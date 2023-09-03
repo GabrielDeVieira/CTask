@@ -2,36 +2,30 @@
 #include <stdlib.h>
 #include <locale.h>
 
-// Limpeza de terminal desenvolvido com a ajuda do ChatGPT
-#ifdef _WIN32
-#define CLEAR_SCREEN "cls"
-#else
-#define CLEAR_SCREEN "clear"
-#endif
-
-void clearTerminal() {
-    system(CLEAR_SCREEN);
-}
 // Utilização da boa prática de assinatura das funções, ideia código professor Flávius https://github.com/FlaviusGorgonio/LinguaSolta/blob/main/ls.c
 void menu_principal(void);
-void menu_compromisso(void);
+void menu_tarefa(void);
 void menu_agendamentos(void);
-void menu_statuscompromisso(void);
-void menu_tipocompromisso(void);
+void menu_statustarefa(void);
+void menu_tipotarefa(void);
 void sobre(void);
 void equipe(void);
-void create_compromisso(void);
-void create_status_compromisso(void);
-void create_tipo_compromisso(void);
-void update_compromisso(void);
-void update_status_compromisso(void);
-void update_tipo_compromisso(void);
-void delete_compromisso(void);
-void delete_status_compromisso(void);
-void delete_tipo_compromisso(void);
-void read_compromisso(void);
-void read_status_compromisso(void);
-void read_tipo_compromisso(void);
+void create_tarefa(void);
+void create_status_tarefa(void);
+void create_tipo_tarefa(void);
+void create_agendamento(void);
+void update_tarefa(void);
+void update_agendamento(void);
+void update_status_tarefa(void);
+void update_tipo_tarefa(void);
+void delete_tarefa(void);
+void delete_status_tarefa(void);
+void delete_tipo_tarefa(void);
+void delete_agendamento(void);
+void read_tarefa(void);
+void read_status_tarefa(void);
+void read_tipo_tarefa(void);
+void read_agendamento(void);
 
 //Funções de Menu
 // Estrutura das Funções baseadas na ideia professor Flávius https://github.com/FlaviusGorgonio/LinguaSolta/blob/main/ls.c
@@ -42,24 +36,32 @@ int false = 0;
 int main(void) {
     setlocale(LC_ALL, "Portuguese_Brazil");
     menu_principal();
-    menu_compromisso();
+    menu_tarefa();
     menu_agendamentos();
-    menu_statuscompromisso();
-    menu_tipocompromisso();
+    menu_statustarefa();
+    menu_tipotarefa();
     sobre();
     equipe();
-    create_compromisso();
-    create_status_compromisso();
-    create_tipo_compromisso();
-    update_compromisso();
-    update_status_compromisso();
-    update_tipo_compromisso();
-    delete_compromisso();
-    delete_status_compromisso();
-    delete_tipo_compromisso();
-    read_compromisso();
-    read_status_compromisso();
-    read_tipo_compromisso();
+
+    create_agendamento();
+    create_tarefa();
+    create_status_tarefa();
+    create_tipo_tarefa();
+
+    update_agendamento();
+    update_tarefa();
+    update_status_tarefa();
+    update_tipo_tarefa();
+
+    delete_agendamento();
+    delete_tarefa();
+    delete_status_tarefa();
+    delete_tipo_tarefa();
+
+    read_agendamento();
+    read_tarefa();
+    read_status_tarefa();
+    read_tipo_tarefa();
     
     // int aux = true;
     // while (aux){
@@ -73,19 +75,19 @@ int main(void) {
     //     printf("Digite uma Opção: ");
     //     scanf(" %d", &op2);
     //    } else if (op == 2){
-    //     menu_compromisso();
+    //     menu_tarefa();
     //     int aux1 = true;
     //     while (aux1){
     //         int op1;
     //         printf("Digite uma Opção: ");
     //         scanf(" %d", &op1);
     //         if (op1 == 6){
-    //             menu_statuscompromisso();
+    //             menu_statustarefa();
     //             printf("Digite uma Opção: ");
     //             scanf(" %d", &op1);
     //             aux1 = false;
     //         } else if (op1 == 7){
-    //             menu_tipocompromisso();
+    //             menu_tipotarefa();
     //             printf("Digite uma Opção: ");
     //             scanf(" %d", &op1);
     //             aux1 = false;
@@ -107,7 +109,7 @@ int main(void) {
 }
 
 void menu_principal(void){
-    clearTerminal();
+    system("clear||cls");
     printf(" ___________________________________________________\n");
     printf("|                     CTASK AGENDA                  |\n");
     printf("|___________________________________________________|\n");
@@ -115,7 +117,7 @@ void menu_principal(void){
     printf("|---------------------------------------------------|\n");
     printf("|                                                   |\n");
     printf("|--            1 - Menu Agendamentos              --|\n");
-    printf("|--            2 - Menu Compromissos              --|\n");
+    printf("|--            2 - Menu Tarefas                   --|\n");
     printf("|--            3 - Sobre                          --|\n");
     printf("|--            4 - Equipe                         --|\n");
     printf("|--            0 - Sair                           --|\n");
@@ -129,21 +131,21 @@ void menu_principal(void){
 
 }
 
-void menu_compromisso(void){
+void menu_tarefa(void){
 
-    clearTerminal();
+    system("clear||cls");
     printf(" ___________________________________________________\n");
     printf("|                     CTASK AGENDA                  |\n");
     printf("|___________________________________________________|\n");
     printf("|---          DIGITE A OPÇÃO DESEJADA:           ---|\n");
     printf("|---------------------------------------------------|\n");
     printf("|                                                   |\n");
-    printf("|--            1 - Adcionar Compromisso           --|\n");
-    printf("|--            2 - Deletar Compromissos           --|\n");
-    printf("|--            3 - Editar  Compromissos           --|\n");
-    printf("|--            4 - Relatório Compromissos         --|\n");
-    printf("|--            5 - Procurar Compromisso           --|\n");
-    printf("|--            6 - Menu Tipo Compromisso          --|\n");
+    printf("|--            1 - Adcionar Tarefa                --|\n");
+    printf("|--            2 - Deletar Tarefas                --|\n");
+    printf("|--            3 - Editar  Tarefas                --|\n");
+    printf("|--            4 - Relatório Tarefas              --|\n");
+    printf("|--            5 - Procurar tarefa                --|\n");
+    printf("|--            6 - Menu Tipo tarefa               --|\n");
     printf("|--            0 - Sair                           --|\n");
     printf("|___________________________________________________|\n");
     printf("\n");
@@ -153,18 +155,18 @@ void menu_compromisso(void){
 
 }
 //Creates
-void create_compromisso(void){
-    clearTerminal();
+void create_tarefa(void){
+    system("clear||cls");
     printf(" ___________________________________________________\n");
     printf("|                     CTASK AGENDA                  |\n");
     printf("|___________________________________________________|\n");
     printf("|___________________________________________________|\n");
-    printf("|---          CADASTRO DO COMPROMISSO            ---|\n");
+    printf("|---          CADASTRO DA TAREFA                 ---|\n");
     printf("|---------------------------------------------------|\n");
     printf("|                                                   |\n");
     printf("|--               Nome:                           --|\n");
     printf("|--               Descrição:                      --|\n");
-    printf("|--               Tipo do Compromisso(ID):        --|\n");
+    printf("|--               Tipo do tarefa(ID):             --|\n");
     printf("|___________________________________________________|\n");
     printf("\n");
     printf("\n");
@@ -172,16 +174,16 @@ void create_compromisso(void){
     getchar();
 
 }
-void create_status_compromisso(void){
-    clearTerminal();
+void create_status_tarefa(void){
+    system("clear||cls");
     printf(" ___________________________________________________\n");
     printf("|                     CTASK AGENDA                  |\n");
     printf("|___________________________________________________|\n");
     printf("|___________________________________________________|\n");
-    printf("|---       CADASTRO STATUS DO COMPROMISSO        ---|\n");
+    printf("|---       CADASTRO STATUS DA TAREFA             ---|\n");
     printf("|---------------------------------------------------|\n");
     printf("|                                                   |\n");
-    printf("|--            Nome Status Compromisso:           --|\n");
+    printf("|--            Nome Status tarefa:                --|\n");
     printf("|___________________________________________________|\n");
     printf("\n");
     printf("\n");
@@ -189,16 +191,38 @@ void create_status_compromisso(void){
     getchar();
 
 }
-void create_tipo_compromisso(void){
-    clearTerminal();
+void create_tipo_tarefa(void){
+    system("clear||cls");
     printf(" ___________________________________________________\n");
     printf("|                     CTASK AGENDA                  |\n");
     printf("|___________________________________________________|\n");
     printf("|___________________________________________________|\n");
-    printf("|---        CADASTRO TIPO DO COMPROMISSO         ---|\n");
+    printf("|---        CADASTRO TIPO DA TAREFA              ---|\n");
     printf("|---------------------------------------------------|\n");
     printf("|                                                   |\n");
-    printf("|--             Nome Tipo Compromisso:            --|\n");
+    printf("|--             Nome Tipo tarefa:                 --|\n");
+    printf("|___________________________________________________|\n");
+    printf("\n");
+    printf("\n");
+    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+    getchar();
+
+}
+void create_agendamento(void){
+    system("clear||cls");
+    printf(" ___________________________________________________\n");
+    printf("|                     CTASK AGENDA                  |\n");
+    printf("|___________________________________________________|\n");
+    printf("|___________________________________________________|\n");
+    printf("|---          CADASTRO DO AGENDAMENTO            ---|\n");
+    printf("|---------------------------------------------------|\n");
+    printf("|                                                   |\n");
+    printf("|--               Nome:                           --|\n");
+    printf("|--               Data Agendamento:               --|\n");
+    printf("|--               Status Tarefa(ID):              --|\n");
+    printf("|--               Horario Agendamento:            --|\n");
+    printf("|--               Tarefa(ID):                     --|\n");
+    printf("|--               Duracao Compromisso(Hora):      --|\n");
     printf("|___________________________________________________|\n");
     printf("\n");
     printf("\n");
@@ -207,16 +231,16 @@ void create_tipo_compromisso(void){
 
 }
 //Updates
-void update_compromisso(void){
-    clearTerminal();
+void update_tarefa(void){
+    system("clear||cls");
     printf(" ___________________________________________________\n");
     printf("|                     CTASK AGENDA                  |\n");
     printf("|___________________________________________________|\n");
     printf("|___________________________________________________|\n");
-    printf("|---         ATUALIZAÇÃO DO COMPROMISSO          ---|\n");
+    printf("|---         ATUALIZAÇÃO DA TAREFA               ---|\n");
     printf("|---------------------------------------------------|\n");
     printf("|                                                   |\n");
-    printf("|--         informe o nome do compromisso:        --|\n");
+    printf("|--         informe o nome do tarefa:             --|\n");
     printf("|___________________________________________________|\n");
     printf("\n");
     printf("\n");
@@ -224,16 +248,31 @@ void update_compromisso(void){
     getchar();
 
 }
-void update_status_compromisso(void){
-    clearTerminal();
+void update_agendamento(void){
+    system("clear||cls");
     printf(" ___________________________________________________\n");
     printf("|                     CTASK AGENDA                  |\n");
     printf("|___________________________________________________|\n");
     printf("|___________________________________________________|\n");
-    printf("|---    ATUALIZAÇÃO DO STATUS DO COMPROMISSO     ---|\n");
+    printf("|---         ATUALIZAÇÃO DA AGENDAMENTO          ---|\n");
     printf("|---------------------------------------------------|\n");
     printf("|                                                   |\n");
-    printf("|--   informe o nome do Status do compromisso:    --|\n");
+    printf("|--         informe o id do Agendamento:          --|\n");
+    printf("|___________________________________________________|\n");
+    printf("\n");
+    printf("\n");
+    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+}
+void update_status_tarefa(void){
+    system("clear||cls");
+    printf(" ___________________________________________________\n");
+    printf("|                     CTASK AGENDA                  |\n");
+    printf("|___________________________________________________|\n");
+    printf("|___________________________________________________|\n");
+    printf("|---    ATUALIZAÇÃO DO STATUS DA TAREFA          ---|\n");
+    printf("|---------------------------------------------------|\n");
+    printf("|                                                   |\n");
+    printf("|--   informe o nome do Status do tarefa:         --|\n");
     printf("|___________________________________________________|\n");
     printf("\n");
     printf("\n");
@@ -241,16 +280,16 @@ void update_status_compromisso(void){
     getchar();
 
 }
-void update_tipo_compromisso(void){
-    clearTerminal();
+void update_tipo_tarefa(void){
+    system("clear||cls");
     printf(" ___________________________________________________\n");
     printf("|                     CTASK AGENDA                  |\n");
     printf("|___________________________________________________|\n");
     printf("|___________________________________________________|\n");
-    printf("|---     ATUALIZAÇÃO DO TIPO DO COMPROMISSO      ---|\n");
+    printf("|---     ATUALIZAÇÃO DO TIPO DA TAREFA           ---|\n");
     printf("|---------------------------------------------------|\n");
     printf("|                                                   |\n");
-    printf("|--    informe o nome do Tipo do compromisso:     --|\n");
+    printf("|--    informe o nome do Tipo do tarefa:          --|\n");
     printf("|___________________________________________________|\n");
     printf("\n");
     printf("\n");
@@ -259,16 +298,16 @@ void update_tipo_compromisso(void){
 
 }
 //Deletes
-void delete_compromisso(void){
-    clearTerminal();
+void delete_tarefa(void){
+    system("clear||cls");
     printf(" ___________________________________________________\n");
     printf("|                     CTASK AGENDA                  |\n");
     printf("|___________________________________________________|\n");
     printf("|___________________________________________________|\n");
-    printf("|---           EXCLUSÃO DO COMPROMISSO           ---|\n");
+    printf("|---           EXCLUSÃO DOA TAREFA               ---|\n");
     printf("|---------------------------------------------------|\n");
     printf("|                                                   |\n");
-    printf("|--         informe o nome do compromisso:        --|\n");
+    printf("|--         informe o nome do tarefa:             --|\n");
     printf("|___________________________________________________|\n");
     printf("\n");
     printf("\n");
@@ -276,16 +315,16 @@ void delete_compromisso(void){
     getchar();
 
 }
-void delete_status_compromisso(void){
-    clearTerminal();
+void delete_agendamento(void){
+    system("clear||cls");
     printf(" ___________________________________________________\n");
     printf("|                     CTASK AGENDA                  |\n");
     printf("|___________________________________________________|\n");
     printf("|___________________________________________________|\n");
-    printf("|---      EXCLUSÃO DO STATUS DO COMPROMISSO      ---|\n");
+    printf("|---           EXCLUSÃO DO AGENDAMENTO           ---|\n");
     printf("|---------------------------------------------------|\n");
     printf("|                                                   |\n");
-    printf("|--   informe o nome do Status do compromisso:    --|\n");
+    printf("|--         informe o id do Agendamento:          --|\n");
     printf("|___________________________________________________|\n");
     printf("\n");
     printf("\n");
@@ -293,16 +332,33 @@ void delete_status_compromisso(void){
     getchar();
 
 }
-void delete_tipo_compromisso(void){
-    clearTerminal();
+void delete_status_tarefa(void){
+    system("clear||cls");
     printf(" ___________________________________________________\n");
     printf("|                     CTASK AGENDA                  |\n");
     printf("|___________________________________________________|\n");
     printf("|___________________________________________________|\n");
-    printf("|---       EXCLUSÃO DO TIPO DO COMPROMISSO       ---|\n");
+    printf("|---          EXCLUSÃO DO STATUS DA TAREFA       ---|\n");
     printf("|---------------------------------------------------|\n");
     printf("|                                                   |\n");
-    printf("|--    informe o nome do Tipo do compromisso:     --|\n");
+    printf("|--      informe o nome do Status do tarefa:      --|\n");
+    printf("|___________________________________________________|\n");
+    printf("\n");
+    printf("\n");
+    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+    getchar();
+
+}
+void delete_tipo_tarefa(void){
+    system("clear||cls");
+    printf(" ___________________________________________________\n");
+    printf("|                     CTASK AGENDA                  |\n");
+    printf("|___________________________________________________|\n");
+    printf("|___________________________________________________|\n");
+    printf("|---          EXCLUSÃO DO TIPO DO TAREFA         ---|\n");
+    printf("|---------------------------------------------------|\n");
+    printf("|                                                   |\n");
+    printf("|--      informe o nome do Tipo da tarefa:        --|\n");
     printf("|___________________________________________________|\n");
     printf("\n");
     printf("\n");
@@ -311,16 +367,16 @@ void delete_tipo_compromisso(void){
 
 }
 //Read
-void read_compromisso(void){
-    clearTerminal();
+void read_tarefa(void){
+    system("clear||cls");
     printf(" ___________________________________________________\n");
     printf("|                     CTASK AGENDA                  |\n");
     printf("|___________________________________________________|\n");
     printf("|___________________________________________________|\n");
-    printf("|---             BUSCA DO COMPROMISSO            ---|\n");
+    printf("|---                BUSCA DA TAREFA              ---|\n");
     printf("|---------------------------------------------------|\n");
     printf("|                                                   |\n");
-    printf("|--         informe o nome do compromisso:        --|\n");
+    printf("|--         informe o nome dA tarefa:             --|\n");
     printf("|___________________________________________________|\n");
     printf("\n");
     printf("\n");
@@ -328,16 +384,16 @@ void read_compromisso(void){
     getchar();
 
 }
-void read_status_compromisso(void){
-    clearTerminal();
+void read_agendamento(void){
+    system("clear||cls");
     printf(" ___________________________________________________\n");
     printf("|                     CTASK AGENDA                  |\n");
     printf("|___________________________________________________|\n");
     printf("|___________________________________________________|\n");
-    printf("|---        BUSCA DO STATUS DO COMPROMISSO       ---|\n");
+    printf("|---                BUSCA DO AGENDAMENTO         ---|\n");
     printf("|---------------------------------------------------|\n");
     printf("|                                                   |\n");
-    printf("|--   informe o nome do Status do compromisso:    --|\n");
+    printf("|--         informe o id do Agndamento:           --|\n");
     printf("|___________________________________________________|\n");
     printf("\n");
     printf("\n");
@@ -345,16 +401,33 @@ void read_status_compromisso(void){
     getchar();
 
 }
-void read_tipo_compromisso(void){
-    clearTerminal();
+void read_status_tarefa(void){
+    system("clear||cls");
     printf(" ___________________________________________________\n");
     printf("|                     CTASK AGENDA                  |\n");
     printf("|___________________________________________________|\n");
     printf("|___________________________________________________|\n");
-    printf("|---         BUSCA DO TIPO DO COMPROMISSO        ---|\n");
+    printf("|---           BUSCA DO STATUS DA TAREFA         ---|\n");
     printf("|---------------------------------------------------|\n");
     printf("|                                                   |\n");
-    printf("|--    informe o nome do Tipo do compromisso:     --|\n");
+    printf("|--    informe o nome do Status do tarefa:        --|\n");
+    printf("|___________________________________________________|\n");
+    printf("\n");
+    printf("\n");
+    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+    getchar();
+
+}
+void read_tipo_tarefa(void){
+    system("clear||cls");
+    printf(" ___________________________________________________\n");
+    printf("|                     CTASK AGENDA                  |\n");
+    printf("|___________________________________________________|\n");
+    printf("|___________________________________________________|\n");
+    printf("|---           BUSCA DO TIPO DO TAREFA           ---|\n");
+    printf("|---------------------------------------------------|\n");
+    printf("|                                                   |\n");
+    printf("|--       informe o nome do Tipo do tarefa:       --|\n");
     printf("|___________________________________________________|\n");
     printf("\n");
     printf("\n");
@@ -364,7 +437,7 @@ void read_tipo_compromisso(void){
 }
 //Menus Principais
 void menu_agendamentos(void){
-    clearTerminal();
+    system("clear||cls");
     printf(" ___________________________________________________\n");
     printf("|                     CTASK AGENDA                  |\n");
     printf("|___________________________________________________|\n");
@@ -376,7 +449,7 @@ void menu_agendamentos(void){
     printf("|--            3 - Editar  Agendamento            --|\n");
     printf("|--            4 - Relatório Agendamentos         --|\n");
     printf("|--            5 - Procurar Agendamento           --|\n");
-    printf("|--            6 - Menu Status Compromisso        --|\n");
+    printf("|--            6 - Menu Status Tarefa             --|\n");
     printf("|--            0 - Sair                           --|\n");
     printf("|___________________________________________________|\n");
     printf("\n");
@@ -386,19 +459,19 @@ void menu_agendamentos(void){
    
 
 }
-void menu_statuscompromisso(void){
-    clearTerminal();
+void menu_statustarefa(void){
+    system("clear||cls");
     printf(" ___________________________________________________\n");
     printf("|                     CTASK AGENDA                  |\n");
     printf("|___________________________________________________|\n");
     printf("|---          DIGITE A OPÇÃO DESEJADA:           ---|\n");
     printf("|---------------------------------------------------|\n");
     printf("|                                                   |\n");
-    printf("|--           1 - Adicionar Status Compromisso    --|\n");
-    printf("|--           2 - Deletar Status Compromisso      --|\n");
-    printf("|--           3 - Editar  Status Compromisso      --|\n");
-    printf("|--           4 - Relatório Status Compromisso    --|\n");
-    printf("|--           5 - Procurar Status Compromisso     --|\n");
+    printf("|--           1 - Adicionar Status tarefa         --|\n");
+    printf("|--           2 - Deletar Status tarefa           --|\n");
+    printf("|--           3 - Editar  Status tarefa           --|\n");
+    printf("|--           4 - Relatório Status tarefa         --|\n");
+    printf("|--           5 - Procurar Status tarefa          --|\n");
     printf("|--           0 - Sair                            --|\n");
     printf("|___________________________________________________|\n");
     printf("\n");
@@ -409,19 +482,19 @@ void menu_statuscompromisso(void){
    
     
 }
-void menu_tipocompromisso(void){
-    clearTerminal();
+void menu_tipotarefa(void){
+    system("clear||cls");
     printf(" ___________________________________________________\n");
     printf("|                     CTASK AGENDA                  |\n");
     printf("|___________________________________________________|\n");
     printf("|---          DIGITE A OPÇÃO DESEJADA:           ---|\n");
     printf("|---------------------------------------------------|\n");
     printf("|                                                   |\n");
-    printf("|--           1 - Adicionar Tipo Compromisso      --|\n");
-    printf("|--           2 - Deletar Tipo Compromisso        --|\n");
-    printf("|--           3 - Editar  Tipo Compromisso        --|\n");
-    printf("|--           4 - Relatório Tipo Compromisso      --|\n");
-    printf("|--           5 - Procurar Tipo Compromisso       --|\n");
+    printf("|--           1 - Adicionar Tipo tarefa           --|\n");
+    printf("|--           2 - Deletar Tipo tarefa             --|\n");
+    printf("|--           3 - Editar  Tipo tarefa             --|\n");
+    printf("|--           4 - Relatório Tipo tarefa           --|\n");
+    printf("|--           5 - Procurar Tipo tarefa            --|\n");
     printf("|--           0 - Sair                            --|\n");
     printf("|___________________________________________________|\n");
     printf("\n");
@@ -434,13 +507,13 @@ void menu_tipocompromisso(void){
 
 // menu baseado no codigo do professor Flávius https://github.com/FlaviusGorgonio/LinguaSolta/blob/main/ls.c
 void sobre(void){
-    clearTerminal();
+    system("clear||cls");
     printf(" ________________________________________________________________________\n");
     printf("|                               CTASK AGENDA                             |\n");
     printf("|________________________________________________________________________|\n");
     printf("|---                             CERES UFRN                           ---|\n");
     printf("|---             Projeto da Disciplina DCT1106 - Programação          ---|\n");
-    printf("|---             CTASK: Uma Agenda de Tarefas e Compromissos          ---|\n");
+    printf("|---             CTASK: Uma Agenda de Compromissos e Tarefas          ---|\n");
     printf("|---              Desenvolvido por Gabriel de Araújo Vieira           ---|\n");
     printf("|------------------------------------------------------------------------|\n");
     printf("|                                                                        |\n");
@@ -449,11 +522,11 @@ void sobre(void){
     printf("|-   O projeto é o método principal de avaliação da disciplina DCT1106  -|\n");
     printf("|-   Programação. Como o próprio nome sugere o projeto diz respeito ao  -|\n");
     printf("|-   Desenvolvimento de uma Agenda de Compromissos, onde o seu usuário  -|\n");
-    printf("|-   vai poder tipificar esses determinados compromissos (Tendo a li-   -|\n");
+    printf("|-   vai poder tipificar esses determinados Compromissos (Tendo a li-   -|\n");
     printf("|-   berdade de nomer o tipo da atividade), enxergar o status do mesmo  -|\n");
     printf("|-   (com a mesma liberdade de excolher o status, por exemplo: 'novo'   -|\n");
     printf("|-   e 'concluído'). Além de todas as funcionalidades de uma agenda,    -|\n");
-    printf("|-   como: criar um compromisso e poder agenda-lo.                      -|\n");
+    printf("|-   como: criar um Compromisso e poder agenda-lo.                      -|\n");
     printf("|________________________________________________________________________|\n");
     printf("\n");
     printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
@@ -462,7 +535,7 @@ void sobre(void){
 
 // menu baseado no codigo do professor Flávius https://github.com/FlaviusGorgonio/LinguaSolta/blob/main/ls.c
 void equipe(void){
-    clearTerminal();
+    system("clear||cls");
     printf(" ________________________________________________________________________\n");
     printf("|                               CTASK AGENDA                             |\n");
     printf("|________________________________________________________________________|\n");
