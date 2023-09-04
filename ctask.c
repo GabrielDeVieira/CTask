@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <locale.h>
 
-// UtilizaÁ„o da boa pr·tica de assinatura das funÁıes, ideia cÛdigo professor Fl·vius https://github.com/FlaviusGorgonio/LinguaSolta/blob/main/ls.c
+// Utiliza√ß√£o da boa pr√°tica de assinatura das fun√ß√µes, ideia c√≥digo professor Fl√°vius https://github.com/FlaviusGorgonio/LinguaSolta/blob/main/ls.c
 void menu_principal(void);
 void menu_tarefa(void);
 void menu_agendamentos(void);
@@ -27,12 +27,10 @@ void read_status_tarefa(void);
 void read_tipo_tarefa(void);
 void read_agendamento(void);
 
-//FunÁıes de Menu
-// Estrutura das FunÁıes baseadas na ideia professor Fl·vius https://github.com/FlaviusGorgonio/LinguaSolta/blob/main/ls.c
-int true = 1;
-int false = 0;
+//Fun√ß√µes de Menu
+// Estrutura das Fun√ß√µes baseadas na ideia professor Fl√°vius https://github.com/FlaviusGorgonio/LinguaSolta/blob/main/ls.c
 
-//FunÁ„o Principal
+//Fun√ß√£o Principal
 int main(void) {
     setlocale(LC_ALL, "Portuguese_Brazil");
     menu_principal();
@@ -67,28 +65,28 @@ int main(void) {
     // while (aux){
     //    menu_principal();
     //    int op;
-    //    printf("Digite uma OpÁ„o: ");
+    //    printf("Digite uma Op√ß√£o: ");
     //    scanf(" %d", &op);
     //    if ( op == 1){
     //     menu_agendamentos();
     //     int op2;
-    //     printf("Digite uma OpÁ„o: ");
+    //     printf("Digite uma Op√ß√£o: ");
     //     scanf(" %d", &op2);
     //    } else if (op == 2){
     //     menu_tarefa();
     //     int aux1 = true;
     //     while (aux1){
     //         int op1;
-    //         printf("Digite uma OpÁ„o: ");
+    //         printf("Digite uma Op√ß√£o: ");
     //         scanf(" %d", &op1);
     //         if (op1 == 6){
     //             menu_statustarefa();
-    //             printf("Digite uma OpÁ„o: ");
+    //             printf("Digite uma Op√ß√£o: ");
     //             scanf(" %d", &op1);
     //             aux1 = false;
     //         } else if (op1 == 7){
     //             menu_tipotarefa();
-    //             printf("Digite uma OpÁ„o: ");
+    //             printf("Digite uma Op√ß√£o: ");
     //             scanf(" %d", &op1);
     //             aux1 = false;
     //         }else{
@@ -113,7 +111,7 @@ void menu_principal(void){
     printf(" ___________________________________________________\n");
     printf("|                     CTASK AGENDA                  |\n");
     printf("|___________________________________________________|\n");
-    printf("|---          DIGITE A OP«√O DESEJADA:           ---|\n");
+    printf("|---          DIGITE A OP√á√ÉO DESEJADA:           ---|\n");
     printf("|---------------------------------------------------|\n");
     printf("|                                                   |\n");
     printf("|--            1 - Menu Agendamentos              --|\n");
@@ -137,13 +135,13 @@ void menu_tarefa(void){
     printf(" ___________________________________________________\n");
     printf("|                     CTASK AGENDA                  |\n");
     printf("|___________________________________________________|\n");
-    printf("|---          DIGITE A OP«√O DESEJADA:           ---|\n");
+    printf("|---          DIGITE A OP√á√ÉO DESEJADA:           ---|\n");
     printf("|---------------------------------------------------|\n");
     printf("|                                                   |\n");
     printf("|--            1 - Adcionar Tarefa                --|\n");
     printf("|--            2 - Deletar Tarefas                --|\n");
     printf("|--            3 - Editar  Tarefas                --|\n");
-    printf("|--            4 - RelatÛrio Tarefas              --|\n");
+    printf("|--            4 - Relat√≥rio Tarefas              --|\n");
     printf("|--            5 - Procurar tarefa                --|\n");
     printf("|--            6 - Menu Tipo tarefa               --|\n");
     printf("|--            0 - Sair                           --|\n");
@@ -165,7 +163,7 @@ void create_tarefa(void){
     printf("|---------------------------------------------------|\n");
     printf("|                                                   |\n");
     printf("|--               Nome:                           --|\n");
-    printf("|--               DescriÁ„o:                      --|\n");
+    printf("|--               Descri√ß√£o:                      --|\n");
     printf("|--               Tipo do tarefa(ID):             --|\n");
     printf("|___________________________________________________|\n");
     printf("\n");
@@ -237,7 +235,7 @@ void update_tarefa(void){
     printf("|                     CTASK AGENDA                  |\n");
     printf("|___________________________________________________|\n");
     printf("|___________________________________________________|\n");
-    printf("|---         ATUALIZA«√O DA TAREFA               ---|\n");
+    printf("|---         ATUALIZA√á√ÉO DA TAREFA               ---|\n");
     printf("|---------------------------------------------------|\n");
     printf("|                                                   |\n");
     printf("|--         informe o nome do tarefa:             --|\n");
@@ -254,7 +252,7 @@ void update_agendamento(void){
     printf("|                     CTASK AGENDA                  |\n");
     printf("|___________________________________________________|\n");
     printf("|___________________________________________________|\n");
-    printf("|---         ATUALIZA«√O DA AGENDAMENTO          ---|\n");
+    printf("|---         ATUALIZA√á√ÉO DA AGENDAMENTO          ---|\n");
     printf("|---------------------------------------------------|\n");
     printf("|                                                   |\n");
     printf("|--         informe o id do Agendamento:          --|\n");
@@ -269,7 +267,7 @@ void update_status_tarefa(void){
     printf("|                     CTASK AGENDA                  |\n");
     printf("|___________________________________________________|\n");
     printf("|___________________________________________________|\n");
-    printf("|---    ATUALIZA«√O DO STATUS DA TAREFA          ---|\n");
+    printf("|---    ATUALIZA√á√ÉO DO STATUS DA TAREFA          ---|\n");
     printf("|---------------------------------------------------|\n");
     printf("|                                                   |\n");
     printf("|--   informe o nome do Status do tarefa:         --|\n");
@@ -286,7 +284,7 @@ void update_tipo_tarefa(void){
     printf("|                     CTASK AGENDA                  |\n");
     printf("|___________________________________________________|\n");
     printf("|___________________________________________________|\n");
-    printf("|---     ATUALIZA«√O DO TIPO DA TAREFA           ---|\n");
+    printf("|---     ATUALIZA√á√ÉO DO TIPO DA TAREFA           ---|\n");
     printf("|---------------------------------------------------|\n");
     printf("|                                                   |\n");
     printf("|--    informe o nome do Tipo do tarefa:          --|\n");
@@ -304,7 +302,7 @@ void delete_tarefa(void){
     printf("|                     CTASK AGENDA                  |\n");
     printf("|___________________________________________________|\n");
     printf("|___________________________________________________|\n");
-    printf("|---           EXCLUS√O DOA TAREFA               ---|\n");
+    printf("|---           EXCLUS√ÉO DOA TAREFA               ---|\n");
     printf("|---------------------------------------------------|\n");
     printf("|                                                   |\n");
     printf("|--         informe o nome do tarefa:             --|\n");
@@ -321,7 +319,7 @@ void delete_agendamento(void){
     printf("|                     CTASK AGENDA                  |\n");
     printf("|___________________________________________________|\n");
     printf("|___________________________________________________|\n");
-    printf("|---           EXCLUS√O DO AGENDAMENTO           ---|\n");
+    printf("|---           EXCLUS√ÉO DO AGENDAMENTO           ---|\n");
     printf("|---------------------------------------------------|\n");
     printf("|                                                   |\n");
     printf("|--         informe o id do Agendamento:          --|\n");
@@ -338,7 +336,7 @@ void delete_status_tarefa(void){
     printf("|                     CTASK AGENDA                  |\n");
     printf("|___________________________________________________|\n");
     printf("|___________________________________________________|\n");
-    printf("|---          EXCLUS√O DO STATUS DA TAREFA       ---|\n");
+    printf("|---          EXCLUS√ÉO DO STATUS DA TAREFA       ---|\n");
     printf("|---------------------------------------------------|\n");
     printf("|                                                   |\n");
     printf("|--      informe o nome do Status do tarefa:      --|\n");
@@ -355,7 +353,7 @@ void delete_tipo_tarefa(void){
     printf("|                     CTASK AGENDA                  |\n");
     printf("|___________________________________________________|\n");
     printf("|___________________________________________________|\n");
-    printf("|---          EXCLUS√O DO TIPO DO TAREFA         ---|\n");
+    printf("|---          EXCLUS√ÉO DO TIPO DO TAREFA         ---|\n");
     printf("|---------------------------------------------------|\n");
     printf("|                                                   |\n");
     printf("|--      informe o nome do Tipo da tarefa:        --|\n");
@@ -441,13 +439,13 @@ void menu_agendamentos(void){
     printf(" ___________________________________________________\n");
     printf("|                     CTASK AGENDA                  |\n");
     printf("|___________________________________________________|\n");
-    printf("|---          DIGITE A OP«√O DESEJADA:           ---|\n");
+    printf("|---          DIGITE A OP√á√ÉO DESEJADA:           ---|\n");
     printf("|---------------------------------------------------|\n");
     printf("|                                                   |\n");
     printf("|--            1 - Adicionar Agendamento          --|\n");
     printf("|--            2 - Deletar Agendamento            --|\n");
     printf("|--            3 - Editar  Agendamento            --|\n");
-    printf("|--            4 - RelatÛrio Agendamentos         --|\n");
+    printf("|--            4 - Relat√≥rio Agendamentos         --|\n");
     printf("|--            5 - Procurar Agendamento           --|\n");
     printf("|--            6 - Menu Status Tarefa             --|\n");
     printf("|--            0 - Sair                           --|\n");
@@ -464,13 +462,13 @@ void menu_statustarefa(void){
     printf(" ___________________________________________________\n");
     printf("|                     CTASK AGENDA                  |\n");
     printf("|___________________________________________________|\n");
-    printf("|---          DIGITE A OP«√O DESEJADA:           ---|\n");
+    printf("|---          DIGITE A OP√á√ÉO DESEJADA:           ---|\n");
     printf("|---------------------------------------------------|\n");
     printf("|                                                   |\n");
     printf("|--           1 - Adicionar Status tarefa         --|\n");
     printf("|--           2 - Deletar Status tarefa           --|\n");
     printf("|--           3 - Editar  Status tarefa           --|\n");
-    printf("|--           4 - RelatÛrio Status tarefa         --|\n");
+    printf("|--           4 - Relat√≥rio Status tarefa         --|\n");
     printf("|--           5 - Procurar Status tarefa          --|\n");
     printf("|--           0 - Sair                            --|\n");
     printf("|___________________________________________________|\n");
@@ -487,13 +485,13 @@ void menu_tipotarefa(void){
     printf(" ___________________________________________________\n");
     printf("|                     CTASK AGENDA                  |\n");
     printf("|___________________________________________________|\n");
-    printf("|---          DIGITE A OP«√O DESEJADA:           ---|\n");
+    printf("|---          DIGITE A OP√á√ÉO DESEJADA:           ---|\n");
     printf("|---------------------------------------------------|\n");
     printf("|                                                   |\n");
     printf("|--           1 - Adicionar Tipo tarefa           --|\n");
     printf("|--           2 - Deletar Tipo tarefa             --|\n");
     printf("|--           3 - Editar  Tipo tarefa             --|\n");
-    printf("|--           4 - RelatÛrio Tipo tarefa           --|\n");
+    printf("|--           4 - Relat√≥rio Tipo tarefa           --|\n");
     printf("|--           5 - Procurar Tipo tarefa            --|\n");
     printf("|--           0 - Sair                            --|\n");
     printf("|___________________________________________________|\n");
@@ -505,27 +503,27 @@ void menu_tipotarefa(void){
     
 }
 
-// menu baseado no codigo do professor Fl·vius https://github.com/FlaviusGorgonio/LinguaSolta/blob/main/ls.c
+// menu baseado no codigo do professor Fl√°vius https://github.com/FlaviusGorgonio/LinguaSolta/blob/main/ls.c
 void sobre(void){
     system("clear||cls");
     printf(" ________________________________________________________________________\n");
     printf("|                               CTASK AGENDA                             |\n");
     printf("|________________________________________________________________________|\n");
     printf("|---                             CERES UFRN                           ---|\n");
-    printf("|---             Projeto da Disciplina DCT1106 - ProgramaÁ„o          ---|\n");
+    printf("|---             Projeto da Disciplina DCT1106 - Programa√ß√£o          ---|\n");
     printf("|---             CTASK: Uma Agenda de Compromissos e Tarefas          ---|\n");
-    printf("|---              Desenvolvido por Gabriel de Ara˙jo Vieira           ---|\n");
+    printf("|---              Desenvolvido por Gabriel de Ara√∫jo Vieira           ---|\n");
     printf("|------------------------------------------------------------------------|\n");
     printf("|                                                                        |\n");
-    printf("|---                           DescriÁ„o CTASK                        ---|\n");
+    printf("|---                           Descri√ß√£o CTASK                        ---|\n");
     printf("|                                                                        |\n");
-    printf("|-   O projeto È o mÈtodo principal de avaliaÁ„o da disciplina DCT1106  -|\n");
-    printf("|-   ProgramaÁ„o. Como o prÛprio nome sugere o projeto diz respeito ao  -|\n");
-    printf("|-   Desenvolvimento de uma Agenda de Compromissos, onde o seu usu·rio  -|\n");
+    printf("|-   O projeto √© o m√©todo principal de avalia√ß√£o da disciplina DCT1106  -|\n");
+    printf("|-   Programa√ß√£o. Como o pr√≥prio nome sugere o projeto diz respeito ao  -|\n");
+    printf("|-   Desenvolvimento de uma Agenda de Compromissos, onde o seu usu√°rio  -|\n");
     printf("|-   vai poder tipificar esses determinados Compromissos (Tendo a li-   -|\n");
     printf("|-   berdade de nomer o tipo da atividade), enxergar o status do mesmo  -|\n");
     printf("|-   (com a mesma liberdade de excolher o status, por exemplo: 'novo'   -|\n");
-    printf("|-   e 'concluÌdo'). AlÈm de todas as funcionalidades de uma agenda,    -|\n");
+    printf("|-   e 'conclu√≠do'). Al√©m de todas as funcionalidades de uma agenda,    -|\n");
     printf("|-   como: criar um Compromisso e poder agenda-lo.                      -|\n");
     printf("|________________________________________________________________________|\n");
     printf("\n");
@@ -533,21 +531,21 @@ void sobre(void){
     getchar();
 }
 
-// menu baseado no codigo do professor Fl·vius https://github.com/FlaviusGorgonio/LinguaSolta/blob/main/ls.c
+// menu baseado no codigo do professor Fl√°vius https://github.com/FlaviusGorgonio/LinguaSolta/blob/main/ls.c
 void equipe(void){
     system("clear||cls");
     printf(" ________________________________________________________________________\n");
     printf("|                               CTASK AGENDA                             |\n");
     printf("|________________________________________________________________________|\n");
     printf("|---                             CERES UFRN                           ---|\n");
-    printf("|---             Projeto da Disciplina DCT1106 - ProgramaÁ„o          ---|\n");
+    printf("|---             Projeto da Disciplina DCT1106 - Programa√ß√£o          ---|\n");
     printf("|---             CTASK: Uma Agenda de Tarefas e Compromissos          ---|\n");
-    printf("|---              Desenvolvido por Gabriel de Ara˙jo Vieira           ---|\n");
+    printf("|---              Desenvolvido por Gabriel de Ara√∫jo Vieira           ---|\n");
     printf("|------------------------------------------------------------------------|\n");
     printf("|                                                                        |\n");
     printf("|---                           Desenvolvedor:                         ---|\n");
     printf("|                                                                        |\n");
-    printf("|           Nome: Gabriel de Ara˙jo Vieira                               |\n");
+    printf("|           Nome: Gabriel de Ara√∫jo Vieira                               |\n");
     printf("|           Redes Sociais: @araujovieiragabriel                          |\n");
     printf("|           Email: gabrieldeviei@gmail.com                               |\n");
     printf("|           git: https://github.com/GabrielDeVieira/CTask.git            |\n");
@@ -557,3 +555,4 @@ void equipe(void){
     getchar();
     
 }
+
