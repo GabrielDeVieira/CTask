@@ -5,7 +5,12 @@
 #include "agendamento.h"
 #include "tarefa.h"
 #include "tipo.h"
+#include "login.h"
+#include "user.h"
 #include "status.h"
+
+#define True 1
+#define False 0
 
 // Utilização da boa prática de assinatura das funções, ideia código professor Flávius https://github.com/FlaviusGorgonio/LinguaSolta/blob/main/ls.c
 char menu_principal(void);
@@ -15,19 +20,27 @@ void equipe(void);
 //Função Principal
 int main(void) {
     setlocale(LC_ALL, "Portuguese_Brazil");
+    int aux = 0;
+
     char opcao;
     do {
-        opcao = menu_principal();
-        switch(opcao) {
-            case '1': 	op_agendamento();
-                        break;
-            case '2': 	op_tarefa();
-                        break;
-            case '3': 	sobre();
-                        break;
-            case '4': 	equipe();
-                        break;
-        } 		
+        if (aux == 0){
+            op_login();
+            aux = 2;
+        }else{
+            opcao = menu_principal();
+            switch(opcao) {
+                case '1': 	op_agendamento();
+                            break;
+                case '2': 	op_tarefa();
+                            break;
+                case '3': 	sobre();
+                            break;
+                case '4': 	equipe();
+                            break;
+            } 
+        }
+        		
     } while (opcao != '0');
     
     return 0;
