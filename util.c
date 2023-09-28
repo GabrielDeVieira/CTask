@@ -60,3 +60,11 @@ int eh_letra(char c) {
     return False;
   }  
 }
+
+int eh_numero(char c){
+   if (c >= '0' && c <= '9') {
+        return True;
+    } else {
+        return False;
+    }
+}
