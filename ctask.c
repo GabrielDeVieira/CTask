@@ -7,7 +7,7 @@
 #include "tipo.h"
 #include "login.h"
 #include "user.h"
-#include "status.h"
+#include "disciplina.h"
 
 #define True 1
 #define False 0
@@ -87,12 +87,11 @@ void sobre(void){
     printf("|                                                                        |\n");
     printf("|-   O projeto é o método principal de avaliação da disciplina DCT1106  -|\n");
     printf("|-   Programação. Como o próprio nome sugere o projeto diz respeito ao  -|\n");
-    printf("|-   Desenvolvimento de uma Agenda de Compromissos, onde o seu usuário  -|\n");
-    printf("|-   vai poder tipificar esses determinados Compromissos (Tendo a li-   -|\n");
-    printf("|-   berdade de nomer o tipo da atividade), enxergar o status do mesmo  -|\n");
-    printf("|-   (com a mesma liberdade de excolher o status, por exemplo: 'novo'   -|\n");
-    printf("|-   e 'concluído'). Além de todas as funcionalidades de uma agenda,    -|\n");
-    printf("|-   como: criar um Compromisso e poder agenda-lo.                      -|\n");
+    printf("|-   Desenvolvimento de uma Agenda de Compromissos para estudantes, onde-|\n");
+    printf("|-    o seu usuário vai poder tipificar esses determinados Compromissos -|\n");
+    printf("|-   (Tendo a liberdade de nomer o tipo da atividade). Além de todas as -|\n");
+    printf("|-   funcionalidades de uma agenda, como: criar um Compromisso e poder  -|\n");
+    printf("|-   agenda-lo.                                                         -|\n");
     printf("|________________________________________________________________________|\n");
     printf("\n");
     printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");

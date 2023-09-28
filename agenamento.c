@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "agendamento.h"
-#include "status.h"
+#include "disciplina.h"
 #include <unistd.h>
 
 // Estrutura das Funções baseadas na ideia professor Flávius https://github.com/FlaviusGorgonio/LinguaSolta/blob/main/ls.c
@@ -18,7 +18,7 @@ void op_agendamento(void) {
                         break;
             case '4': 	read_agendamento();
                         break;
-            case '5': 	op_status_tarefa();
+            case '5': 	op_disciplina();
                         break;
         } 		
     } while (opcao != '0');
