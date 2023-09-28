@@ -21,6 +21,7 @@ void op_user(void) {
     } while (opcao != '0');
 }
 
+
 // Estrutura das Funções baseadas na ideia professor Flávius https://github.com/FlaviusGorgonio/LinguaSolta/blob/main/ls.c
 char menu_users(void){
     char opcao;
@@ -46,7 +47,10 @@ char menu_users(void){
    
     
 }
-void create_users(void){
+User create_users(void){
+
+    User usuario;
+
     system("clear||cls");
     printf(" ___________________________________________________\n");
     printf("|                     CTASK AGENDA                  |\n");
@@ -55,17 +59,30 @@ void create_users(void){
     printf("|---            CADASTRO NOVO USUÁRIO            ---|\n");
     printf("|---------------------------------------------------|\n");
     printf("|                                                   |\n");
-    printf("|--            Nome                               --|\n");
-    printf("|--            Data de Nascimento                 --|\n");
-    printf("|--            Email                              --|\n");
-    printf("|--            Numero                             --|\n");
-    printf("|--            Username                           --|\n");
-    printf("|--            CPF                                --|\n");
+    printf("|-- Nome: \n");
+    fgets(usuario.nome, sizeof(usuario.nome), stdin);
+    printf("|-- Data de Nascimento: \n");
+    fgets(usuario.data_nascimento, sizeof(usuario.data_nascimento), stdin);
+    printf("|                                                   |\n");
+    printf("|-- Email: \n");
+    fgets(usuario.email, sizeof(usuario.email), stdin);
+    printf("|                                                   |\n");
+    printf("|-- Numero: \n");
+    fgets(usuario.numero, sizeof(usuario.numero), stdin);
+    printf("|                                                   |\n");
+    printf("|-- Username: \n");
+    fgets(usuario.username, sizeof(usuario.username), stdin);
+    printf("|                                                   |\n");
+    printf("|-- CPF: \n");
+    fgets(usuario.cpf, sizeof(usuario.cpf), stdin);
+    printf("|                                                   |\n");
     printf("|___________________________________________________|\n");
     printf("\n");
     printf("\n");
     printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
     getchar();
+
+    return usuario;
 
 }
 void update_users(void){

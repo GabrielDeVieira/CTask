@@ -1,27 +1,27 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "status.h"
+#include "disciplina.h"
 #include <unistd.h>
 
-void op_status_tarefa(void) {
+void op_disciplina(void) {
     char opcao;
     do {
-        opcao = menu_statustarefa();
+        opcao = menu_disciplina();
         switch(opcao) {
-            case '1': 	create_status_tarefa();
+            case '1': 	create_disciplina();
                         break;
-            case '2': 	delete_status_tarefa();
+            case '2': 	delete_disciplina();
                         break;
-            case '3': 	update_status_tarefa();
+            case '3': 	update_disciplina();
                         break;
-            case '4': 	read_status_tarefa();
+            case '4': 	read_disciplina();
                         break;
         } 		
     } while (opcao != '0');
 }
 
 // Estrutura das Funções baseadas na ideia professor Flávius https://github.com/FlaviusGorgonio/LinguaSolta/blob/main/ls.c
-char menu_statustarefa(void){
+char menu_disciplina(void){
     char opcao;
     system("clear||cls");
     printf(" ___________________________________________________\n");
@@ -30,10 +30,10 @@ char menu_statustarefa(void){
     printf("|---           DIGITE A OPÇÃO DESEJADA:          ---|\n");
     printf("|---------------------------------------------------|\n");
     printf("|                                                   |\n");
-    printf("|--           1 - Adicionar Status tarefa         --|\n");
-    printf("|--           2 - Deletar Status tarefa           --|\n");
-    printf("|--           3 - Editar  Status tarefa           --|\n");
-    printf("|--           4 - Relatório Status tarefa         --|\n");
+    printf("|--           1 - Adicionar Disciplina            --|\n");
+    printf("|--           2 - Deletar Disciplina              --|\n");
+    printf("|--           3 - Editar  Disciplina              --|\n");
+    printf("|--           4 - Relatório Disciplina            --|\n");
     printf("|--           0 - Sair                            --|\n");
     printf("|___________________________________________________|\n");
     printf("\n");
@@ -45,16 +45,18 @@ char menu_statustarefa(void){
    
     
 }
-void create_status_tarefa(void){
+void create_disciplina(void){
     system("clear||cls");
     printf(" ___________________________________________________\n");
     printf("|                     CTASK AGENDA                  |\n");
     printf("|___________________________________________________|\n");
     printf("|___________________________________________________|\n");
-    printf("|---         CADASTRO STATUS DA TAREFA           ---|\n");
+    printf("|---            CADASTRO DA DISCIPLINA           ---|\n");
     printf("|---------------------------------------------------|\n");
     printf("|                                                   |\n");
-    printf("|--            Nome Status tarefa:                --|\n");
+    printf("|--            Nome Disciplina   :                --|\n");
+    printf("|--            Nome do Doscente   :               --|\n");
+    printf("|--            Carga Horária   :                  --|\n");
     printf("|___________________________________________________|\n");
     printf("\n");
     printf("\n");
@@ -62,16 +64,16 @@ void create_status_tarefa(void){
     getchar();
 
 }
-void update_status_tarefa(void){
+void update_disciplina(void){
     system("clear||cls");
     printf(" ___________________________________________________\n");
     printf("|                     CTASK AGENDA                  |\n");
     printf("|___________________________________________________|\n");
     printf("|___________________________________________________|\n");
-    printf("|---       ATUALIZAÇÃO DO STATUS DA TAREFA       ---|\n");
+    printf("|---           ATUALIZAÇÃO DA DISCIPLINA         ---|\n");
     printf("|---------------------------------------------------|\n");
     printf("|                                                   |\n");
-    printf("|--   informe o nome do Status da tarefa:         --|\n");
+    printf("|--         informe o nome da disciplina:         --|\n");
     printf("|___________________________________________________|\n");
     printf("\n");
     printf("\n");
@@ -79,16 +81,16 @@ void update_status_tarefa(void){
     getchar();
 
 }
-void delete_status_tarefa(void){
+void delete_disciplina(void){
     system("clear||cls");
     printf(" ___________________________________________________\n");
     printf("|                     CTASK AGENDA                  |\n");
     printf("|___________________________________________________|\n");
     printf("|___________________________________________________|\n");
-    printf("|---         EXCLUSÃO DO STATUS DA TAREFA        ---|\n");
+    printf("|---            EXCLUSÃO DA DISCIPLINA           ---|\n");
     printf("|---------------------------------------------------|\n");
     printf("|                                                   |\n");
-    printf("|--      informe o nome do Status da tarefa:      --|\n");
+    printf("|--          informe o nome da disciplina:        --|\n");
     printf("|___________________________________________________|\n");
     printf("\n");
     printf("\n");
@@ -96,16 +98,16 @@ void delete_status_tarefa(void){
     getchar();
 
 }
-void read_status_tarefa(void){
+void read_disciplina(void){
     system("clear||cls");
     printf(" ___________________________________________________\n");
     printf("|                     CTASK AGENDA                  |\n");
     printf("|___________________________________________________|\n");
     printf("|___________________________________________________|\n");
-    printf("|---          BUSCA DO STATUS DA TAREFA          ---|\n");
+    printf("|---              BUSCA DA DISCIPLINA            ---|\n");
     printf("|---------------------------------------------------|\n");
     printf("|                                                   |\n");
-    printf("|--    informe o nome do Status da tarefa:        --|\n");
+    printf("|--         informe o nome da disciplina:         --|\n");
     printf("|___________________________________________________|\n");
     printf("\n");
     printf("\n");
