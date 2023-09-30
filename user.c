@@ -49,7 +49,7 @@ char menu_users(void){
 }
 User create_users(void){
 
-    User usuario;
+    User *usuario = malloc(sizeof(User));
 
     system("clear||cls");
     printf(" ___________________________________________________\n");
@@ -60,21 +60,21 @@ User create_users(void){
     printf("|---------------------------------------------------|\n");
     printf("|                                                   |\n");
     printf("|-- Nome: \n");
-    fgets(usuario.nome, sizeof(usuario.nome), stdin);
+    fgets(usuario->nome, sizeof(usuario->nome), stdin);
     printf("|-- Data de Nascimento: \n");
-    fgets(usuario.data_nascimento, sizeof(usuario.data_nascimento), stdin);
+    fgets(usuario->data_nascimento, sizeof(usuario->data_nascimento), stdin);
     printf("|                                                   |\n");
     printf("|-- Email: \n");
-    fgets(usuario.email, sizeof(usuario.email), stdin);
+    fgets(usuario->email, sizeof(usuario->email), stdin);
     printf("|                                                   |\n");
     printf("|-- Numero: \n");
-    fgets(usuario.numero, sizeof(usuario.numero), stdin);
+    fgets(usuario->numero, sizeof(usuario->numero), stdin);
     printf("|                                                   |\n");
     printf("|-- Username: \n");
-    fgets(usuario.username, sizeof(usuario.username), stdin);
+    fgets(usuario->username, sizeof(usuario->username), stdin);
     printf("|                                                   |\n");
     printf("|-- CPF: \n");
-    fgets(usuario.cpf, sizeof(usuario.cpf), stdin);
+    fgets(usuario->cpf, sizeof(usuario->cpf), stdin);
     printf("|                                                   |\n");
     printf("|___________________________________________________|\n");
     printf("\n");
@@ -82,7 +82,7 @@ User create_users(void){
     printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
     getchar();
 
-    return usuario;
+    return *usuario;
 
 }
 void update_users(void){

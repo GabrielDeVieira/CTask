@@ -7,6 +7,7 @@ struct user
     char numero[14];
     char username[100];
     char cpf[15];
+    struct user *next;
 };
 typedef struct user User;
 
