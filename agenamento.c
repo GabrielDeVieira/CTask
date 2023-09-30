@@ -18,8 +18,6 @@ void op_agendamento(void) {
                         break;
             case '4': 	read_agendamento();
                         break;
-            case '5': 	op_disciplina();
-                        break;
         } 		
     } while (opcao != '0');
 }
@@ -37,7 +35,6 @@ char menu_agendamentos(void){
     printf("|--            2 - Deletar Agendamento            --|\n");
     printf("|--            3 - Editar  Agendamento            --|\n");
     printf("|--            4 - Relatório Agendamentos         --|\n");
-    printf("|--            5 - Menu Status Tarefa             --|\n");
     printf("|--            0 - Sair                           --|\n");
     printf("|___________________________________________________|\n");
     printf("\n");
@@ -49,7 +46,9 @@ char menu_agendamentos(void){
    
 
 }
-void create_agendamento(void){
+Agendamento create_agendamento(void){
+
+    Agendamento *agendamento = malloc(sizeof(Agendamento));
     system("clear||cls");
     printf(" ___________________________________________________\n");
     printf("|                     CTASK AGENDA                  |\n");
@@ -69,6 +68,8 @@ void create_agendamento(void){
     printf("\n");
     printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
     getchar();
+
+    return *agendamento;
 
 }
 void update_agendamento(void){

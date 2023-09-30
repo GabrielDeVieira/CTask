@@ -34,9 +34,11 @@ int main(void) {
                             break;
                 case '2': 	op_tarefa();
                             break;
-                case '3': 	sobre();
+                case '3': 	op_disciplina();
                             break;
-                case '4': 	equipe();
+                case '4': 	sobre();
+                            break;
+                case '5': 	equipe();
                             break;
             } 
         }
@@ -57,8 +59,9 @@ char menu_principal(void){
     printf("|                                                   |\n");
     printf("|--            1 - Menu Agendamentos              --|\n");
     printf("|--            2 - Menu Tarefas                   --|\n");
-    printf("|--            3 - Sobre                          --|\n");
-    printf("|--            4 - Equipe                         --|\n");
+    printf("|--            3 - Disciplina                     --|\n");
+    printf("|--            4 - Sobre                          --|\n");
+    printf("|--            5 - Equipe                         --|\n");
     printf("|--            0 - Sair                           --|\n");
     printf("|___________________________________________________|\n");
     printf("\n");

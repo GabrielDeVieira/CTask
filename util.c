@@ -5,6 +5,18 @@
 
 #define True 1
 #define False 0
+int valida_cpf(){
+  return True;
+}
+int valida_datahora_exist(){
+  return True;  
+}
+int valida_data_exist(){
+  return True;  
+}
+int valida_exist_nome(){
+  return True;
+}
 
 //Função adaptada do código do professsor Flávius - https://replit.com/@GabrielVieira01/ValidacaoDeDados#util.c
 int eh_bissexto(int aa) {

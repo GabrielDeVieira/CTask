@@ -45,7 +45,9 @@ char menu_disciplina(void){
    
     
 }
-void create_disciplina(void){
+Disciplina create_disciplina(void){
+
+    Disciplina *disciplina = malloc(sizeof(disciplina));
     system("clear||cls");
     printf(" ___________________________________________________\n");
     printf("|                     CTASK AGENDA                  |\n");
@@ -54,14 +56,22 @@ void create_disciplina(void){
     printf("|---            CADASTRO DA DISCIPLINA           ---|\n");
     printf("|---------------------------------------------------|\n");
     printf("|                                                   |\n");
-    printf("|--            Nome Disciplina   :                --|\n");
-    printf("|--            Nome do Doscente   :               --|\n");
-    printf("|--            Carga Horária   :                  --|\n");
+    printf("|-- Nome Da Disciplina: \n");
+    fgets(disciplina->nome, sizeof(disciplina->nome), stdin);
+    printf("|                                                   |\n");
+    printf("|-- Nome do Doscente : \n");
+    fgets(disciplina->docente, sizeof(disciplina->docente), stdin);
+    printf("|                                                   |\n");
+    printf("|-- Carga Horária : \n");
+    fgets(disciplina->carga_horaria, sizeof(disciplina->carga_horaria), stdin);
+    printf("|                                                   |\n");
     printf("|___________________________________________________|\n");
-    printf("\n");
     printf("\n");
     printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
     getchar();
+
+    return *disciplina;
+
 
 }
 void update_disciplina(void){
