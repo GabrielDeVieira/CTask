@@ -5,9 +5,7 @@
 
 #define True 1
 #define False 0
-int valida_cpf(){
-  return True;
-}
+
 int valida_datahora_exist(){
   return True;  
 }
@@ -75,6 +73,43 @@ int eh_letra(char c) {
 
 int eh_numero(char c){
    if (c >= '0' && c <= '9') {
+        return True;
+    } else {
+        return False;
+    }
+}
+int valida_CPF(char *cpf) {
+    int i, j;
+    int digito_v1 = 0, digito_v2 = 0;
+
+    char numeros_cpf[12]; 
+    int len = strlen(cpf);
+    int pos = 0;
+    for (i = 0; i < len; i++) {
+        if (eh_numero(cpf[i])) {
+            numeros_cpf[pos++] = cpf[i];
+        }
+    }
+    numeros_cpf[pos] = '\0';
+
+    if (strlen(numeros_cpf) != 11) {
+        return False;
+    }
+    for (i = 0, j = 10; i < 9; i++, j--) {
+        digito_v1 += (numeros_cpf[i] - '0') * j;
+    }
+    digito_v1 = 11 - (digito_v1 % 11);
+    if (digito_v1 >= 10) {
+        digito_v1 = 0;
+    }
+    for (i = 0, j = 11; i < 10; i++, j--) {
+        digito_v2 += (numeros_cpf[i] - '0') * j;
+    }
+    digito_v2 = 11 - (digito_v2 % 11);
+    if (digito_v2 >= 10) {
+        digito_v2 = 0;
+    }
+    if (digito_v1 == (numeros_cpf[9] - '0') && digito_v2 == (numeros_cpf[10] - '0')) {
         return True;
     } else {
         return False;
