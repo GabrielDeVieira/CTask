@@ -47,7 +47,9 @@ char menu_tarefa(void){
     return opcao;
 
 }
-void create_tarefa(void){
+Tarefa create_tarefa(void){
+
+    Tarefa *tarefa = malloc(sizeof(tarefa));
     system("clear||cls");
     printf(" ___________________________________________________\n");
     printf("|                     CTASK AGENDA                  |\n");
@@ -56,14 +58,20 @@ void create_tarefa(void){
     printf("|---              CADASTRO DA TAREFA             ---|\n");
     printf("|---------------------------------------------------|\n");
     printf("|                                                   |\n");
-    printf("|--               Nome:                           --|\n");
-    printf("|--               Descrição:                      --|\n");
-    printf("|--               Tipo do tarefa(ID):             --|\n");
+    printf("|-- Nome Da Tarefa : \n");
+    fgets(tarefa->nome, sizeof(tarefa->nome), stdin);
+    printf("|                                                   |\n");
+    printf("|-- Descrição : \n");
+    fgets(tarefa->descricao, sizeof(tarefa->descricao), stdin);
+    printf("|                                                   |\n");
+    printf("|-- Tipo do tarefa(ID) : \n");
+    scanf("%d", &tarefa->id_tipo);
+    printf("|                                                   |\n");
     printf("|___________________________________________________|\n");
-    printf("\n");
     printf("\n");
     printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
     getchar();
+    return *tarefa;
 
 }
 void update_tarefa(void){
