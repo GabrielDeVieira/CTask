@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "agendamento.h"
-#include "disciplina.h"
 #include <unistd.h>
+#include "util.h"
 
 // Estrutura das Funções baseadas na ideia professor Flávius https://github.com/FlaviusGorgonio/LinguaSolta/blob/main/ls.c
 void op_agendamento(void) {
@@ -49,6 +49,7 @@ char menu_agendamentos(void){
 Agendamento create_agendamento(void){
 
     Agendamento *agendamento = malloc(sizeof(Agendamento));
+
     system("clear||cls");
     printf(" ___________________________________________________\n");
     printf("|                     CTASK AGENDA                  |\n");
@@ -57,12 +58,35 @@ Agendamento create_agendamento(void){
     printf("|---           CADASTRO DO AGENDAMENTO           ---|\n");
     printf("|---------------------------------------------------|\n");
     printf("|                                                   |\n");
-    printf("|--               Nome:                           --|\n");
-    printf("|--               Data Agendamento:               --|\n");
-    printf("|--               Status Tarefa(ID):              --|\n");
-    printf("|--               Horario Agendamento:            --|\n");
-    printf("|--               Tarefa(ID):                     --|\n");
-    printf("|--               Duracao Compromisso(Hora):      --|\n");
+    printf("|-- Nome : \n");
+    fgets(agendamento->nome, sizeof(agendamento->nome), stdin);
+    printf("|-- Data Agendamento(dd/mm/aaaa) : \n");
+    do
+    {
+      scanf("%d/%d/%d", &agendamento->dia, &agendamento->mes, &agendamento->ano);
+      getchar();
+      if(!(valida_data(agendamento->dia, agendamento->mes, agendamento->ano))){
+        printf("|-- Data Agendamento inválida! \n");
+        printf("|-- Data Agendamento(dd/mm/aaaa): \n");
+      }
+    } while (!(valida_data(agendamento->dia, agendamento->mes, agendamento->ano)));
+
+    printf("|-- Horario Agendamento(hh:mm:ss):: \n");
+    do
+    {
+      scanf("%d:%d:%d", &agendamento->hora, &agendamento->minuto, &agendamento->segundo);
+      getchar();
+      if(!(valida_hora(agendamento->hora, agendamento->minuto, agendamento->segundo))){
+        printf("|-- Horario Agendamento inválida! \n");
+        printf("|-- Horario Agendamento(hh:mm:ss): \n");
+      }
+    } while (!(valida_data(agendamento->hora, agendamento->minuto, agendamento->segundo)));
+
+    printf("|-- Tarefa(ID) : \n");
+    scanf("%d", &agendamento->id_tarefa);
+    getchar();
+    printf("|-- Duracao Compromisso(Hora): \n");
+    fgets(agendamento->duracao_hora, sizeof(agendamento->duracao_hora), stdin);
     printf("|___________________________________________________|\n");
     printf("\n");
     printf("\n");

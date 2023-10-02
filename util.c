@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "util.h"
 #include <string.h>
+#include <ctype.h>
 
 #define True 1
 #define False 0
@@ -78,6 +79,8 @@ int eh_numero(char c){
         return False;
     }
 }
+
+// Função de validação de cpf
 int valida_CPF(char *cpf) {
     int i, j;
     int digito_v1 = 0, digito_v2 = 0;
@@ -115,3 +118,63 @@ int valida_CPF(char *cpf) {
         return False;
     }
 }
+
+// Função de Validação de email desenvolvida com auxilio do ChatGPT
+int valida_email(char *email) {
+    int i, atCount = 0, dotCount = 0;
+    int emailLength = strlen(email);
+
+    if (emailLength < 5 || emailLength > 100) {
+        return False;
+    }
+
+    for (i = 0; i < emailLength; i++) {
+        if (email[i] == '@') {
+            atCount++;
+        } else if (email[i] == '.') {
+            dotCount++;
+        }
+    }
+
+    if (atCount != 1 || dotCount < 1) {
+        return False;
+    }
+
+    return True;
+}
+
+int valida_numero(char *numero){
+  int tamanho = strlen(numero);
+  if (tamanho > 0 && numero[tamanho - 1] == '\n') {
+        numero[tamanho - 1] = '\0';
+    }
+    if (tamanho != 11) {
+        return False;
+    }
+    int i;
+    for (i = 0; i < tamanho; i++) {
+        if (!isdigit(numero[i])) {
+            return False; 
+        }
+    }
+
+    return True;
+
+}
+//Função de Validação de hora desenvolvida com auxilio do ChatGPT
+int valida_hora(int horas, int minutos, int segundos) {
+
+
+    if (horas < 0 || horas > 23 ) {
+        return False;
+    }else if ( minutos < 0 || minutos > 59 ){
+      return False;
+    }else if (segundos < 0 || segundos > 59){
+     return False;
+    }
+    
+  
+    return True;
+}
+
+
