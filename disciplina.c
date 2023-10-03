@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "disciplina.h"
 #include <unistd.h>
+#include "util.h"
 
 void op_disciplina(void) {
     char opcao;
@@ -60,7 +61,13 @@ Disciplina create_disciplina(void){
     fgets(disciplina->nome, sizeof(disciplina->nome), stdin);
     printf("|                                                   |\n");
     printf("|-- Nome do Doscente : \n");
+    do{
     fgets(disciplina->docente, sizeof(disciplina->docente), stdin);
+    if(!(valida_nome(disciplina->docente))){
+        printf("|-- Nome inválido! \n");
+        printf("|-- Nome: \n");
+    }
+    }while (!(valida_nome(disciplina->docente)));
     printf("|                                                   |\n");
     printf("|-- Carga Horária : \n");
     fgets(disciplina->carga_horaria, sizeof(disciplina->carga_horaria), stdin);

@@ -4,7 +4,10 @@
 #include "user.h"
 #include <unistd.h>
 
-void op_user(void) {
+#define True 1
+#define False 0
+
+void op_users(void) {
     char opcao;
     do {
         opcao = menu_users();
@@ -51,6 +54,7 @@ User create_users(void){
 
     User *usuario = malloc(sizeof(User));
 
+
     system("clear||cls");
     printf(" ___________________________________________________\n");
     printf("|                     CTASK AGENDA                  |\n");
@@ -60,21 +64,62 @@ User create_users(void){
     printf("|---------------------------------------------------|\n");
     printf("|                                                   |\n");
     printf("|-- Nome: \n");
+    do{
     fgets(usuario->nome, sizeof(usuario->nome), stdin);
-    printf("|-- Data de Nascimento: \n");
-    fgets(usuario->data_nascimento, sizeof(usuario->data_nascimento), stdin);
+    if(!(valida_nome(usuario->nome))){
+        printf("|-- Nome inválido! \n");
+        printf("|-- Nome: \n");
+    }
+    }while (!(valida_nome(usuario->nome)));
+    printf("|-- Data de Nascimento(dd/mm/aaaa): \n");
+    do
+    {
+      scanf("%d/%d/%d", &usuario->dia, &usuario->mes, &usuario->ano);
+      getchar();
+      if(!(valida_data(usuario->dia, usuario->mes, usuario->ano))){
+        printf("|-- Data de NAscimento inválida! \n");
+        printf("|-- Data de Nascimento(dd/mm/aaaa): \n");
+      }
+    } while (!(valida_data(usuario->dia, usuario->mes, usuario->ano)));
+
     printf("|                                                   |\n");
     printf("|-- Email: \n");
+    do{
     fgets(usuario->email, sizeof(usuario->email), stdin);
+
+    if (!(valida_email(usuario->email))){
+       printf("|-- Email Inválido ! \n");
+       printf("|-- Email: \n");
+    }
+    
+    } while (!(valida_email(usuario->email)));
+    
+    
     printf("|                                                   |\n");
-    printf("|-- Numero: \n");
+    printf("|-- Numero (apenas os numeros): \n");
+    do
+    {
     fgets(usuario->numero, sizeof(usuario->numero), stdin);
+    
+     if (!(valida_numero(usuario->numero))){
+       printf("|-- Numero Inválido ! \n");
+       printf("|-- Numero (apenas os numeros): \n");
+     }
+    } while (!(valida_numero(usuario->numero)));
+    
+    
     printf("|                                                   |\n");
     printf("|-- Username: \n");
     fgets(usuario->username, sizeof(usuario->username), stdin);
     printf("|                                                   |\n");
     printf("|-- CPF: \n");
-    fgets(usuario->cpf, sizeof(usuario->cpf), stdin);
+    do{
+    fgets(usuario->username, sizeof(usuario->username), stdin);
+    if (!(valida_CPF(usuario->username))){
+        printf("|-- CPF inválido! \n");
+        printf("|-- CPF: \n");
+    }
+    }while(!(valida_CPF(usuario->username)));
     printf("|                                                   |\n");
     printf("|___________________________________________________|\n");
     printf("\n");
@@ -85,6 +130,8 @@ User create_users(void){
     return *usuario;
 
 }
+
+
 void update_users(void){
     system("clear||cls");
     printf(" ___________________________________________________\n");
