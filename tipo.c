@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "tipo.h"
 #include <unistd.h>
+#include "util.h"
 
 void op_tipo(void) {
     char opcao;
@@ -44,7 +45,9 @@ char menu_tipotarefa(void){
     
     
 }
-void create_tipo_tarefa(void){
+Tipo create_tipo_tarefa(void){
+
+    Tipo *tipo = malloc(sizeof(Tipo));
     system("clear||cls");
     printf(" ___________________________________________________\n");
     printf("|                     CTASK AGENDA                  |\n");
@@ -53,14 +56,23 @@ void create_tipo_tarefa(void){
     printf("|---        CADASTRO TIPO DA TAREFA              ---|\n");
     printf("|---------------------------------------------------|\n");
     printf("|                                                   |\n");
-    printf("|--             Nome Tipo tarefa:                 --|\n");
+    printf("|-- Nome Tipo tarefa: \n");
+    do{
+    fgets(tipo->nome, sizeof(tipo->nome), stdin);
+    if(!(valida_nome(tipo->nome))){
+        printf("|-- Nome inválido! \n");
+        printf("|-- Nome: \n");
+    }
+    }while (!(valida_nome(tipo->nome)));
     printf("|___________________________________________________|\n");
     printf("\n");
     printf("\n");
     printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
     getchar();
 
+    return *tipo;
 }
+
 void update_tipo_tarefa(void){
     system("clear||cls");
     printf(" ___________________________________________________\n");
