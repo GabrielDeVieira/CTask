@@ -143,6 +143,7 @@ int valida_email(char *email) {
     return True;
 }
 
+//Função de Validação de hora desenvolvida com auxilio do ChatGPT
 int valida_numero(char *numero){
   int tamanho = strlen(numero);
   if (tamanho > 0 && numero[tamanho - 1] == '\n') {
