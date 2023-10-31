@@ -64,8 +64,8 @@ Tipo create_tipo_tarefa(void){
         printf("|-- Nome: \n");
     }
     }while (!(valida_nome(tipo->nome)));
+    
     printf("|___________________________________________________|\n");
-    printf("\n");
     printf("\n");
     printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
     getchar();
