@@ -3,6 +3,7 @@
 #include "agendamento.h"
 #include <unistd.h>
 #include "util.h"
+#include <string.h>
 
 // Estrutura das Funções baseadas na ideia professor Flávius https://github.com/FlaviusGorgonio/LinguaSolta/blob/main/ls.c
 void op_agendamento(void) {
@@ -10,14 +11,15 @@ void op_agendamento(void) {
     do {
         opcao = menu_agendamentos();
         switch(opcao) {
-            case '1': 	create_agendamento();
+            case '1':   salvar_agendamento(create_agendamento());
                         break;
             case '2': 	delete_agendamento();
                         break;
             case '3': 	update_agendamento();
                         break;
-            case '4': 	read_agendamento();
+            case '4': 	all_agendamentos();
                         break;
+
         } 		
     } while (opcao != '0');
 }
@@ -46,10 +48,67 @@ char menu_agendamentos(void){
    
 
 }
-Agendamento create_agendamento(void){
+//Funções de Listagem
+void exibe_agendamento(Agendamento* ag) {
+char situacao[20];
+if ((ag == NULL) || (ag->status == '0')) {
+ printf("\n= = = tarefa Inexistente = = =\n");
+} else {
+ printf("\n= = = Tarefa Cadastrado = = =\n");
+ printf("Nome da Tarefa: %s\n", ag->nome);
+ printf("Data do Agndamento: %s\n", ag->data_agendamento);
+ printf("Horário do Agndamento: %d:%d:%d\n", ag->hora, ag->minuto, ag->segundo);
+ printf("Tarefa do Agendamento: %d\n", ag->id_tarefa);
+ printf("Duração do Agendamento: %d horas\n", ag->duracao_hora);
 
+if (ag->status == '1') {
+ strcpy(situacao, "Novo");
+} else {
+ strcpy(situacao, "Arquivado");
+}
+ printf("Situação do aluno: %s\n", situacao);
+}
+}
+
+void all_agendamentos(){
+    FILE* fp;
+    Agendamento* agendamento;
+    printf("\n = Lista de Tarefas = \n");
+    agendamento = (Agendamento*) malloc(sizeof(Agendamento));
+    fp = fopen("agendamento.dat", "rb");
+    if (fp == NULL) {
+    printf("Ops! Erro na abertura do arquivo!\n");
+    printf("Não é possível continuar...\n");
+    exit(1);
+    }
+    while(fread(agendamento, sizeof(Agendamento), 1, fp)) {
+        if (agendamento->status == '1') {
+            exibe_agendamento(agendamento);
+        }
+    }
+    fclose(fp);
+    printf("\n");
+    printf("\t\t\t>>> Pressione <ENTER> para continuar...\n");
+    getchar();
+
+}
+
+//Função de gravação em arquivo
+void salvar_agendamento(Agendamento * agendamento){
+    FILE* fp;
+    fp = fopen("agendamento.dat","ab");
+    if (fp == NULL) {
+    printf("Erro na criacao do arquivo\n!");
+    exit(1);
+    }
+    fwrite(agendamento, sizeof(Agendamento), 1, fp);
+    fclose(fp);
+    free(agendamento);
+}
+
+Agendamento * create_agendamento(void){
     Agendamento *agendamento = malloc(sizeof(Agendamento));
-
+    int dia, mes, ano;
     system("clear||cls");
     printf(" ___________________________________________________\n");
     printf("|                     CTASK AGENDA                  |\n");
@@ -63,13 +122,19 @@ Agendamento create_agendamento(void){
     printf("|-- Data Agendamento(dd/mm/aaaa) : \n");
     do
     {
-      scanf("%d/%d/%d", &agendamento->dia, &agendamento->mes, &agendamento->ano);
+      //scanf("%d/%d/%d", &agendamento->dia, &agendamento->mes, &agendamento->ano);
+      scanf("%10s", agendamento->data_agendamento);
       getchar();
-      if(!(valida_data(agendamento->dia, agendamento->mes, agendamento->ano))){
+      if (sscanf(agendamento->data_agendamento, "%2d/%2d/%4d", &dia, &mes, &ano) == 3) {
+        if(!(valida_data(dia, mes, ano))){
+            printf("|-- Data Agendamento inválida! \n");
+            printf("|-- Data Agendamento(dd/mm/aaaa): \n");
+        }
+      }else{
         printf("|-- Data Agendamento inválida! \n");
         printf("|-- Data Agendamento(dd/mm/aaaa): \n");
       }
-    } while (!(valida_data(agendamento->dia, agendamento->mes, agendamento->ano)));
+    } while (!(valida_data(dia, mes, ano)));
 
     printf("|-- Horario Agendamento(hh:mm:ss):: \n");
     do
@@ -86,17 +151,21 @@ Agendamento create_agendamento(void){
     scanf("%d", &agendamento->id_tarefa);
     getchar();
     printf("|-- Duracao Compromisso(Hora): \n");
-    fgets(agendamento->duracao_hora, sizeof(agendamento->duracao_hora), stdin);
+    scanf("%d", &agendamento->duracao_hora);
+    getchar();
+    agendamento->status = '1';
     printf("|___________________________________________________|\n");
     printf("\n");
     printf("\n");
     printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
     getchar();
 
-    return *agendamento;
+    return agendamento;
 
 }
+
 void update_agendamento(void){
+    int id_agendamento;
     system("clear||cls");
     printf(" ___________________________________________________\n");
     printf("|                     CTASK AGENDA                  |\n");
@@ -105,14 +174,15 @@ void update_agendamento(void){
     printf("|---          ATUALIZAÇÃO DO AGENDAMENTO         ---|\n");
     printf("|---------------------------------------------------|\n");
     printf("|                                                   |\n");
-    printf("|--         informe o id do Agendamento:          --|\n");
+    printf("|-- informe o id do Agendamento: \n");
+    scanf("%d", &id_agendamento);
     printf("|___________________________________________________|\n");
-    printf("\n");
     printf("\n");
     printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
     getchar();
 }
 void delete_agendamento(void){
+    int id_agendamento;
     system("clear||cls");
     printf(" ___________________________________________________\n");
     printf("|                     CTASK AGENDA                  |\n");
@@ -121,9 +191,9 @@ void delete_agendamento(void){
     printf("|---           EXCLUSÃO DO AGENDAMENTO           ---|\n");
     printf("|---------------------------------------------------|\n");
     printf("|                                                   |\n");
-    printf("|--         informe o id do Agendamento:          --|\n");
+    printf("|-- informe o id do Agendamento: \n");
+    scanf("%d", &id_agendamento);
     printf("|___________________________________________________|\n");
-    printf("\n");
     printf("\n");
     printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
     getchar();
@@ -132,6 +202,7 @@ void delete_agendamento(void){
 }
 
 void read_agendamento(void){
+    int id_agendamento;
     system("clear||cls");
     printf(" ___________________________________________________\n");
     printf("|                     CTASK AGENDA                  |\n");
@@ -140,10 +211,9 @@ void read_agendamento(void){
     printf("|---             BUSCA DO AGENDAMENTO            ---|\n");
     printf("|---------------------------------------------------|\n");
     printf("|                                                   |\n");
-    printf("|--         informe o id do Agndamento:           --|\n");
+    printf("|-- informe o id do Agendamento: \n");
+    scanf("%d", &id_agendamento);
     printf("|___________________________________________________|\n");
-    printf("\n");
-    printf("\n");
     printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
     getchar();
 

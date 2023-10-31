@@ -3,6 +3,7 @@
 struct tipo_tarefa
 {
     char nome[100];
+    char status;
 };
 typedef struct tipo_tarefa Tipo;
 
