@@ -67,7 +67,7 @@ if (tf->status == '1') {
  printf("Situação do aluno: %s\n", situacao);
 }
 }
-
+//Função Baseada nos Slides da aula: Semana 11
 void all_tarefas(){
     FILE* fp;
     Tarefa* tarefa;
@@ -90,6 +90,7 @@ void all_tarefas(){
     getchar();
 
 }
+//Função Baseada nos Slides da aula: Semana 11
 void salvar_tarefa(Tarefa * tarefa){
     FILE* fp;
     fp = fopen("tarefa.dat","ab");

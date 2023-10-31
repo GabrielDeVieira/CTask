@@ -49,6 +49,7 @@ char menu_agendamentos(void){
 
 }
 //Funções de Listagem
+//Função Baseada nos Slides da aula: Semana 11
 void exibe_agendamento(Agendamento* ag) {
 char situacao[20];
 if ((ag == NULL) || (ag->status == '0')) {
@@ -57,7 +58,7 @@ if ((ag == NULL) || (ag->status == '0')) {
  printf("\n= = = Tarefa Cadastrado = = =\n");
  printf("Nome da Tarefa: %s\n", ag->nome);
  printf("Data do Agndamento: %s\n", ag->data_agendamento);
- printf("Horário do Agndamento: %d:%d:%d\n", ag->hora, ag->minuto, ag->segundo);
+ printf("Horário do Agndamento: %s\n", ag->horaria_agendamento);
  printf("Tarefa do Agendamento: %d\n", ag->id_tarefa);
  printf("Duração do Agendamento: %d horas\n", ag->duracao_hora);
 
@@ -66,10 +67,10 @@ if (ag->status == '1') {
 } else {
  strcpy(situacao, "Arquivado");
 }
- printf("Situação do aluno: %s\n", situacao);
+ printf("Situação do agendamento: %s\n", situacao);
 }
 }
-
+//Função Baseada nos Slides da aula: Semana 11
 void all_agendamentos(){
     FILE* fp;
     Agendamento* agendamento;
@@ -94,6 +95,7 @@ void all_agendamentos(){
 }
 
 //Função de gravação em arquivo
+//Função Baseada nos Slides da aula: Semana 11
 void salvar_agendamento(Agendamento * agendamento){
     FILE* fp;
     fp = fopen("agendamento.dat","ab");
@@ -108,7 +110,7 @@ void salvar_agendamento(Agendamento * agendamento){
 
 Agendamento * create_agendamento(void){
     Agendamento *agendamento = malloc(sizeof(Agendamento));
-    int dia, mes, ano;
+    int dia, mes, ano, hora, minuto, segundo;
     system("clear||cls");
     printf(" ___________________________________________________\n");
     printf("|                     CTASK AGENDA                  |\n");
@@ -136,16 +138,21 @@ Agendamento * create_agendamento(void){
       }
     } while (!(valida_data(dia, mes, ano)));
 
-    printf("|-- Horario Agendamento(hh:mm:ss):: \n");
+    printf("|-- Horario Agendamento(hh:mm:ss): \n");
     do
     {
-      scanf("%d:%d:%d", &agendamento->hora, &agendamento->minuto, &agendamento->segundo);
+      scanf("%8s", agendamento->horaria_agendamento);
       getchar();
-      if(!(valida_hora(agendamento->hora, agendamento->minuto, agendamento->segundo))){
+      if(sscanf(agendamento->horaria_agendamento,"%2d:%2d:%2d", &hora, &minuto, &segundo) == 3){
+        if(!(valida_hora(hora, minuto, segundo))){
+            printf("|-- Horario Agendamento inválida! \n");
+            printf("|-- Horario Agendamento(hh:mm:ss): \n");
+        }
+      }else{
         printf("|-- Horario Agendamento inválida! \n");
         printf("|-- Horario Agendamento(hh:mm:ss): \n");
       }
-    } while (!(valida_data(agendamento->hora, agendamento->minuto, agendamento->segundo)));
+    } while (!(valida_hora(hora, minuto, segundo)));
 
     printf("|-- Tarefa(ID) : \n");
     scanf("%d", &agendamento->id_tarefa);
