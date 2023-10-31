@@ -4,13 +4,7 @@ struct agendamento
 {
     char nome[100];
     char data_agendamento[11];
-    int dia;
-    int mes;
-    int ano;
-    int hora;
-    int minuto;
-    int segundo;
-    char horaria_agendamento[10];
+    char horaria_agendamento[9];
     int id_tarefa;
     int id_disciplina;
     int duracao_hora;
