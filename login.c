@@ -35,6 +35,10 @@ char menu_login(void){
     printf("|--           1 - Login                           --|\n");
     printf("|--           2 - Registro                        --|\n");
     printf("|___________________________________________________|\n");
+    printf("Login em Desenvolvimento, selecione 1 e digite qualquer\n");
+    printf("valor na username e senha!\n");
+    printf("Crud completo de 4 módulos- Agendamento, Tarefa, Disciplina\n");
+    printf("e tipo da tarefa.\n");
     printf("\n");
     printf("Digite uma opção: \n");
     scanf("%c", &opcao);

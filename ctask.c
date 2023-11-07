@@ -22,21 +22,21 @@ int main(void) {
     setlocale(LC_ALL, "Portuguese_Brazil");
     int aux = 0;
 
-    char opcao;
+    char opcao[256];
     do {
         if (aux == 0){
             op_login();
             aux = 2;
         }else{
-            opcao = menu_principal();
-            switch(opcao) {
+            opcao[0] = menu_principal();
+            switch(opcao[0]) {
                 case '1': 	op_agendamento();
                             break;
                 case '2': 	op_tarefa();
                             break;
                 case '3': 	op_disciplina();
                             break;
-                case '4': op_users();
+                case '4':   op_users();
                             break;
                 case '5': 	sobre();
                             break;
@@ -45,7 +45,7 @@ int main(void) {
             } 
         }
         		
-    } while (opcao != '0');
+    } while (opcao[0] != '0');
     
     return 0;
 }
