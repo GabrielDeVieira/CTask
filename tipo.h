@@ -2,6 +2,7 @@
 
 struct tipo_tarefa
 {
+    int id;
     char nome[100];
     char status;
 };
@@ -15,3 +16,8 @@ void delete_tipo_tarefa(void);
 void read_tipo_tarefa(void);
 void salvar_tipo(Tipo * );
 void all_tipos();
+void exibe_tipo(Tipo *);
+void exibe_tipo_lista(Tipo *);
+void editar_tipo(Tipo *);
+void excluir_tipo(Tipo *);
+int new_id_tipo();

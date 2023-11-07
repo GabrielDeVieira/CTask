@@ -177,5 +177,25 @@ int valida_hora(int horas, int minutos, int segundos) {
   
     return True;
 }
+// Função para ler um número inteiro com validação, desenvolvida com auxílio do ChatGPT
+int lerNumeroInteiro() {
+    int numero;
+    int entradaValida = 0;
+    
+    while (!entradaValida) {
+        printf("Digite um número inteiro: ");
+        if (scanf("%d", &numero) == 1) {
+            // A leitura foi bem-sucedida
+            entradaValida = 1;
+        } else {
+            // Limpar o buffer de entrada em caso de erro
+            while (getchar() != '\n');
+            printf("Entrada inválida. Tente novamente.\n");
+        }
+    }
+    getchar();
+    return numero;
+}
+//get_nome():
 
 
