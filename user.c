@@ -3,25 +3,28 @@
 #include "util.h"
 #include "user.h"
 #include <unistd.h>
+#include <string.h>
 
 #define True 1
 #define False 0
 
 void op_users(void) {
-    char opcao;
+    char opcao[256];
     do {
-        opcao = menu_users();
-        switch(opcao) {
-            case '1': 	create_users();
+        opcao[0] = menu_users();
+        switch(opcao[0]) {
+            case '1': 	salvar_user(create_users());
                         break;
             case '2': 	delete_users();
                         break;
             case '3': 	update_users();
                         break;
-            case '4': 	read_users();
+            case '4': 	all_users();
+                        break;
+            case '5':   read_users();
                         break;
         } 		
-    } while (opcao != '0');
+    } while (opcao[0] != '0');
 }
 
 
@@ -39,6 +42,7 @@ char menu_users(void){
     printf("|--           2 - Deletar User                    --|\n");
     printf("|--           3 - Editar  User                    --|\n");
     printf("|--           4 - Relatório User                  --|\n");
+    printf("|--           5 - Buscar User                     --|\n");
     printf("|--           0 - Sair                            --|\n");
     printf("|___________________________________________________|\n");
     printf("\n");
@@ -50,11 +54,20 @@ char menu_users(void){
    
     
 }
-User create_users(void){
-
+void salvar_user(User * user){
+    FILE* fp;
+    fp = fopen("user.dat","ab");
+    if (fp == NULL) {
+    printf("Erro na criacao do arquivo\n!");
+    exit(1);
+    }
+    fwrite(user, sizeof(User), 1, fp);
+    fclose(fp);
+    free(user);
+}
+User * create_users(void){
+    int dia, mes, ano;
     User *usuario = malloc(sizeof(User));
-
-
     system("clear||cls");
     printf(" ___________________________________________________\n");
     printf("|                     CTASK AGENDA                  |\n");
@@ -63,6 +76,7 @@ User create_users(void){
     printf("|---            CADASTRO NOVO USUÁRIO            ---|\n");
     printf("|---------------------------------------------------|\n");
     printf("|                                                   |\n");
+    usuario->id = new_id_user();
     printf("|-- Nome: \n");
     do{
     fgets(usuario->nome, sizeof(usuario->nome), stdin);
@@ -74,13 +88,18 @@ User create_users(void){
     printf("|-- Data de Nascimento(dd/mm/aaaa): \n");
     do
     {
-      scanf("%d/%d/%d", &usuario->dia, &usuario->mes, &usuario->ano);
+      scanf("%10s", usuario->data_nascimento);
       getchar();
-      if(!(valida_data(usuario->dia, usuario->mes, usuario->ano))){
-        printf("|-- Data de NAscimento inválida! \n");
-        printf("|-- Data de Nascimento(dd/mm/aaaa): \n");
+      if (sscanf(usuario->data_nascimento, "%2d/%2d/%4d", &dia, &mes, &ano) == 3) {
+        if(!(valida_data(dia, mes, ano))){
+            printf("|-- Data user inválida! \n");
+            printf("|-- Data user(dd/mm/aaaa): \n");
+        }
+      }else{
+        printf("|-- Data user inválida! \n");
+        printf("|-- Data user(dd/mm/aaaa): \n");
       }
-    } while (!(valida_data(usuario->dia, usuario->mes, usuario->ano)));
+    } while (!(valida_data(dia, mes, ano)));
 
     printf("|                                                   |\n");
     printf("|-- Email: \n");
@@ -96,7 +115,7 @@ User create_users(void){
     
     
     printf("|                                                   |\n");
-    printf("|-- Numero (apenas os numeros): \n");
+    printf("|-- DDD + Numero do Celular(apenas os numeros):  \n");
     do
     {
     fgets(usuario->numero, sizeof(usuario->numero), stdin);
@@ -112,14 +131,18 @@ User create_users(void){
     printf("|-- Username: \n");
     fgets(usuario->username, sizeof(usuario->username), stdin);
     printf("|                                                   |\n");
+    printf("|-- Senha: \n");
+    fgets(usuario->senha, sizeof(usuario->senha), stdin);
+    printf("|                                                   |\n");
     printf("|-- CPF: \n");
     do{
-    fgets(usuario->username, sizeof(usuario->username), stdin);
-    if (!(valida_CPF(usuario->username))){
+    fgets(usuario->cpf, sizeof(usuario->cpf), stdin);
+    if (!(valida_CPF(usuario->cpf))){
         printf("|-- CPF inválido! \n");
         printf("|-- CPF: \n");
     }
-    }while(!(valida_CPF(usuario->username)));
+    }while(!(valida_CPF(usuario->cpf)));
+    usuario->status = '1';
     printf("|                                                   |\n");
     printf("|___________________________________________________|\n");
     printf("\n");
@@ -127,12 +150,200 @@ User create_users(void){
     printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
     getchar();
 
-    return *usuario;
+    return usuario;
 
+}
+void exibe_user(User* tf) {
+char situacao[20];
+if ((tf == NULL) || (tf->status == '0')) {
+ printf("\n= = = Usuário Inexistente = = =\n");
+} else {
+ printf("Id do Usuário: %d", tf->id);
+ printf("Nome do Usuário: %s\n", tf->nome);
+ printf("Data de Nascimento: %s\n", tf->data_nascimento);
+ printf("Email: %s\n", tf->email);
+ printf("Username: %s\n", tf->username);
+ printf("Número: %s\n", tf->numero);
+
+if (tf->status == '1') {
+ strcpy(situacao, "Cadastrado");
+} else {
+ strcpy(situacao, "Não Cadastrado");
+}
+ printf("Situação do Usuário: %s\n", situacao);
+}
+}
+void exibe_user_lista(User* tf) {
+if ((tf == NULL) || (tf->status == '0')) {
+ printf("\n= = = Usuário Inexistente = = =\n");
+} else {
+ printf("\nNome do Usuário: %sId do Usuário: %d\n", tf->nome,tf->id);
+
+}
+}
+//FUnção desenvolvida a partir do ChatGPT
+int new_id_user(){
+    FILE *file = fopen("user.dat", "rb+");
+    if (file == NULL) {
+        // Se o arquivo não existir, crie um novo
+        file = fopen("user.dat", "wb+");
+        if (file == NULL) {
+            perror("Erro ao criar o arquivo");
+            return 1;
+        }
+    }
+    int lastId = 0;
+
+    // Encontre o último ID
+    fseek(file, 0, SEEK_SET);
+    while (1) {
+        User record;
+        size_t read_bytes = fread(&record, sizeof(User), 1, file);
+        if (read_bytes == 0) {
+            break;
+        }
+        if (record.id > lastId) {
+            lastId = record.id;
+        }
+    }
+    return lastId+1;
+}
+
+//Função Baseada nos Slides da aula: Semana 11
+void all_users(){
+    FILE* fp;
+    User* user;
+    printf("\n = Lista de Usuário = \n");
+    user = (User*) malloc(sizeof(User));
+    fp = fopen("user.dat", "rb");
+    if (fp == NULL) {
+    printf("Ops! Erro na abertura do arquivo!\n");
+    printf("Não é possível continuar...\n");
+    exit(1);
+    }
+    while(fread(user, sizeof(User), 1, fp)) {
+        if (user->status == '1') {
+            exibe_user_lista(user);
+        }
+    }
+    fclose(fp);
+    free(user);
+    printf("\n");
+    printf("\t\t\t>>> Pressione <ENTER> para continuar...\n");
+    getchar();
+
+}
+//Função retirada do material de aula
+void editar_user(User* nome_user) {
+    
+    FILE* fp;
+    User* usuario;
+    int achou = 0;
+    if (nome_user == NULL) {
+    printf("O Usuário informado não existe!\n");
+    }
+    else {
+    usuario = (User*) malloc(sizeof(User));
+    fp = fopen("user.dat", "r+b");
+    if (fp == NULL) {
+    printf("Ops! Erro abertura do arquivo!\n");
+    printf("Não é possível continuar...\n");
+    exit(1);
+    }
+    int aux =0;
+    while(!aux) {
+        fread(usuario, sizeof(User), 1, fp);
+        if ((usuario->id == nome_user->id) && (usuario->status != '0')) {
+            achou = 1;
+            int dia,mes,ano;
+            printf("|-- Nome: \n");
+            do{
+            fgets(usuario->nome, sizeof(usuario->nome), stdin);
+            if(!(valida_nome(usuario->nome))){
+                printf("|-- Nome inválido! \n");
+                printf("|-- Nome: \n");
+            }
+            }while (!(valida_nome(usuario->nome)));
+            printf("|-- Data de Nascimento(dd/mm/aaaa): \n");
+            do
+            {
+            scanf("%10s", usuario->data_nascimento);
+            getchar();
+            if (sscanf(usuario->data_nascimento, "%2d/%2d/%4d", &dia, &mes, &ano) == 3) {
+                if(!(valida_data(dia, mes, ano))){
+                    printf("|-- Data user inválida! \n");
+                    printf("|-- Data user(dd/mm/aaaa): \n");
+                }
+            }else{
+                printf("|-- Data user inválida! \n");
+                printf("|-- Data user(dd/mm/aaaa): \n");
+            }
+            } while (!(valida_data(dia, mes, ano)));
+
+            printf("|                                                   |\n");
+            printf("|-- Email: \n");
+            do{
+            fgets(usuario->email, sizeof(usuario->email), stdin);
+
+            if (!(valida_email(usuario->email))){
+            printf("|-- Email Inválido ! \n");
+            printf("|-- Email: \n");
+            }
+            
+            } while (!(valida_email(usuario->email)));
+            
+            
+            printf("|                                                   |\n");
+            printf("|-- DDD + Numero do Celular(apenas os numeros): \n");
+            do
+            {
+            fgets(usuario->numero, sizeof(usuario->numero), stdin);
+            
+            if (!(valida_numero(usuario->numero))){
+            printf("|-- Numero Inválido ! \n");
+            printf("|-- Numero (apenas os numeros): \n");
+            }
+            } while (!(valida_numero(usuario->numero)));
+            
+            
+            printf("|                                                   |\n");
+            printf("|-- Username: \n");
+            fgets(usuario->username, sizeof(usuario->username), stdin);
+            printf("|                                                   |\n");
+            printf("|-- Senha: \n");
+            fgets(usuario->senha, sizeof(usuario->senha), stdin);
+            printf("|                                                   |\n");
+            printf("|-- CPF: \n");
+            do{
+            fgets(usuario->cpf, sizeof(usuario->cpf), stdin);
+            if (!(valida_CPF(usuario->cpf))){
+                printf("|-- CPF inválido! \n");
+                printf("|-- CPF: \n");
+            }
+            }while(!(valida_CPF(usuario->cpf)));
+            usuario->status = '1';
+    printf("|                                                   |\n");
+    printf("|___________________________________________________|\n");
+            
+            fseek(fp, -1*sizeof(User), SEEK_CUR);
+            fwrite(usuario, sizeof(User), 1, fp);
+            printf("\nUsuário editado!\n");
+            aux = 1;
+        }
+    }
+    if (!achou) {
+    printf("\nUsuário não encontrado!\n");
+    }
+    fclose(fp);
+    free(usuario);
+}
 }
 
 
+
 void update_users(void){
+    User * user;
+    user = (User*) malloc(sizeof(User));
     system("clear||cls");
     printf(" ___________________________________________________\n");
     printf("|                     CTASK AGENDA                  |\n");
@@ -141,15 +352,53 @@ void update_users(void){
     printf("|---            ATUALIZAÇÃO DO USUÁRIO           ---|\n");
     printf("|---------------------------------------------------|\n");
     printf("|                                                   |\n");
-    printf("|--           informe o cpf do usuário:           --|\n");
+    printf("|--           informe o id do usuário:            --|\n");
     printf("|___________________________________________________|\n");
+    user->id = lerNumeroInteiro();
     printf("\n");
-    printf("\n");
+    editar_user(user);
+    free(user);
     printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
     getchar();
 
 }
+//Função retirada do material de aula
+void excluir_user(User* id_usuario) {
+   
+    FILE* fp;
+    User* user;
+    int achou = 0;
+    if (id_usuario == NULL) {
+    printf("O disciplina informado não existe!\n");
+    }
+    else {
+    user = (User*) malloc(sizeof(User));
+    fp = fopen("user.dat", "r+b");
+    if (fp == NULL) {
+    printf("Ops! Erro abertura do arquivo!\n");
+    printf("Não é possível continuar...\n");
+    exit(1);
+    }
+    while(!feof(fp)) {
+        fread(user, sizeof(User), 1, fp);
+        if ((user->id ==id_usuario->id) && (user->status != '0')) {
+            achou = 1;
+            user->status = '0';
+            fseek(fp, -1*sizeof(User), SEEK_CUR);
+            fwrite(user, sizeof(User), 1, fp);
+            printf("\nUsuário excluído!\n");
+        }
+    }
+    if (!achou) {
+    printf("\nUsuário não encontrada!\n");
+    }
+    fclose(fp);
+    free(user);
+    }
+    }
 void delete_users(void){
+    User * user;
+    user = (User*) malloc(sizeof(User));
     system("clear||cls");
     printf(" ___________________________________________________\n");
     printf("|                     CTASK AGENDA                  |\n");
@@ -158,15 +407,20 @@ void delete_users(void){
     printf("|---            EXCLUSÃO DO DO USUÁRIO           ---|\n");
     printf("|---------------------------------------------------|\n");
     printf("|                                                   |\n");
-    printf("|--            informe o cpf do usuário:          --|\n");
+    printf("|--            informe o id do usuário:           --|\n");
     printf("|___________________________________________________|\n");
-    printf("\n");
-    printf("\n");
+    user->id = lerNumeroInteiro();
+    excluir_user(user);
+    free(user);
     printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
     getchar();
 
 }
 void read_users(void){
+    int user_id;
+    FILE * fp;
+    User * user;
+    user = (User*) malloc(sizeof(User));
     system("clear||cls");
     printf(" ___________________________________________________\n");
     printf("|                     CTASK AGENDA                  |\n");
@@ -175,10 +429,23 @@ void read_users(void){
     printf("|---              BUSCA DO DO USUÁRIO            ---|\n");
     printf("|---------------------------------------------------|\n");
     printf("|                                                   |\n");
-    printf("|--            informe o cpf do usuário:          --|\n");
+    printf("|--            informe o id do usuário:           --|\n");
     printf("|___________________________________________________|\n");
+    user_id = lerNumeroInteiro();
     printf("\n");
-    printf("\n");
+    fp = fopen("user.dat", "rb");
+    if (fp == NULL) {
+    printf("Ops! Erro na abertura do arquivo!\n");
+    printf("Não é possível continuar...\n");
+    exit(1);
+    }
+    while(fread(user, sizeof(User), 1, fp)) {
+        if ((user->status == '1') && user_id == user->id) {
+            exibe_user(user);
+        }
+    }
+    fclose(fp);
+    free(user);
     printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
     getchar();
 

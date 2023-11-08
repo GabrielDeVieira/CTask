@@ -3,23 +3,31 @@
 #include "user.h"
 #include "login.h"
 #include <unistd.h>
+#include <string.h>
 
 #define True 1
 #define False 0
 
-void op_login(void) {
-    char opcao;
+int op_login(void) {
+    char opcao[256];
+    int aux = 0;
     do {
-        opcao = menu_login();
-        switch(opcao) {
-            case '1': 	login();
-                        opcao = '0';
+        opcao[0] = menu_login();
+        switch(opcao[0]) {
+            case '1': 	if(login()){
+                aux =1;
+                opcao[0] = '0';
+            }
                         break;
-            case '2': 	create_users();
+            case '2': 	salvar_user(create_users());
                         break;
 
         } 		
-    } while (opcao != '0');
+    } while (opcao[0] != '0');
+    if (aux){
+        return True;
+    }
+    return False;
 }
 
 // Estrutura das Funções baseadas na ideia professor Flávius https://github.com/FlaviusGorgonio/LinguaSolta/blob/main/ls.c
@@ -34,11 +42,8 @@ char menu_login(void){
     printf("|                                                   |\n");
     printf("|--           1 - Login                           --|\n");
     printf("|--           2 - Registro                        --|\n");
+    printf("|--           0 - Sair                            --|\n");
     printf("|___________________________________________________|\n");
-    printf("Login em Desenvolvimento, selecione 1 e digite qualquer\n");
-    printf("valor na username e senha!\n");
-    printf("Crud completo de 4 módulos- Agendamento, Tarefa, Disciplina\n");
-    printf("e tipo da tarefa.\n");
     printf("\n");
     printf("Digite uma opção: \n");
     scanf("%c", &opcao);
@@ -47,9 +52,8 @@ char menu_login(void){
     
 }
 int login(){
-    char username[100];
-    char senha[20];
-
+    User * user;
+    user = (User*) malloc(sizeof(User));
     printf(" ___________________________________________________\n");
     printf("|                     CTASK AGENDA                  |\n");
     printf("|___________________________________________________|\n");
@@ -57,23 +61,55 @@ int login(){
     printf("|---------------------------------------------------|\n");
     printf("|                                                   |\n");
     printf("|--  Username: ");
-    fgets(username, sizeof(username), stdin);
+    fgets(user->username, sizeof(user->username), stdin);
     printf("|                                                   |\n");
     printf("|-- Senha: ");
-    fgets(senha, sizeof(senha), stdin);
+    fgets(user->senha, sizeof(user->senha), stdin);
     printf("|                                                   |\n");
     printf("|___________________________________________________|\n");
     printf("\n");
     printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
     getchar();
 
-    if (valida_login(username[100], senha[20])){
+    if (valida_login(user)){
         return True;
     }else{
         return False;
     }
 
 }
-int valida_login(char username[100], char senha[20]){
+int valida_login(User * usuario){
+    FILE* fp;
+    User* user;
+    int achou = 0;
+    if (usuario == NULL) {
+    printf("Usuário ou senha informados estao incorretos!\n");
+    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+    getchar();
+    return False;
+    }else {
+    user = (User*) malloc(sizeof(User));
+    fp = fopen("user.dat", "r+b");
+    if (fp == NULL) {
+    printf("Ops! Erro abertura do arquivo!\n");
+    printf("Não é possível continuar...\n");
+    exit(1);
+    }
+    while(!feof(fp)) {
+        fread(user, sizeof(User), 1, fp);
+        if ( strcmp(user->username,usuario->username)==0 && (user->status != '0') && strcmp(user->senha,usuario->senha) ) {
+            achou = 1;
+            free(user);
+            return True;
+        }
+    }
+    if (!achou) {
+    printf("\nUsuário ou senha informados estao incorretos!\n");
+    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+    getchar();
+    free(user);
+    return False;
+    }
+    }
     return True;
 }
