@@ -13,6 +13,9 @@ int op_login(void) {
     int aux = 0;
     do {
         opcao[0] = menu_login();
+        if( opcao[0] == '0'){
+            exit(1);
+        }
         switch(opcao[0]) {
             case '1': 	if(login()){
                 aux =1;
