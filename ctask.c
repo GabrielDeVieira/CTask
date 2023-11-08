@@ -20,14 +20,10 @@ void equipe(void);
 //Função Principal
 int main(void) {
     setlocale(LC_ALL, "Portuguese_Brazil");
-    int aux = 0;
-
+    
     char opcao[256];
     do {
-        if (aux == 0){
-            op_login();
-            aux = 2;
-        }else{
+        if (op_login()){
             opcao[0] = menu_principal();
             switch(opcao[0]) {
                 case '1': 	op_agendamento();
