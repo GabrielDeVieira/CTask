@@ -4,6 +4,7 @@
 #include "login.h"
 #include <unistd.h>
 #include <string.h>
+#include "util.h"
 
 #define True 1
 #define False 0
@@ -64,10 +65,12 @@ int login(){
     printf("|---------------------------------------------------|\n");
     printf("|                                                   |\n");
     printf("|--  Username: ");
-    fgets(user->username, sizeof(user->username), stdin);
+    scanf("%s", user->username);
+    limpa_buffer();
     printf("|                                                   |\n");
     printf("|-- Senha: ");
-    fgets(user->senha, sizeof(user->senha), stdin);
+    scanf("%s", user->senha);
+    limpa_buffer();
     printf("|                                                   |\n");
     printf("|___________________________________________________|\n");
     printf("\n");
@@ -75,8 +78,10 @@ int login(){
     getchar();
 
     if (valida_login(user)){
+        free(user);
         return True;
     }else{
+        free(user);
         return False;
     }
 
@@ -100,9 +105,10 @@ int valida_login(User * usuario){
     }
     while(!feof(fp)) {
         fread(user, sizeof(User), 1, fp);
-        if ( strcmp(user->username,usuario->username)==0 && (user->status != '0') && strcmp(user->senha,usuario->senha) ) {
+        if ( strcmp(user->username,usuario->username)==0 && (user->status != '0') && strcmp(user->senha,usuario->senha)==0 ) {
             achou = 1;
             free(user);
+            fclose(fp);
             return True;
         }
     }
@@ -111,8 +117,10 @@ int valida_login(User * usuario){
     printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
     getchar();
     free(user);
+    fclose(fp);
     return False;
     }
     }
+    fclose(fp);
     return True;
 }

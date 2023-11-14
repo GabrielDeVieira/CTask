@@ -50,6 +50,7 @@ char menu_disciplina(void){
    
     
 }
+
 //Função desenvolvida a partir do ChatGPT
 int new_id_disciplina(){
     FILE *file = fopen("disciplina.dat", "rb+");
