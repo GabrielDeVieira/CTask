@@ -164,6 +164,7 @@ Agendamento * create_agendamento(void){
     do
     {
       //scanf("%d/%d/%d", &agendamento->dia, &agendamento->mes, &agendamento->ano);
+      // 12/03/2023
       scanf("%10s", agendamento->data_agendamento);
       getchar();
       if (sscanf(agendamento->data_agendamento, "%2d/%2d/%4d", &dia, &mes, &ano) == 3) {

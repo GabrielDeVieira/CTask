@@ -7,13 +7,10 @@
 #define True 1
 #define False 0
 
-int valida_datahora_exist(){
-  return True;  
-}
 int valida_data_exist(){
   return True;  
 }
-int valida_exist_nome(){
+int valida_exist_cpf(){
   return True;
 }
 
@@ -195,6 +192,14 @@ int lerNumeroInteiro() {
     }
     getchar();
     return numero;
+}
+//Funçaõ retirada do stack overflow - https://pt.stackoverflow.com/questions/111697/limpar-buffer-em-c-com-fflush-ou-fpurge
+void limpa_buffer(void) 
+{
+    int c;
+    do {
+        c = fgetc(stdin);
+    } while (c != EOF && c!= '\n');
 }
 //get_nome():
 

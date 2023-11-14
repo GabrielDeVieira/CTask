@@ -8,7 +8,7 @@ struct user
     int mes;
     int ano;
     char email[100];
-    char numero[14];
+    char numero[12];
     char senha[20];
     char username[100];
     char cpf[15];
@@ -31,3 +31,7 @@ void exibe_user_lista(User *);
 void excluir_user(User *);
 void editar_user(User *);
 int new_id_user();
+void get_nome(char *);
+void get_data_nascimento(char *);
+void get_email(char *);
+void get_numero(char *);

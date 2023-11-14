@@ -1,4 +1,4 @@
-# CTask
+# CTASK
 Um Projeto da Disciplina de Programação 2023.2
 
 Para Compilar o Código:

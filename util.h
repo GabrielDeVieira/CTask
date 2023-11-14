@@ -8,4 +8,5 @@ int valida_email(char*);
 int valida_numero(char*);
 int valida_hora(int, int, int);
 int lerNumeroInteiro();
+void limpa_buffer(void);
 

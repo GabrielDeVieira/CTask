@@ -65,8 +65,62 @@ void salvar_user(User * user){
     fclose(fp);
     free(user);
 }
-User * create_users(void){
+void get_nome(char * nome){
+    do{
+    fgets(nome, sizeof(nome), stdin);
+    if(!(valida_nome(nome))){
+        printf("|-- Nome inválido! \n");
+        printf("|-- Nome: \n");
+    }
+    }while (!(valida_nome(nome)));
+}
+
+void get_data_nascimento(char * data){
     int dia, mes, ano;
+    do
+    {
+      scanf("%10s", data);
+      limpa_buffer();
+      if (sscanf(data, "%2d/%2d/%4d", &dia, &mes, &ano) == 3) {
+        if(!(valida_data(dia, mes, ano))){
+            printf("|-- Data user inválida! \n");
+            printf("|-- Data user(dd/mm/aaaa): \n");
+        }
+      }else{
+        printf("|-- Data user inválida! \n");
+        printf("|-- Data user(dd/mm/aaaa): \n");
+      }
+    } while (!(valida_data(dia, mes, ano)));
+}
+void get_email(char * email){
+    do
+    {
+    //fgets(email, sizeof(email), stdin);
+    scanf("%s", email);
+    limpa_buffer();
+    if (!(valida_email(email))){ 
+       printf("|-- Email Inválido ! \n");
+       printf("|-- Email: \n");
+    } 
+    
+    } while (!(valida_email(email))); 
+    
+}
+void get_numero(char * numero){
+    do
+    {
+    //fgets(numero, sizeof(numero), stdin);
+     scanf("%11s", numero);
+     if (!(valida_numero(numero))){
+       printf("|-- Numero Inválido ! \n");
+       printf("|-- Numero (apenas os numeros): \n");
+     }
+    } while (!(valida_numero(numero)));
+   
+}
+
+User * create_users(void){
+   
     User *usuario = malloc(sizeof(User));
     system("clear||cls");
     printf(" ___________________________________________________\n");
@@ -78,61 +132,25 @@ User * create_users(void){
     printf("|                                                   |\n");
     usuario->id = new_id_user();
     printf("|-- Nome: \n");
-    do{
-    fgets(usuario->nome, sizeof(usuario->nome), stdin);
-    if(!(valida_nome(usuario->nome))){
-        printf("|-- Nome inválido! \n");
-        printf("|-- Nome: \n");
-    }
-    }while (!(valida_nome(usuario->nome)));
+    get_nome(usuario->nome);
     printf("|-- Data de Nascimento(dd/mm/aaaa): \n");
-    do
-    {
-      scanf("%10s", usuario->data_nascimento);
-      getchar();
-      if (sscanf(usuario->data_nascimento, "%2d/%2d/%4d", &dia, &mes, &ano) == 3) {
-        if(!(valida_data(dia, mes, ano))){
-            printf("|-- Data user inválida! \n");
-            printf("|-- Data user(dd/mm/aaaa): \n");
-        }
-      }else{
-        printf("|-- Data user inválida! \n");
-        printf("|-- Data user(dd/mm/aaaa): \n");
-      }
-    } while (!(valida_data(dia, mes, ano)));
-
+    get_data_nascimento(usuario->data_nascimento);
     printf("|                                                   |\n");
     printf("|-- Email: \n");
-    do{
-    fgets(usuario->email, sizeof(usuario->email), stdin);
-
-    if (!(valida_email(usuario->email))){
-       printf("|-- Email Inválido ! \n");
-       printf("|-- Email: \n");
-    }
-    
-    } while (!(valida_email(usuario->email)));
-    
-    
+    get_email(usuario->email);
     printf("|                                                   |\n");
     printf("|-- DDD + Numero do Celular(apenas os numeros):  \n");
-    do
-    {
-    fgets(usuario->numero, sizeof(usuario->numero), stdin);
-    
-     if (!(valida_numero(usuario->numero))){
-       printf("|-- Numero Inválido ! \n");
-       printf("|-- Numero (apenas os numeros): \n");
-     }
-    } while (!(valida_numero(usuario->numero)));
-    
-    
+    get_numero(usuario->numero);    
     printf("|                                                   |\n");
     printf("|-- Username: \n");
-    fgets(usuario->username, sizeof(usuario->username), stdin);
+    scanf("%s", usuario->username);
+    limpa_buffer();
+    //fgets(usuario->username, sizeof(usuario->username), stdin);
     printf("|                                                   |\n");
     printf("|-- Senha: \n");
-    fgets(usuario->senha, sizeof(usuario->senha), stdin);
+    //fgets(usuario->senha, sizeof(usuario->senha), stdin);
+    scanf("%s", usuario->senha);
+    limpa_buffer();
     printf("|                                                   |\n");
     printf("|-- CPF: \n");
     do{
