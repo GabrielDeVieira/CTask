@@ -23,3 +23,4 @@ void exibe_disciplina_lista(Disciplina *);
 void editar_disciplina(Disciplina *);
 void excluir_disciplina(Disciplina *);
 int new_id_disciplina();
+void filtro_disciplinas();

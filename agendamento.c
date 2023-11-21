@@ -21,6 +21,8 @@ void op_agendamento(void) {
                         break;
             case '5':   read_agendamento();
                         break;
+            case '6':   filtro_agendamentos();
+                        break;
 
         } 		
     } while (opcao[0] != '0');
@@ -40,6 +42,7 @@ char menu_agendamentos(void){
     printf("|--            3 - Editar  Agendamento            --|\n");
     printf("|--            4 - Relatório Agendamentos         --|\n");
     printf("|--            5 - Buscar Agendamentos            --|\n");
+    printf("|--            6 - Filtrar Agendamentos           --|\n");
     printf("|--            0 - Sair                           --|\n");
     printf("|___________________________________________________|\n");
     printf("\n");
@@ -104,9 +107,37 @@ if ((ag == NULL) || (ag->status == '0')) {
  printf("\n= = = tarefa Inexistente = = =\n");
 } else {
  
- printf("Nome da Tarefa: %s Data: %s Id agendamento: %d\n", ag->nome, ag->data_agendamento, ag->id);
+ printf("Nome da Tarefa: %s Data: %11s Id agendamento: %d\n", ag->nome, ag->data_agendamento, ag->id);
  
 }
+}
+//Função Baseada nos Slides da aula: Semana 11
+void filtro_agendamentos(){
+    FILE* fp;
+    char data[11];
+    printf("Didite a data que deseja buscar(dd/mm/aaaa): ");
+    scanf("%10s", data);
+    getchar();
+    Agendamento* agendamento;
+    printf("\n = Filtragem dos Agendamentos por Data = \n");
+    printf("\n");
+    agendamento = (Agendamento*) malloc(sizeof(Agendamento));
+    fp = fopen("agendamento.dat", "rb");
+    if (fp == NULL) {
+    printf("Ops! Erro na abertura do arquivo!\n");
+    printf("Não é possível continuar...\n");
+    exit(1);
+    }
+    while(fread(agendamento, sizeof(Agendamento), 1, fp)) {
+        if (agendamento->status == '1' && (strstr(agendamento->data_agendamento, data))!= NULL) {
+            exibe_agendamento_lista(agendamento);
+        }
+    }
+    fclose(fp);
+    printf("\n");
+    printf("\t\t\t>>> Pressione <ENTER> para continuar...\n");
+    getchar();
+
 }
 //Função Baseada nos Slides da aula: Semana 11
 void all_agendamentos(){
@@ -164,7 +195,7 @@ Agendamento * create_agendamento(void){
     do
     {
       //scanf("%d/%d/%d", &agendamento->dia, &agendamento->mes, &agendamento->ano);
-      // 12/03/2023
+
       scanf("%10s", agendamento->data_agendamento);
       getchar();
       if (sscanf(agendamento->data_agendamento, "%2d/%2d/%4d", &dia, &mes, &ano) == 3) {
