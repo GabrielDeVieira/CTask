@@ -20,6 +20,8 @@ void op_tipo(void) {
                         break;
             case '5':   read_tipo_tarefa();
                         break;
+            case '6':  filtro_tipos();
+                        break;
         } 		
     } while (opcao[0] != '0');
 }
@@ -65,6 +67,7 @@ char menu_tipotarefa(void){
     printf("|--           3 - Editar  Tipo tarefa             --|\n");
     printf("|--           4 - Relatório Tipo tarefa           --|\n");
     printf("|--           5 - Busca Tipo tarefa               --|\n");
+    printf("|--           6 - Filtrar Tipo tarefa             --|\n");
     printf("|--           0 - Sair                            --|\n");
     printf("|___________________________________________________|\n");
     printf("\n");
@@ -180,6 +183,32 @@ if ((tp == NULL) || (tp->status == '0')) {
  printf("Nome da Tarefa: %s Id do Tipo da tarefa: %d\n", tp->nome,tp->id);
 
 }
+}
+//Função Baseada nos Slides da aula: Semana 11
+void filtro_tipos(){
+    FILE* fp;
+    char nome[100];
+    printf("Digite o nome que deseja Buscar: \n");
+    scanf("%[^\n\t]",nome);
+    limpa_buffer();
+    Tipo* tipo;
+    printf("\n = Lista Filtarda de Tipos de Tarefas por nome = \n");
+    tipo = (Tipo*) malloc(sizeof(Tipo));
+    fp = fopen("tipo.dat", "rb");
+    if (fp == NULL) {
+    printf("Ops! Erro na abertura do arquivo!\n");
+    printf("Não é possível continuar...\n");
+    exit(1);
+    }
+    while(fread(tipo, sizeof(Tipo), 1, fp)) {
+        if (tipo->status == '1' && (strstr(tipo->nome, nome))!= NULL) {
+            exibe_tipo_lista(tipo);
+        }
+    }
+    fclose(fp);
+    printf("\t\t\t>>> Pressione <ENTER> para continuar...\n");
+    getchar();
+
 }
 //Função Baseada nos Slides da aula: Semana 11
 void all_tipos(){
