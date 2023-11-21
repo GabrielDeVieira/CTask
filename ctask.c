@@ -22,8 +22,12 @@ int main(void) {
     setlocale(LC_ALL, "Portuguese_Brazil");
     
     char opcao[256];
+    int log = 0;
     do {
-        if (op_login()){
+        if (!log){
+            op_login();
+            log = 1;
+        }else{
             opcao[0] = menu_principal();
             switch(opcao[0]) {
                 case '1': 	op_agendamento();

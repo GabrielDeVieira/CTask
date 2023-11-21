@@ -51,7 +51,7 @@ char menu_login(void){
     printf("\n");
     printf("Digite uma opção: \n");
     scanf("%c", &opcao);
-    getchar();
+    limpa_buffer();
     return opcao;
     
 }
