@@ -21,3 +21,5 @@ void exibe_tipo_lista(Tipo *);
 void editar_tipo(Tipo *);
 void excluir_tipo(Tipo *);
 int new_id_tipo();
+void filtro_tipos();
+
