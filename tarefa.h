@@ -22,3 +22,4 @@ void exibe_tarefa_lista(Tarefa *);
 void excluir_tarefa(Tarefa *);
 void editar_tarefa(Tarefa *);
 int new_id_tarefa();
+void filtro_tarefas();

@@ -24,6 +24,8 @@ void op_tarefa(void) {
                         break;
             case '6': read_tarefa();
                         break;
+            case '7': filtro_tarefas();
+                        break;
         } 		
     } while (opcao[0] != '0');
 }
@@ -44,6 +46,7 @@ char menu_tarefa(void){
     printf("|--            4 - Relatório Tarefas              --|\n");
     printf("|--            5 - Menu Tipo tarefa               --|\n");
     printf("|--            6 - Busca Tarefas                  --|\n");
+    printf("|--            7 - Filtrar Tarefas                --|\n");
     printf("|--            0 - Sair                           --|\n");
     printf("|___________________________________________________|\n");
     printf("\n");
@@ -94,6 +97,35 @@ void all_tarefas(){
     }
     while(fread(tarefa, sizeof(Tarefa), 1, fp)) {
         if (tarefa->status == '1') {
+            exibe_tarefa_lista(tarefa);
+        }
+    }
+    fclose(fp);
+    free(tarefa);
+    printf("\n");
+    printf("\t\t\t>>> Pressione <ENTER> para continuar...\n");
+    getchar();
+
+}
+//Função Baseada nos Slides da aula: Semana 11
+void filtro_tarefas(){
+    FILE* fp;
+    char nome[150];
+    printf("Digite o nome que deseja Buscar: \n");
+    scanf("%[^\n\t]",nome);
+    limpa_buffer();
+    Tarefa* tarefa;
+    printf("\n = Lista de tarefas filtradas por nome = \n");
+    printf("\n");
+    tarefa = (Tarefa*) malloc(sizeof(Tarefa));
+    fp = fopen("tarefa.dat", "rb");
+    if (fp == NULL) {
+    printf("Ops! Erro na abertura do arquivo!\n");
+    printf("Não é possível continuar...\n");
+    exit(1);
+    }
+    while(fread(tarefa, sizeof(Tarefa), 1, fp)) {
+        if (tarefa->status == '1'  && (strstr(tarefa->nome, nome))!= NULL) {
             exibe_tarefa_lista(tarefa);
         }
     }
