@@ -20,6 +20,8 @@ void op_disciplina(void) {
                         break;
             case '5':   read_disciplina();
                         break;
+            case '6':   filtro_disciplinas();
+                        break;
         } 		
     } while (opcao[0] != '0');
 }
@@ -39,6 +41,7 @@ char menu_disciplina(void){
     printf("|--           3 - Editar  Disciplina              --|\n");
     printf("|--           4 - Relatório Disciplina            --|\n");
     printf("|--           5 - Buscar Disciplina               --|\n");
+    printf("|--           6 - Filtrar Disciplina              --|\n");
     printf("|--           0 - Sair                            --|\n");
     printf("|___________________________________________________|\n");
     printf("\n");
@@ -127,7 +130,32 @@ void all_disciplinas(){
     getchar();
 
 }
+//Função Baseada nos Slides da aula: Semana 11
+void filtro_disciplinas(){
+    FILE* fp;
+    char nome[100];
+    printf("Digite o nome que deseja Buscar: \n");
+    scanf("%[^\n\t]",nome);
+    limpa_buffer();
+    Disciplina* disciplina;
+    printf("\n = Lista de Disciplinas = \n");
+    disciplina = (Disciplina*) malloc(sizeof(Disciplina));
+    fp = fopen("disciplina.dat", "rb");
+    if (fp == NULL) {
+    printf("Ops! Erro na abertura do arquivo!\n");
+    printf("Não é possível continuar...\n");
+    exit(1);
+    }
+    while(fread(disciplina, sizeof(Disciplina), 1, fp)) {
+        if (disciplina->status == '1' && (strstr(disciplina->nome, nome))!= NULL) {
+            exibe_disciplina_lista(disciplina);
+        }
+    }
+    fclose(fp);
+    printf("\t\t\t>>> Pressione <ENTER> para continuar...\n");
+    getchar();
 
+}
 //Função de gravação em arquivo
 //Função Baseada nos Slides da aula: Semana 11
 void salvar_disciplina(Disciplina * disciplina){
