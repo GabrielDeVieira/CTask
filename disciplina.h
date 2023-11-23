@@ -24,3 +24,4 @@ void editar_disciplina(Disciplina *);
 void excluir_disciplina(Disciplina *);
 int new_id_disciplina();
 void filtro_disciplinas();
+void get_nomed(char *);
