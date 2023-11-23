@@ -169,6 +169,17 @@ void salvar_disciplina(Disciplina * disciplina){
     fclose(fp);
     free(disciplina);
 }
+
+void get_nomed(char * nome){
+    do{
+    fgets(nome, 150, stdin);
+    if(!(valida_nome(nome))){
+        printf("|-- Nome inválido! \n");
+        printf("|-- Nome: \n");
+    }
+    }while (!(valida_nome(nome)));
+}
+
 Disciplina * create_disciplina(void){
 
     Disciplina *disciplina = malloc(sizeof(Disciplina));
@@ -185,13 +196,7 @@ Disciplina * create_disciplina(void){
     fgets(disciplina->nome, sizeof(disciplina->nome), stdin);
     printf("|                                                   |\n");
     printf("|-- Nome do Doscente : \n");
-    do{
-    fgets(disciplina->docente, sizeof(disciplina->docente), stdin);
-    if(!(valida_nome(disciplina->docente))){
-        printf("|-- Nome inválido! \n");
-        printf("|-- Nome: \n");
-    }
-    }while (!(valida_nome(disciplina->docente)));
+    get_nomed(disciplina->docente);
     printf("|                                                   |\n");
     printf("|-- Carga Horária : \n");
     fgets(disciplina->carga_horaria, sizeof(disciplina->carga_horaria), stdin);

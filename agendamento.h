@@ -30,3 +30,5 @@ void editar_agendamento(Agendamento *);
 void excluir_agendamento(Agendamento *);
 int new_id_agendamento();
 void filtro_agendamentos();
+void get_data(char *);
+void get_hora(char *);

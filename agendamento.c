@@ -177,9 +177,44 @@ void salvar_agendamento(Agendamento * agendamento){
     free(agendamento);
 }
 
+void get_data(char * data){
+    int dia, mes, ano;
+    do
+    {
+      scanf("%10s", data);
+      limpa_buffer();
+      if (sscanf(data, "%2d/%2d/%4d", &dia, &mes, &ano) == 3) {
+        if(!(valida_data(dia, mes, ano))){
+            printf("|-- Data Agendamento inválida! \n");
+            printf("|-- Data Agendamento(dd/mm/aaaa): \n");
+        }
+      }else{
+        printf("|-- Data Agendamento inválida! \n");
+        printf("|-- Data Agendamento(dd/mm/aaaa): \n");
+      }
+    } while (!(valida_data(dia, mes, ano)));
+}
+
+void get_hora(char * data){
+    int  hora, minuto, segundo;
+    do
+    {
+      scanf("%8s", data);
+      limpa_buffer();
+      if(sscanf(data,"%2d:%2d:%2d", &hora, &minuto, &segundo) == 3){
+        if(!(valida_hora(hora, minuto, segundo))){
+            printf("|-- Horario Agendamento inválida! \n");
+            printf("|-- Horario Agendamento(hh:mm:ss): \n");
+        }
+      }else{
+        printf("|-- Horario Agendamento inválida! \n");
+        printf("|-- Horario Agendamento(hh:mm:ss): \n");
+      }
+    } while (!(valida_hora(hora, minuto, segundo)));
+}
+
 Agendamento * create_agendamento(void){
     Agendamento *agendamento = malloc(sizeof(Agendamento));
-    int dia, mes, ano, hora, minuto, segundo;
     system("clear||cls");
     printf(" ___________________________________________________\n");
     printf("|                     CTASK AGENDA                  |\n");
@@ -192,39 +227,9 @@ Agendamento * create_agendamento(void){
     printf("|-- Nome : \n");
     fgets(agendamento->nome, sizeof(agendamento->nome), stdin);
     printf("|-- Data Agendamento(dd/mm/aaaa) : \n");
-    do
-    {
-      //scanf("%d/%d/%d", &agendamento->dia, &agendamento->mes, &agendamento->ano);
-
-      scanf("%10s", agendamento->data_agendamento);
-      getchar();
-      if (sscanf(agendamento->data_agendamento, "%2d/%2d/%4d", &dia, &mes, &ano) == 3) {
-        if(!(valida_data(dia, mes, ano))){
-            printf("|-- Data Agendamento inválida! \n");
-            printf("|-- Data Agendamento(dd/mm/aaaa): \n");
-        }
-      }else{
-        printf("|-- Data Agendamento inválida! \n");
-        printf("|-- Data Agendamento(dd/mm/aaaa): \n");
-      }
-    } while (!(valida_data(dia, mes, ano)));
-
+    get_data(agendamento->data_agendamento);
     printf("|-- Horario Agendamento(hh:mm:ss): \n");
-    do
-    {
-      scanf("%8s", agendamento->horaria_agendamento);
-      getchar();
-      if(sscanf(agendamento->horaria_agendamento,"%2d:%2d:%2d", &hora, &minuto, &segundo) == 3){
-        if(!(valida_hora(hora, minuto, segundo))){
-            printf("|-- Horario Agendamento inválida! \n");
-            printf("|-- Horario Agendamento(hh:mm:ss): \n");
-        }
-      }else{
-        printf("|-- Horario Agendamento inválida! \n");
-        printf("|-- Horario Agendamento(hh:mm:ss): \n");
-      }
-    } while (!(valida_hora(hora, minuto, segundo)));
-
+    get_hora(agendamento->horaria_agendamento);
     printf("|-- Tarefa(ID) : \n");
     agendamento->id_tarefa = lerNumeroInteiro();
     printf("|-- Disciplina(ID) : \n");
@@ -264,49 +269,21 @@ void editar_agendamento(Agendamento* nome_agendamento) {
         fread(agendamento, sizeof(Agendamento), 1, fp);
         if ((agendamento->id == nome_agendamento->id) && (agendamento->status != '0')) {
             achou = 1;
-            int dia, mes, ano, hora, minuto, segundo;
             printf("|-- Nome : \n");
             fgets(agendamento->nome, sizeof(agendamento->nome), stdin);
             printf("|-- Data Agendamento(dd/mm/aaaa) : \n");
-            do
-            {
-            //scanf("%d/%d/%d", &agendamento->dia, &agendamento->mes, &agendamento->ano);
-            scanf("%10s", agendamento->data_agendamento);
-            getchar();
-            if (sscanf(agendamento->data_agendamento, "%2d/%2d/%4d", &dia, &mes, &ano) == 3) {
-                if(!(valida_data(dia, mes, ano))){
-                    printf("|-- Data Agendamento inválida! \n");
-                    printf("|-- Data Agendamento(dd/mm/aaaa): \n");
-                }
-            }else{
-                printf("|-- Data Agendamento inválida! \n");
-                printf("|-- Data Agendamento(dd/mm/aaaa): \n");
-            }
-            } while (!(valida_data(dia, mes, ano)));
-
+            get_data(agendamento->data_agendamento);
             printf("|-- Horario Agendamento(hh:mm:ss): \n");
-            do
-            {
-            scanf("%8s", agendamento->horaria_agendamento);
-            getchar();
-            if(sscanf(agendamento->horaria_agendamento,"%2d:%2d:%2d", &hora, &minuto, &segundo) == 3){
-                if(!(valida_hora(hora, minuto, segundo))){
-                    printf("|-- Horario Agendamento inválida! \n");
-                    printf("|-- Horario Agendamento(hh:mm:ss): \n");
-                }
-            }else{
-                printf("|-- Horario Agendamento inválida! \n");
-                printf("|-- Horario Agendamento(hh:mm:ss): \n");
-            }
-            } while (!(valida_hora(hora, minuto, segundo)));
-
+            get_hora(agendamento->horaria_agendamento);
             printf("|-- Tarefa(ID) : \n");
             agendamento->id_tarefa = lerNumeroInteiro();
             printf("|-- Disciplina(ID) : \n");
             agendamento->id_disciplina = lerNumeroInteiro();
             printf("|-- Duracao Compromisso(Hora): \n");
             agendamento->duracao_hora = lerNumeroInteiro();
-            
+            agendamento->status = '1';
+            printf("|___________________________________________________|\n");
+                    
             fseek(fp, -1*sizeof(Agendamento), SEEK_CUR);
             fwrite(agendamento, sizeof(Agendamento), 1, fp);
             printf("\nTarefa editada!\n");

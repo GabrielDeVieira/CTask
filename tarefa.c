@@ -196,7 +196,7 @@ Tarefa * create_tarefa(void){
     fgets(tarefa->descricao, sizeof(tarefa->descricao), stdin);
     printf("|                                                   |\n");
     printf("|-- Tipo do tarefa(ID) : \n");
-    scanf("%d", &tarefa->id_tipo);
+    tarefa->id_tipo = lerNumeroInteiro();
     tarefa->status = '1';
     printf("|                                                   |\n");
     printf("|___________________________________________________|\n");
@@ -291,7 +291,7 @@ void editar_tarefa(Tarefa* nome_tarefa) {
             fgets(tarefa->descricao, sizeof(tarefa->descricao), stdin);
             printf("|                                                   |\n");
             printf("|-- Tipo do tarefa(ID) : \n");
-            scanf("%d", &tarefa->id_tipo);
+            tarefa->id_tipo = lerNumeroInteiro();
             fseek(fp, -1*sizeof(Tarefa), SEEK_CUR);
             fwrite(tarefa, sizeof(Tarefa), 1, fp);
             printf("\nTarefa editada!\n");
