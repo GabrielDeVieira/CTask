@@ -173,6 +173,7 @@ void salvar_disciplina(Disciplina * disciplina){
 void get_nomed(char * nome){
     do{
     fgets(nome, 150, stdin);
+    trata_string(nome);
     if(!(valida_nome(nome))){
         printf("|-- Nome inválido! \n");
         printf("|-- Nome: \n");
@@ -194,6 +195,7 @@ Disciplina * create_disciplina(void){
     disciplina->id = new_id_disciplina();
     printf("|-- Nome Da Disciplina: \n");
     fgets(disciplina->nome, sizeof(disciplina->nome), stdin);
+    trata_string(disciplina->nome);
     printf("|                                                   |\n");
     printf("|-- Nome do Doscente : \n");
     get_nomed(disciplina->docente);
@@ -236,6 +238,7 @@ void editar_disciplina(Disciplina* nome_disciplina) {
             achou = 1;
             printf("|-- Nome Da Disciplina: \n");
             fgets(disciplina->nome, sizeof(disciplina->nome), stdin);
+            trata_string(disciplina->nome);
             printf("|                                                   |\n");
             printf("|-- Nome do Doscente : \n");
             do{

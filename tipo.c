@@ -135,13 +135,7 @@ void editar_tipo(Tipo* nome_tipo) {
             achou = 1;
             printf("Nome:\n");
             fgets(tarefa->nome, sizeof(tarefa->nome), stdin);
-            do {
-            if(!(valida_nome(tarefa->nome))){
-                printf("|-- Nome inválido! \n");
-                printf("|-- Nome: \n");
-                fgets(tarefa->nome, sizeof(tarefa->nome), stdin);
-            }
-            }while (!(valida_nome(tarefa->nome)));
+            trata_string(tarefa->nome);
             fseek(fp, -1*sizeof(Tipo), SEEK_CUR);
             fwrite(tarefa, sizeof(Tipo), 1, fp);
             printf("\nTarefa editada!\n");
@@ -258,17 +252,11 @@ Tipo * create_tipo_tarefa(void){
     printf("|---        CADASTRO TIPO DA TAREFA              ---|\n");
     printf("|---------------------------------------------------|\n");
     printf("|                                                   |\n");
-    printf("|-- Nome Tipo tarefa: \n");
-    do{
-    fgets(tipo->nome, sizeof(tipo->nome), stdin);
-    if(!(valida_nome(tipo->nome))){
-        printf("|-- Nome inválido! \n");
-        printf("|-- Nome: \n");
-    }
-    }while (!(valida_nome(tipo->nome)));
     tipo->id = new_id_tipo();
-    tipo->status = '1';
-    
+    printf("|-- Nome Tipo tarefa: \n");
+    fgets(tipo->nome, sizeof(tipo->nome), stdin);
+    trata_string(tipo->nome); 
+    tipo->status = '1';   
     printf("|___________________________________________________|\n");
     printf("\n");
     printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");

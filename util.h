@@ -9,4 +9,5 @@ int valida_numero(char*);
 int valida_hora(int, int, int);
 int lerNumeroInteiro();
 void limpa_buffer(void);
+char trata_string(char *);
 
