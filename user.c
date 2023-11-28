@@ -71,6 +71,7 @@ void salvar_user(User * user){
 void get_nome(char * nome){
     do{
     fgets(nome, 150, stdin);
+    trata_string(nome);
     if(!(valida_nome(nome))){
         printf("|-- Nome inválido! \n");
         printf("|-- Nome: \n");

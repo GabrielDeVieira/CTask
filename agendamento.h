@@ -5,10 +5,9 @@ struct agendamento
     int id;
     char nome[100];
     char data_agendamento[11];
-    char horaria_agendamento[9];
     int id_tarefa;
     int id_disciplina;
-    int duracao_hora;
+    int horario;
     char status;
     struct agendamento *next;
 };
@@ -32,3 +31,4 @@ int new_id_agendamento();
 void filtro_agendamentos();
 void get_data(char *);
 void get_hora(char *);
+void matriz_agendamento();

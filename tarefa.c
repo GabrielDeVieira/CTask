@@ -191,6 +191,7 @@ Tarefa * create_tarefa(void){
     tarefa->id = new_id_tarefa();
     printf("|-- Nome Da Tarefa : \n");
     fgets(tarefa->nome, sizeof(tarefa->nome), stdin);
+    trata_string(tarefa->nome);
     printf("|                                                   |\n");
     printf("|-- Descrição : \n");
     fgets(tarefa->descricao, sizeof(tarefa->descricao), stdin);
@@ -219,6 +220,7 @@ void update_tarefa(void){
     printf("|                                                   |\n");
     printf("|-- informe o nome da tarefa: \n");
     fgets(tarefa->nome, sizeof(tarefa->nome), stdin);
+    trata_string(tarefa->nome);
     printf("|___________________________________________________|\n");
     editar_tarefa(tarefa);
     printf("\n");
@@ -286,6 +288,7 @@ void editar_tarefa(Tarefa* nome_tarefa) {
             achou = 1;
             printf("Nome:\n");
             fgets(tarefa->nome, sizeof(tarefa->nome), stdin);
+            trata_string(tarefa->nome);
             printf("|                                                   |\n");
             printf("|-- Descrição : \n");
             fgets(tarefa->descricao, sizeof(tarefa->descricao), stdin);
@@ -321,6 +324,7 @@ void delete_tarefa(void){
     printf("|                                                   |\n");
     printf("|-- informe o nome da tarefa: \n");
     fgets(tarefa->nome, sizeof(tarefa->nome), stdin);
+    trata_string(tarefa->nome);
     printf("|___________________________________________________|\n");
     printf("\n");
     excluir_tarefa(tarefa);

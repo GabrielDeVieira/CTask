@@ -201,6 +201,16 @@ void limpa_buffer(void)
         c = fgetc(stdin);
     } while (c != EOF && c!= '\n');
 }
+char trata_string(char * str){
+    for (int i = 0; str[i] != '\0'; i++) {
+            if (str[i] == '\n') {
+                // Substituindo '\n' por '\0'
+                str[i] = '\0';
+            }
+        }
+    return *str;
+
+}
 //get_nome():
 
 
