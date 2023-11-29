@@ -6,6 +6,7 @@
 #include <string.h>
 #include <time.h>
 #include "tarefa.h"
+#include "disciplina.h"
 
 // Estrutura das Funções baseadas na ideia professor Flávius https://github.com/FlaviusGorgonio/LinguaSolta/blob/main/ls.c
 void op_agendamento(void) {
@@ -24,6 +25,11 @@ void op_agendamento(void) {
             case '5':   read_agendamento();
                         break;
             case '6':   filtro_agendamentos();
+                        break;
+            case '7':   matriz_agendamento();
+                        printf("\n");
+                        printf("\t\t\t>>> Pressione <ENTER> para continuar...\n");
+                        getchar();
                         break;
 
         } 		
@@ -45,6 +51,7 @@ char menu_agendamentos(void){
     printf("|--            4 - Relatório Agendamentos         --|\n");
     printf("|--            5 - Buscar Agendamentos            --|\n");
     printf("|--            6 - Filtrar Agendamentos           --|\n");
+    printf("|--            7 - Agendamentos da Semana         --|\n");
     printf("|--            0 - Sair                           --|\n");
     printf("|___________________________________________________|\n");
     printf("\n");
@@ -87,8 +94,11 @@ int new_id_agendamento(){
 void exibe_agendamento(Agendamento* ag) {
 char situacao[20];
 FILE* fp;
+FILE* fp1;
 fp = fopen("tarefa.dat", "rb");
+fp1 = fopen("disciplina.dat", "rb");
 Tarefa * tarefa = (Tarefa*) malloc(sizeof(Tarefa));
+Disciplina * d = (Disciplina*) malloc(sizeof(Disciplina));
 
 if ((ag == NULL) || (ag->status == '0')) {
  printf("\n= = = tarefa Inexistente = = =\n");
@@ -96,16 +106,22 @@ if ((ag == NULL) || (ag->status == '0')) {
  printf("\n= = = Tarefa Cadastrado = = =\n");
  printf("Nome da Tarefa: %s\n", ag->nome);
  printf("Data do Agndamento: %s\n", ag->data_agendamento);
- while(!feof(fp)) {
-        fread(tarefa, sizeof(Tarefa), 1, fp);
+ while(fread(tarefa, sizeof(Tarefa), 1, fp)) {
         if ((ag->id_tarefa == tarefa->id) && (tarefa->status != '0')) {
             printf("Tarefa do Agendamento: %s\n", tarefa->nome);
             fclose(fp);
             break;
         }
     }
- printf("Horário do Agndamento: %d\n", ag->horario);
+while(fread(d, sizeof(Disciplina), 1, fp1)){
+        if ((ag->id_disciplina == d->id) && (d->status != '0')) {
+            printf("Disciplina : %s\n", d->nome);
+            fclose(fp1);
+            break;
+        }
+    }
  
+ printf("Horário do Agndamento: %d\n", ag->horario);
 if (ag->status == '1') {
  strcpy(situacao, "Novo");
 } else {
@@ -113,16 +129,40 @@ if (ag->status == '1') {
 }
  printf("Situação do agendamento: %s\n", situacao);
 }
+free(tarefa);
+free(d);
 }
 void exibe_agendamento_lista(Agendamento* ag) {
+FILE* fp;
+FILE* fp1;
+fp = fopen("tarefa.dat", "rb");
+fp1 = fopen("disciplina.dat", "rb");
+Tarefa * tarefa = (Tarefa*) malloc(sizeof(Tarefa));
+Disciplina * d = (Disciplina*) malloc(sizeof(Disciplina));
 if ((ag == NULL) || (ag->status == '0')) {
  printf("\n= = = tarefa Inexistente = = =\n");
 } else {
  
- printf("Nome da Tarefa: %s ", ag->nome);
+ printf("Nome: %s ", ag->nome);
  printf(" Data: %11s ",  ag->data_agendamento);
- printf(" Id agendamento: %d\n", ag->id);
- 
+ printf(" Id : %d", ag->id);
+ while(fread(tarefa, sizeof(Tarefa), 1, fp)) {
+        if ((ag->id_tarefa == tarefa->id) && (tarefa->status != '0')) {
+            printf(" Tarefa : %s", tarefa->nome);
+            fclose(fp);
+            break;
+        }
+    }
+while(fread(d, sizeof(Disciplina), 1, fp1)){
+        if ((ag->id_disciplina == d->id) && (d->status != '0')) {
+            printf(" Disciplina : %s\n", d->nome);
+            fclose(fp1);
+            break;
+        }
+    }
+printf("-----------------------------------------------------------------------------------------------------\n");
+free(d);
+free(tarefa);
 }
 }
 //Função Baseada nos Slides da aula: Semana 11
@@ -157,7 +197,8 @@ void filtro_agendamentos(){
 void all_agendamentos(){
     FILE* fp;
     Agendamento* agendamento;
-    printf("\n = Lista de Tarefas = \n");
+    printf("\t\t\t = Lista de Agendamentos = \n");
+    printf("\n");
     agendamento = (Agendamento*) malloc(sizeof(Agendamento));
     fp = fopen("agendamento.dat", "rb");
     if (fp == NULL) {
@@ -255,14 +296,14 @@ void matriz_agendamento(){
             while(fread(agendamento, sizeof(Agendamento), 1, fp)) {
                 if (agendamento->status == '1' && ((strstr(agendamento->data_agendamento, dataString))!= NULL)
                 && agendamento->horario == (j+1)) {
-                    printf(" %d |", agendamento->id);
+                    printf(" x |");
                     vaux =0;
                     break;
                 }
             
             }
             if (vaux){
-                printf(" 0 |");
+                printf("   |");
             }
             fclose(fp);
         }
@@ -271,6 +312,41 @@ void matriz_agendamento(){
     }
     free(matriz);
     free(agendamento);
+
+}
+void get_id_tarefa(int  ag){
+    FILE* fp;
+    fp = fopen("tarefa.dat", "rb");
+    int vaux = 1;
+     Tarefa *tarefa = malloc(sizeof(Tarefa));
+     while(!feof(fp) && vaux) {
+        ag = lerNumeroInteiro();
+        fread(tarefa, sizeof(Tarefa), 1, fp);
+        if ((ag == tarefa->id) && (tarefa->status != '0')) {
+            fclose(fp);
+            vaux = 0;
+        }else{
+            printf("Tarefa nao encontrada, digite um id valido \n");
+        }
+
+    }
+
+}
+void get_id_disciplina(int  ag){
+    FILE* fp;
+    fp = fopen("disciplina.dat", "rb");
+    int vaux = 1;
+     Disciplina *d = malloc(sizeof(Disciplina));
+     ag = lerNumeroInteiro();
+     while(!feof(fp) && vaux) {
+        fread(d, sizeof(Disciplina), 1, fp);
+        if ((ag == d->id) && (d->status != '0')) {
+            fclose(fp);
+            vaux = 0;
+        }else{
+            printf("Disciplina nao encontrada, digite um id valido \n");
+        }
+    }
 
 }
 Agendamento * create_agendamento(void){
@@ -293,9 +369,9 @@ Agendamento * create_agendamento(void){
     printf("|-- Data Agendamento(dd/mm/aaaa) : \n");
     get_data(agendamento->data_agendamento);
     printf("|-- Tarefa(ID) : \n");
-    agendamento->id_tarefa = lerNumeroInteiro();
+    get_id_tarefa(agendamento->id_tarefa);
     printf("|-- Disciplina(ID) : \n");
-    agendamento->id_disciplina = lerNumeroInteiro();
+    get_id_disciplina(agendamento->id_disciplina);
     printf("|-- Horario da Tarefa (1 a 16): \n");
     agendamento->horario = lerNumeroInteiro();
     agendamento->status = '1';

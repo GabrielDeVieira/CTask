@@ -32,3 +32,5 @@ void filtro_agendamentos();
 void get_data(char *);
 void get_hora(char *);
 void matriz_agendamento();
+void get_id_disciplina(int  );
+void get_id_tarefa(int  );
