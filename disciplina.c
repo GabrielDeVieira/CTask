@@ -116,9 +116,11 @@ void all_disciplinas(){
     disciplina = (Disciplina*) malloc(sizeof(Disciplina));
     fp = fopen("disciplina.dat", "rb");
     if (fp == NULL) {
-    printf("Ops! Erro na abertura do arquivo!\n");
-    printf("Não é possível continuar...\n");
-    exit(1);
+     printf("Ops! Erro na abertura do arquivo!\n");
+    printf("Criar disciplina...\n");
+    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+    getchar();
+    return;
     }
     while(fread(disciplina, sizeof(Disciplina), 1, fp)) {
         if (disciplina->status == '1') {
@@ -143,8 +145,10 @@ void filtro_disciplinas(){
     fp = fopen("disciplina.dat", "rb");
     if (fp == NULL) {
     printf("Ops! Erro na abertura do arquivo!\n");
-    printf("Não é possível continuar...\n");
-    exit(1);
+    printf("Criar disciplina...\n");
+    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+    getchar();
+    return;
     }
     while(fread(disciplina, sizeof(Disciplina), 1, fp)) {
         if (disciplina->status == '1' && (strstr(disciplina->nome, nome))!= NULL) {
@@ -227,9 +231,11 @@ void editar_disciplina(Disciplina* nome_disciplina) {
     disciplina = (Disciplina*) malloc(sizeof(Disciplina));
     fp = fopen("disciplina.dat", "r+b");
     if (fp == NULL) {
-    printf("Ops! Erro abertura do arquivo!\n");
-    printf("Não é possível continuar...\n");
-    exit(1);
+    printf("Ops! Erro na abertura do arquivo!\n");
+    printf("Criar agendamento...\n");
+    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+    getchar();
+    return;
     }
     int aux = 0;
     while(!aux) {
@@ -301,9 +307,11 @@ void excluir_disciplina(Disciplina* nome_disciplina) {
     disciplina = (Disciplina*) malloc(sizeof(Disciplina));
     fp = fopen("disciplina.dat", "r+b");
     if (fp == NULL) {
-    printf("Ops! Erro abertura do arquivo!\n");
-    printf("Não é possível continuar...\n");
-    exit(1);
+    printf("Ops! Erro na abertura do arquivo!\n");
+    printf("Criar agendamento...\n");
+    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+    getchar();
+    return;
     }
     while(!feof(fp)) {
         fread(disciplina, sizeof(Disciplina), 1, fp);

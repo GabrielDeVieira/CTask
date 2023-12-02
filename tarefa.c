@@ -91,9 +91,11 @@ void all_tarefas(){
     tarefa = (Tarefa*) malloc(sizeof(Tarefa));
     fp = fopen("tarefa.dat", "rb");
     if (fp == NULL) {
-    printf("Ops! Erro na abertura do arquivo!\n");
-    printf("Não é possível continuar...\n");
-    exit(1);
+     printf("Ops! Erro na abertura do arquivo!\n");
+    printf("Criar tarefa...\n");
+    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+    getchar();
+    return;
     }
     while(fread(tarefa, sizeof(Tarefa), 1, fp)) {
         if (tarefa->status == '1') {
@@ -121,8 +123,10 @@ void filtro_tarefas(){
     fp = fopen("tarefa.dat", "rb");
     if (fp == NULL) {
     printf("Ops! Erro na abertura do arquivo!\n");
-    printf("Não é possível continuar...\n");
-    exit(1);
+    printf("Criar tarefa...\n");
+    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+    getchar();
+    return;
     }
     while(fread(tarefa, sizeof(Tarefa), 1, fp)) {
         if (tarefa->status == '1'  && (strstr(tarefa->nome, nome))!= NULL) {
@@ -243,9 +247,11 @@ void excluir_tarefa(Tarefa* nome_tarefa) {
     tarefa = (Tarefa*) malloc(sizeof(Tarefa));
     fp = fopen("tarefa.dat", "r+b");
     if (fp == NULL) {
-    printf("Ops! Erro abertura do arquivo!\n");
-    printf("Não é possível continuar...\n");
-    exit(1);
+        printf("Ops! Erro na abertura do arquivo!\n");
+        printf("Criar tarefa...\n");
+        printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+        getchar();
+        return;
     }
     while(!feof(fp)) {
         fread(tarefa, sizeof(Tarefa), 1, fp);
@@ -278,9 +284,11 @@ void editar_tarefa(Tarefa* nome_tarefa) {
     tarefa = (Tarefa*) malloc(sizeof(Tarefa));
     fp = fopen("tarefa.dat", "r+b");
     if (fp == NULL) {
-    printf("Ops! Erro abertura do arquivo!\n");
-    printf("Não é possível continuar...\n");
-    exit(1);
+     printf("Ops! Erro na abertura do arquivo!\n");
+    printf("Criar tarefa...\n");
+    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+    getchar();
+    return;
     }
     while(!feof(fp)) {
         fread(tarefa, sizeof(Tarefa), 1, fp);
@@ -353,9 +361,11 @@ void read_tarefa(void){
     tarefa = (Tarefa*) malloc(sizeof(Tarefa));
     fp = fopen("tarefa.dat", "rb");
     if (fp == NULL) {
-    printf("Ops! Erro na abertura do arquivo!\n");
-    printf("Não é possível continuar...\n");
-    exit(1);
+     printf("Ops! Erro na abertura do arquivo!\n");
+    printf("Criar tarefa...\n");
+    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+    getchar();
+    return;
     }
     while(fread(tarefa, sizeof(Tarefa), 1, fp)) {
         if ((tarefa->status == '1') && strcmp(nome_tarefa,tarefa->nome)==0) {

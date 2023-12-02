@@ -100,8 +100,10 @@ int valida_login(User * usuario){
     fp = fopen("user.dat", "r+b");
     if (fp == NULL) {
     printf("Ops! Erro abertura do arquivo!\n");
-    printf("Não é possível continuar...\n");
-    exit(1);
+    printf("É necessário a criação de pelo menos um usuario...\n");
+    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+    getchar();
+    return 0;
     }
     while(!feof(fp)) {
         fread(user, sizeof(User), 1, fp);

@@ -243,7 +243,7 @@ void all_users(){
     if (fp == NULL) {
     printf("Ops! Erro na abertura do arquivo!\n");
     printf("Não é possível continuar...\n");
-    exit(1);
+    return;
     }
     while(fread(user, sizeof(User), 1, fp)) {
         if (user->status == '1') {
@@ -271,7 +271,7 @@ void filtro_nome_users(){
     if (fp == NULL) {
     printf("Ops! Erro na abertura do arquivo!\n");
     printf("Não é possível continuar...\n");
-    exit(1);
+    return;
     }
     while(fread(user, sizeof(User), 1, fp)) {
         if ((user->status == '1') && (strstr(user->nome, nome))!= NULL) {
@@ -382,7 +382,7 @@ void excluir_user(User* id_usuario) {
     if (fp == NULL) {
     printf("Ops! Erro abertura do arquivo!\n");
     printf("Não é possível continuar...\n");
-    exit(1);
+    return;
     }
     while(!feof(fp)) {
         fread(user, sizeof(User), 1, fp);

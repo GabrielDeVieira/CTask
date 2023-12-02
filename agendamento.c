@@ -178,9 +178,11 @@ void filtro_agendamentos(){
     agendamento = (Agendamento*) malloc(sizeof(Agendamento));
     fp = fopen("agendamento.dat", "rb");
     if (fp == NULL) {
-    printf("Ops! Erro na abertura do arquivo!\n");
-    printf("Não é possível continuar...\n");
-    exit(1);
+     printf("Ops! Erro na abertura do arquivo!\n");
+    printf("Criar agendamento...\n");
+    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+    getchar();
+    return;
     }
     while(fread(agendamento, sizeof(Agendamento), 1, fp)) {
         if (agendamento->status == '1' && (strstr(agendamento->data_agendamento, data))!= NULL) {
@@ -202,9 +204,11 @@ void all_agendamentos(){
     agendamento = (Agendamento*) malloc(sizeof(Agendamento));
     fp = fopen("agendamento.dat", "rb");
     if (fp == NULL) {
-    printf("Ops! Erro na abertura do arquivo!\n");
-    printf("Não é possível continuar...\n");
-    exit(1);
+     printf("Ops! Erro na abertura do arquivo!\n");
+    printf("Criar agendamento...\n");
+    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+    getchar();
+    return;
     }
     while(fread(agendamento, sizeof(Agendamento), 1, fp)) {
         if (agendamento->status == '1') {
@@ -221,6 +225,14 @@ void all_agendamentos(){
 //Função de gravação em arquivo
 //Função Baseada nos Slides da aula: Semana 11
 void salvar_agendamento(Agendamento * agendamento){
+    printf("%d + %d + %c \n",agendamento->id_disciplina,agendamento->id_tarefa, agendamento->status);
+    if (agendamento->id_disciplina == 0 || agendamento->id_tarefa== 0){
+        printf("Ops! Erro na abertura do arquivo!\n");
+        printf("Verificar Informações que Foram indicadas durante a execucao...\n");
+        printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+        getchar();
+        return;
+    }
     FILE* fp;
     fp = fopen("agendamento.dat","ab");
     if (fp == NULL) {
@@ -257,8 +269,10 @@ void matriz_agendamento(){
     fp1 = fopen("agendamento.dat","ab");
     if (fp1 == NULL) {
     printf("Ops! Erro na abertura do arquivo!\n");
-    printf("Não é possível continuar...\n");
-    exit(1);
+    printf("Criar agendamento...\n");
+    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+    getchar();
+    return;
     }
     fclose(fp1);
     time_t t;
@@ -314,39 +328,66 @@ void matriz_agendamento(){
     free(agendamento);
 
 }
-void get_id_tarefa(int  ag){
-    FILE* fp;
-    fp = fopen("tarefa.dat", "rb");
+int get_id_tarefa(){
+    int  ag;
     int vaux = 1;
      Tarefa *tarefa = malloc(sizeof(Tarefa));
+     do{
+        FILE* fp;
+        fp = fopen("disciplina.dat", "rb");
+        if (fp == NULL) {
+        printf("Ops! Erro na abertura do arquivo!\n");
+        printf("Criar disciplina...\n");
+        ag =0;
+        return ag;
+        }
      while(!feof(fp) && vaux) {
         ag = lerNumeroInteiro();
         fread(tarefa, sizeof(Tarefa), 1, fp);
         if ((ag == tarefa->id) && (tarefa->status != '0')) {
             fclose(fp);
             vaux = 0;
-        }else{
-            printf("Tarefa nao encontrada, digite um id valido \n");
+            return ag;
         }
 
     }
+    if(vaux){
+            printf("Disciplina nao encontrada, digite um id valido \n");
+            fclose(fp);
+        }
+    }while(vaux);
+    return 0;
 
 }
-void get_id_disciplina(int  ag){
-    FILE* fp;
-    fp = fopen("disciplina.dat", "rb");
+int get_id_disciplina(){
+    int  ag;
+    
     int vaux = 1;
      Disciplina *d = malloc(sizeof(Disciplina));
+     do{
+        FILE* fp;
+        fp = fopen("disciplina.dat", "rb");
+        if (fp == NULL) {
+        printf("Ops! Erro na abertura do arquivo!\n");
+        printf("Criar disciplina...\n");
+        ag =0;
+        return ag;
+        }
      ag = lerNumeroInteiro();
      while(!feof(fp) && vaux) {
         fread(d, sizeof(Disciplina), 1, fp);
         if ((ag == d->id) && (d->status != '0')) {
             fclose(fp);
             vaux = 0;
-        }else{
-            printf("Disciplina nao encontrada, digite um id valido \n");
+            return ag;
         }
     }
+    if(vaux){
+            printf("Disciplina nao encontrada, digite um id valido \n");
+            fclose(fp);
+        }
+    }while(vaux);
+    return 0;
 
 }
 Agendamento * create_agendamento(void){
@@ -369,9 +410,11 @@ Agendamento * create_agendamento(void){
     printf("|-- Data Agendamento(dd/mm/aaaa) : \n");
     get_data(agendamento->data_agendamento);
     printf("|-- Tarefa(ID) : \n");
-    get_id_tarefa(agendamento->id_tarefa);
+    agendamento->id_tarefa = get_id_tarefa();
+    printf("%d\n",agendamento->id_tarefa);
     printf("|-- Disciplina(ID) : \n");
-    get_id_disciplina(agendamento->id_disciplina);
+    agendamento->id_disciplina = get_id_disciplina();
+    printf("%d\n",agendamento->id_disciplina);
     printf("|-- Horario da Tarefa (1 a 16): \n");
     agendamento->horario = lerNumeroInteiro();
     agendamento->status = '1';
@@ -398,9 +441,11 @@ void editar_agendamento(Agendamento* nome_agendamento) {
     agendamento = (Agendamento*) malloc(sizeof(Agendamento));
     fp = fopen("agendamento.dat", "r+b");
     if (fp == NULL) {
-    printf("Ops! Erro abertura do arquivo!\n");
-    printf("Não é possível continuar...\n");
-    exit(1);
+    printf("Ops! Erro na abertura do arquivo!\n");
+    printf("Criar agendamento...\n");
+    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+    getchar();
+    return;
     }
     int aux =0;
     while(!aux) {
@@ -470,8 +515,8 @@ void excluir_agendamento(Agendamento* nome_agendamento) {
     fp = fopen("agendamento.dat", "r+b");
     if (fp == NULL) {
     printf("Ops! Erro abertura do arquivo!\n");
-    printf("Não é possível continuar...\n");
-    exit(1);
+    printf("Criar agendamento...\n");
+    return;
     }
     while(!feof(fp)) {
         fread(agendamento, sizeof(Agendamento), 1, fp);
@@ -532,8 +577,10 @@ void read_agendamento(void){
     fp = fopen("agendamento.dat", "rb");
     if (fp == NULL) {
     printf("Ops! Erro na abertura do arquivo!\n");
-    printf("Não é possível continuar...\n");
-    exit(1);
+    printf("Criar agendamento...\n");
+    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+    getchar();
+    return;
     }
     while(fread(agendamento, sizeof(Agendamento), 1, fp)) {
         if ((agendamento->status == '1') && id_agendamento == agendamento->id) {
