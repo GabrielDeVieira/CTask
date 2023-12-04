@@ -1,4 +1,5 @@
 // Assinatura Funções
+typedef struct user User;
 struct user
 {
     int id;
@@ -13,9 +14,9 @@ struct user
     char username[100];
     char cpf[15];
     char status;
-    struct user *next;
+    User *prox;
 };
-typedef struct user User;
+
 
 void op_users(void);
 char menu_users(void);
@@ -37,3 +38,4 @@ void get_data_nascimento(char *);
 void get_email(char *);
 void get_numero(char *);
 void  get_cpf(char * );
+void Lista_ordenada_alfa(void);

@@ -6,7 +6,7 @@ struct disciplina
     char docente[150];
     char carga_horaria[10];
     char status;
-    struct disciplina *next;
+    struct disciplina *prox;
 };
 typedef struct disciplina Disciplina;
 
@@ -25,3 +25,4 @@ void excluir_disciplina(Disciplina *);
 int new_id_disciplina();
 void filtro_disciplinas();
 void get_nomed(char *);
+void Lista_ordenada_alfa_d(void);

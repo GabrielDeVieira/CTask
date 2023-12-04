@@ -31,6 +31,8 @@ void op_agendamento(void) {
                         printf("\t\t\t>>> Pressione <ENTER> para continuar...\n");
                         getchar();
                         break;
+            case '8': Lista_ordenada_alfa_a();
+                        break;
 
         } 		
     } while (opcao[0] != '0');
@@ -52,6 +54,7 @@ char menu_agendamentos(void){
     printf("|--            5 - Buscar Agendamentos            --|\n");
     printf("|--            6 - Filtrar Agendamentos           --|\n");
     printf("|--            7 - Agendamentos da Semana         --|\n");
+    printf("|--            8 - Listar em Ordem Alfabetica     --|\n");
     printf("|--            0 - Sair                           --|\n");
     printf("|___________________________________________________|\n");
     printf("\n");
@@ -284,8 +287,6 @@ void matriz_agendamento(){
     // Calculando o início da semana (domingo)
     t -= diaSemana * 24 * 60 * 60;
     infoTempo = localtime(&t);
-    //infoTempo->tm_year += 1900;
-    //infoTempo->tm_mon += 1;
     
     int **matriz = (int **)malloc(16 * sizeof(int *));
     for (int i = 0; i < 16; i++) {
@@ -590,6 +591,68 @@ void read_agendamento(void){
     fclose(fp);
     free(agendamento);
     printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+    getchar();
+
+}
+void Lista_ordenada_alfa_a(void) {
+    FILE* fp;
+    Agendamento* agendamento; 
+    Agendamento* lista;
+    fp = fopen("agendamento.dat", "rb"); 
+    if (fp == NULL) {
+        printf("Ops! Erro na abertura do arquivo!\n");
+        printf("Criar Agendamento...\n");
+        printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+        getchar();
+        return;
+    }
+    
+    lista = NULL;
+    agendamento = (Agendamento*)malloc(sizeof(Agendamento)); 
+
+    system("clear||cls");
+    printf(" ------------------------------------------------------------------------------- \n");
+    printf("|---                            LISTA DE AGENDAMENTOS                        ---|\n");
+    printf(" -------------------------------------------------------------------------------\n");
+
+    while(fread(agendamento, sizeof(Agendamento), 1, fp) == 1) {
+        agendamento->prox = NULL;
+        if ((lista == NULL) || (strcmp(agendamento->data_agendamento, lista->data_agendamento) < 0)) {
+            agendamento->prox = lista;  
+            lista = agendamento;
+        } else {  
+            Agendamento *anterior = lista; 
+            Agendamento *atual = lista->prox;
+            while ((atual != NULL) && strcmp(atual->data_agendamento, agendamento->data_agendamento) < 0) { 
+                anterior = atual;  
+                atual = atual->prox;
+            }
+            anterior->prox = agendamento;  
+            agendamento->prox = atual; 
+        }
+        
+        agendamento = (Agendamento*)malloc(sizeof(Agendamento));
+        
+        
+    }
+
+    fclose(fp); 
+
+    agendamento = lista; 
+    while (agendamento != NULL) {  
+        exibe_agendamento_lista(agendamento);
+        agendamento = agendamento->prox; 
+        }
+        
+
+    agendamento = lista; 
+    while (lista != NULL) {
+        lista = lista->prox;  
+        free(agendamento);
+        agendamento = lista; 
+    }
+
+    printf("\n\t\t\t>>> Tecle <ENTER> para continuar...\n");
     getchar();
 
 }

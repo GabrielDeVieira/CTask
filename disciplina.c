@@ -22,6 +22,8 @@ void op_disciplina(void) {
                         break;
             case '6':   filtro_disciplinas();
                         break;
+            case '7':   Lista_ordenada_alfa_d();
+                        break;
         } 		
     } while (opcao[0] != '0');
 }
@@ -42,6 +44,7 @@ char menu_disciplina(void){
     printf("|--           4 - Relatório Disciplina            --|\n");
     printf("|--           5 - Buscar Disciplina               --|\n");
     printf("|--           6 - Filtrar Disciplina              --|\n");
+    printf("|--           7 - Listar em Ordem Alfabetica      --|\n");
     printf("|--           0 - Sair                            --|\n");
     printf("|___________________________________________________|\n");
     printf("\n");
@@ -382,6 +385,67 @@ void read_disciplina(void){
     }
     fclose(fp);
     free(disciplina);
+    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+    getchar();
+
+}
+void Lista_ordenada_alfa_d(void) {
+    FILE* fp;
+    Disciplina* disciplina; 
+    Disciplina* lista;
+    fp = fopen("disciplina.dat", "rb"); 
+    if (fp == NULL) {
+        printf("Ops! Erro na abertura do arquivo!\n");
+        printf("Criar Disciplina...\n");
+        printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+        getchar();
+        return;
+    }
+    
+    lista = NULL;
+    disciplina = (Disciplina*)malloc(sizeof(Disciplina)); 
+
+    system("clear||cls");
+    printf(" --------------------------------------------------- \n");
+    printf("|---             LISTA DE DISCIPLINAS            ---|\n");
+    printf(" --------------------------------------------------- \n");
+
+    while(fread(disciplina, sizeof(Disciplina), 1, fp) == 1) {
+        disciplina->prox = NULL;
+        if ((lista == NULL) || (strcmp(disciplina->nome, lista->nome) < 0)) {
+            disciplina->prox = lista;  
+            lista = disciplina;
+        } else {  
+            Disciplina *anterior = lista; 
+            Disciplina *atual = lista->prox;
+            while ((atual != NULL) && strcmp(atual->nome, disciplina->nome) < 0) { 
+                anterior = atual;  
+                atual = atual->prox;
+            }
+            anterior->prox = disciplina;  
+            disciplina->prox = atual; 
+        }
+        
+        disciplina = (Disciplina*)malloc(sizeof(Disciplina));
+        
+        
+    }
+
+    fclose(fp); 
+
+    disciplina = lista; 
+    while (disciplina != NULL) {  
+        exibe_disciplina_lista(disciplina);
+        disciplina = disciplina->prox; 
+        }
+        
+
+    disciplina = lista; 
+    while (lista != NULL) {
+        lista = lista->prox;  
+        free(disciplina);
+        disciplina = lista; 
+    }
     printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
     getchar();
 

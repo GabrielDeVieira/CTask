@@ -6,6 +6,7 @@ struct tarefa
     char descricao[200];
     int id_tipo;
     char status;
+    struct tarefa *prox;
     
 };
 typedef struct tarefa Tarefa;
@@ -23,3 +24,4 @@ void excluir_tarefa(Tarefa *);
 void editar_tarefa(Tarefa *);
 int new_id_tarefa();
 void filtro_tarefas();
+void Lista_ordenada_alfa_t(void);

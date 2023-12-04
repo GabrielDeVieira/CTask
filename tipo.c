@@ -22,6 +22,8 @@ void op_tipo(void) {
                         break;
             case '6':  filtro_tipos();
                         break;
+            case '7':  Lista_ordenada_alfa_tp();
+                        break;
         } 		
     } while (opcao[0] != '0');
 }
@@ -68,6 +70,7 @@ char menu_tipotarefa(void){
     printf("|--           4 - Relatório Tipo tarefa           --|\n");
     printf("|--           5 - Busca Tipo tarefa               --|\n");
     printf("|--           6 - Filtrar Tipo tarefa             --|\n");
+    printf("|--           7 - Listar em Ordem Alfabetica      --|\n");
     printf("|--           0 - Sair                            --|\n");
     printf("|___________________________________________________|\n");
     printf("\n");
@@ -337,6 +340,68 @@ void read_tipo_tarefa(void){
     fclose(fp);
     free(tipo);
     printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+    getchar();
+
+}
+void Lista_ordenada_alfa_tp(void) {
+    FILE* fp;
+    Tipo* tipo; 
+    Tipo* lista;
+    fp = fopen("tipo.dat", "rb"); 
+    if (fp == NULL) {
+        printf("Ops! Erro na abertura do arquivo!\n");
+        printf("Criar Tipo...\n");
+        printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+        getchar();
+        return;
+    }
+    
+    lista = NULL;
+    tipo = (Tipo*)malloc(sizeof(Tipo)); 
+
+    system("clear||cls");
+    printf(" --------------------------------------------------- \n");
+    printf("|---                LISTA DE TIPOS               ---|\n");
+    printf(" --------------------------------------------------- \n");
+
+    while(fread(tipo, sizeof(Tipo), 1, fp) == 1) {
+        tipo->prox = NULL;
+        if ((lista == NULL) || (strcmp(tipo->nome, lista->nome) < 0)) {
+            tipo->prox = lista;  
+            lista = tipo;
+        } else {  
+            Tipo *anterior = lista; 
+            Tipo *atual = lista->prox;
+            while ((atual != NULL) && strcmp(atual->nome, tipo->nome) < 0) { 
+                anterior = atual;  
+                atual = atual->prox;
+            }
+            anterior->prox = tipo;  
+            tipo->prox = atual; 
+        }
+        
+        tipo = (Tipo*)malloc(sizeof(Tipo));
+        
+        
+    }
+
+    fclose(fp); 
+
+    tipo = lista; 
+    while (tipo != NULL) {  
+        exibe_tipo_lista(tipo);
+        tipo = tipo->prox; 
+        }
+        
+
+    tipo = lista; 
+    while (lista != NULL) {
+        lista = lista->prox;  
+        free(tipo);
+        tipo = lista; 
+    }
+
+    printf("\n\t\t\t>>> Tecle <ENTER> para continuar...\n");
     getchar();
 
 }

@@ -25,6 +25,8 @@ void op_users(void) {
                         break;
             case '6':   filtro_nome_users();
                         break;
+            case '7':   Lista_ordenada_alfa();
+                        break;
         } 		
     } while (opcao[0] != '0');
 }
@@ -46,6 +48,7 @@ char menu_users(void){
     printf("|--           4 - Relatório User                  --|\n");
     printf("|--           5 - Buscar User                     --|\n");
     printf("|--           6 - Buscar Com Filtro               --|\n");
+    printf("|--           7 - Listar em Ordem Alfabetica      --|\n");
     printf("|--           0 - Sair                            --|\n");
     printf("|___________________________________________________|\n");
     printf("\n");
@@ -58,12 +61,25 @@ char menu_users(void){
     
 }
 void salvar_user(User * user){
+    FILE* fp1;
+    User* usuario;
+    User *user1 = (User*) malloc(sizeof(User));
+    fp1 = fopen("user.dat", "rb");
+    if (fp1 == NULL) {
+        usuario = NULL;
+    }else{
+        while(fread(user1, sizeof(User), 1, fp1)) {
+            usuario = user1->prox;
+        }
+        free(user1);
+    }
     FILE* fp;
     fp = fopen("user.dat","ab");
     if (fp == NULL) {
     printf("Erro na criacao do arquivo\n!");
     exit(1);
     }
+    user->prox = usuario;
     fwrite(user, sizeof(User), 1, fp);
     fclose(fp);
     free(user);
@@ -135,7 +151,7 @@ void get_cpf(char * cpf){
 
 User * create_users(void){
    
-    User *usuario = malloc(sizeof(User));
+    User *usuario = (User*) malloc(sizeof(User));
     system("clear||cls");
     printf(" ___________________________________________________\n");
     printf("|                     CTASK AGENDA                  |\n");
@@ -188,6 +204,7 @@ if ((tf == NULL) || (tf->status == '0')) {
  printf("Email: %s\n", tf->email);
  printf("Username: %s\n", tf->username);
  printf("Número: %s\n", tf->numero);
+ 
 
 if (tf->status == '1') {
  strcpy(situacao, "Cadastrado");
@@ -201,7 +218,7 @@ void exibe_user_lista(User* tf) {
 if ((tf == NULL) || (tf->status == '0')) {
  printf("\n= = = Usuário Inexistente = = =\n");
 } else {
- printf(" Nome do Usuário: %s - Id do Usuário: %d \n ", tf->nome,tf->id);
+ printf("Nome do Usuário: %s - Id do Usuário: %d \n ", tf->nome,tf->id);
 
 }
 }
@@ -237,13 +254,13 @@ int new_id_user(){
 void all_users(){
     FILE* fp;
     User* user;
-    printf("\n = Lista de Usuário = \n");
+    
     user = (User*) malloc(sizeof(User));
     fp = fopen("user.dat", "rb");
     if (fp == NULL) {
     printf("Ops! Erro na abertura do arquivo!\n");
     printf("Não é possível continuar...\n");
-    return;
+    return;printf("\n = Lista de Usuário = \n");
     }
     while(fread(user, sizeof(User), 1, fp)) {
         if (user->status == '1') {
@@ -451,6 +468,68 @@ void read_users(void){
     }
     fclose(fp);
     free(user);
+    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+    getchar();
+
+}
+//Função desenvolvida a partir do ChatGPT e auxilio dos materiais de aula https://replit.com/@flaviusgorgonio/ExemploDeListaInvertidac#main.c
+void Lista_ordenada_alfa(void) {
+    FILE* fp;
+    User* usuario; 
+    User* lista;
+    fp = fopen("user.dat", "rb"); 
+    if (fp == NULL) {
+        printf("Ops! Erro na abertura do arquivo!\n");
+        printf("Criar Usuario...\n");
+        printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+        getchar();
+        return;
+    }
+    
+    lista = NULL;
+    usuario = (User*)malloc(sizeof(User)); 
+
+    system("clear||cls");
+    printf(" --------------------------------------------------- \n");
+    printf("|---              LISTA DE USUARIOS              ---|\n");
+    printf(" --------------------------------------------------- \n");
+
+    while(fread(usuario, sizeof(User), 1, fp) == 1) {
+        usuario->prox = NULL;
+        if ((lista == NULL) || (strcmp(usuario->nome, lista->nome) < 0)) {
+            usuario->prox = lista;  
+            lista = usuario;
+        } else {  
+            User *anterior = lista; 
+            User *atual = lista->prox;
+            while ((atual != NULL) && strcmp(atual->nome, usuario->nome) < 0) { 
+                anterior = atual;  
+                atual = atual->prox;
+            }
+            anterior->prox = usuario;  
+            usuario->prox = atual; 
+        }
+        
+        usuario = (User*)malloc(sizeof(User));
+        
+        
+    }
+
+    fclose(fp); 
+
+    usuario = lista; 
+    while (usuario != NULL) {  
+        exibe_user_lista(usuario);
+        usuario = usuario->prox; 
+        }
+        
+
+    usuario = lista; 
+    while (lista != NULL) {
+        lista = lista->prox;  
+        free(usuario);
+        usuario = lista; 
+    }
     printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
     getchar();
 

@@ -9,7 +9,7 @@ struct agendamento
     int id_disciplina;
     int horario;
     char status;
-    struct agendamento *next;
+    struct agendamento *prox;
 };
 
 typedef struct agendamento Agendamento;
@@ -34,3 +34,4 @@ void get_hora(char *);
 void matriz_agendamento();
 int get_id_disciplina( );
 int get_id_tarefa();
+void Lista_ordenada_alfa_a(void);

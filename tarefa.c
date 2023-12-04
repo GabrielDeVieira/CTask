@@ -26,6 +26,8 @@ void op_tarefa(void) {
                         break;
             case '7': filtro_tarefas();
                         break;
+            case '8': Lista_ordenada_alfa_t();
+                        break;
         } 		
     } while (opcao[0] != '0');
 }
@@ -47,6 +49,7 @@ char menu_tarefa(void){
     printf("|--            5 - Menu Tipo tarefa               --|\n");
     printf("|--            6 - Busca Tarefas                  --|\n");
     printf("|--            7 - Filtrar Tarefas                --|\n");
+    printf("|--            8 - Listar em Ordem Alfabetica     --|\n");
     printf("|--            0 - Sair                           --|\n");
     printf("|___________________________________________________|\n");
     printf("\n");
@@ -379,8 +382,64 @@ void read_tarefa(void){
     getchar();
 
 }
+void Lista_ordenada_alfa_t(void) {
+    FILE* fp;
+    Tarefa* tarefa; 
+    Tarefa* lista;
+    fp = fopen("tarefa.dat", "rb"); 
+    if (fp == NULL) {
+        printf("Ops! Erro na abertura do arquivo!\n");
+        printf("Criar tarefa...\n");
+        printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+        getchar();
+        return;
+    }
+    
+    lista = NULL;
+    tarefa = (Tarefa*)malloc(sizeof(Tarefa)); 
 
-//fseek
-//ftell
-//prox_id = (tamanho arq/tamanho reg)2 + 1
-//prtbcc -site manipulação de arquivo
+    system("clear||cls");
+    printf(" --------------------------------------------------- \n");
+    printf("|---               LISTA DE TAREFAS              ---|\n");
+    printf(" --------------------------------------------------- \n");
+
+    while(fread(tarefa, sizeof(Tarefa), 1, fp) == 1) {
+        tarefa->prox = NULL;
+        if ((lista == NULL) || (strcmp(tarefa->nome, lista->nome) < 0)) {
+            tarefa->prox = lista;  
+            lista = tarefa;
+        } else {  
+            Tarefa *anterior = lista; 
+            Tarefa *atual = lista->prox;
+            while ((atual != NULL) && strcmp(atual->nome, tarefa->nome) < 0) { 
+                anterior = atual;  
+                atual = atual->prox;
+            }
+            anterior->prox = tarefa;  
+            tarefa->prox = atual; 
+        }
+        
+        tarefa = (Tarefa*)malloc(sizeof(Tarefa));
+        
+        
+    }
+
+    fclose(fp); 
+
+    tarefa = lista; 
+    while (tarefa != NULL) {  
+        exibe_tarefa_lista(tarefa);
+        tarefa = tarefa->prox; 
+        }
+        
+
+    tarefa = lista; 
+    while (lista != NULL) {
+        lista = lista->prox;  
+        free(tarefa);
+        tarefa = lista; 
+    }
+    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+    getchar();
+
+}
