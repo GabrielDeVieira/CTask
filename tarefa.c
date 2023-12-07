@@ -81,7 +81,9 @@ void exibe_tarefa_lista(Tarefa* tf) {
 if ((tf == NULL) || (tf->status == '0')) {
  printf("\n= = = Tarefa Inexistente = = =\n");
 } else {
- printf("\nNome da Tarefa: %sId da Tarefa: %d\n", tf->nome,tf->id);
+  printf("| %-5d | %-40s |\n",tf->id, tf->nome);
+  printf("|-------|------------------------------------------|\n");
+ 
 
 }
 }
@@ -100,6 +102,13 @@ void all_tarefas(){
     getchar();
     return;
     }
+    system("clear||cls");
+    printf(" --------------------------------------------------\n");
+    printf("|---              LISTA DE TAREFAS              ---|\n");
+    printf(" --------------------------------------------------\n");
+    printf(" --------------------------------------------------\n");
+    printf("| %-5s | %-40s |\n", "ID", "Nome");
+    printf("|-------|------------------------------------------|\n");
     while(fread(tarefa, sizeof(Tarefa), 1, fp)) {
         if (tarefa->status == '1') {
             exibe_tarefa_lista(tarefa);
@@ -120,8 +129,6 @@ void filtro_tarefas(){
     scanf("%[^\n\t]",nome);
     limpa_buffer();
     Tarefa* tarefa;
-    printf("\n = Lista de tarefas filtradas por nome = \n");
-    printf("\n");
     tarefa = (Tarefa*) malloc(sizeof(Tarefa));
     fp = fopen("tarefa.dat", "rb");
     if (fp == NULL) {
@@ -131,6 +138,13 @@ void filtro_tarefas(){
     getchar();
     return;
     }
+    system("clear||cls");
+    printf(" ---------------------------------------------------\n");
+    printf("|---              LISTA DE TAREFAS               ---|\n");
+    printf(" --------------------------------------------------\n");
+    printf(" --------------------------------------------------\n");
+    printf("| %-5s | %-40s |\n", "ID", "Nome");
+    printf("|-------|------------------------------------------|\n");
     while(fread(tarefa, sizeof(Tarefa), 1, fp)) {
         if (tarefa->status == '1'  && (strstr(tarefa->nome, nome))!= NULL) {
             exibe_tarefa_lista(tarefa);
@@ -202,7 +216,7 @@ int dado_tf_exist( char* dado) {
     }
     Tarefa * lista = (Tarefa*) malloc(sizeof(Tarefa));
     while(fread(lista, sizeof(Tarefa), 1, fp)) {
-        if (strcmp(lista->nome, dado) == 0 ) {
+        if (strcmp(lista->nome, dado) == 0 && lista->status=='1') {
             // Data  encontrada na lista
             free(lista);
             fclose(fp);
@@ -289,7 +303,7 @@ void excluir_tarefa(Tarefa* nome_tarefa) {
     }
     while(!feof(fp)) {
         fread(tarefa, sizeof(Tarefa), 1, fp);
-        if ((*tarefa->nome == *nome_tarefa->nome) && (tarefa->status != '0')) {
+        if ((strcmp(tarefa->nome, nome_tarefa->nome) == 0) && (tarefa->status != '0')) {
             achou = 1;
             tarefa->status = '0';
             fseek(fp, -1*sizeof(Tarefa), SEEK_CUR);
@@ -326,7 +340,7 @@ void editar_tarefa(Tarefa* nome_tarefa) {
     }
     while(!feof(fp)) {
         fread(tarefa, sizeof(Tarefa), 1, fp);
-        if ((*tarefa->nome == *nome_tarefa->nome) && (tarefa->status != '0')) {
+        if (strcmp(tarefa->nome, nome_tarefa->nome) == 0 && (tarefa->status != '0')){
             achou = 1;
             printf("Nome:\n");
             fgets(tarefa->nome, sizeof(tarefa->nome), stdin);

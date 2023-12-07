@@ -177,7 +177,9 @@ void exibe_tipo_lista(Tipo* tp) {
 if ((tp == NULL) || (tp->status == '0')) {
  printf("\n= = = |Tipo da tarefa Inexistente = = =\n");
 } else {
- printf("Nome da Tarefa: %s Id do Tipo da tarefa: %d\n", tp->nome,tp->id);
+ printf("| %-5d | %-40s |\n",tp->id, tp->nome);
+  printf("|-------|------------------------------------------|\n");
+ 
 
 }
 }
@@ -197,6 +199,13 @@ void filtro_tipos(){
     printf("Não é possível continuar...\n");
     exit(1);
     }
+    system("clear||cls");
+    printf(" --------------------------------------------------\n");
+    printf("|---           LISTA DE TIPOS TAREFAS           ---|\n");
+    printf(" --------------------------------------------------\n");
+    printf(" --------------------------------------------------\n");
+    printf("| %-5s | %-40s |\n", "ID", "Nome");
+    printf("|-------|------------------------------------------|\n");
     while(fread(tipo, sizeof(Tipo), 1, fp)) {
         if (tipo->status == '1' && (strstr(tipo->nome, nome))!= NULL) {
             exibe_tipo_lista(tipo);
@@ -219,6 +228,13 @@ void all_tipos(){
     printf("Não é possível continuar...\n");
     exit(1);
     }
+    system("clear||cls");
+    printf(" --------------------------------------------------\n");
+    printf("|---           LISTA DE TIPOS TAREFAS           ---|\n");
+    printf(" --------------------------------------------------\n");
+    printf(" --------------------------------------------------\n");
+    printf("| %-5s | %-40s |\n", "ID", "Nome");
+    printf("|-------|------------------------------------------|\n");
     while(fread(tipo, sizeof(Tipo), 1, fp)) {
         if (tipo->status == '1') {
             exibe_tipo_lista(tipo);

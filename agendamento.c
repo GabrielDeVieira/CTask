@@ -142,28 +142,28 @@ fp = fopen("tarefa.dat", "rb");
 fp1 = fopen("disciplina.dat", "rb");
 Tarefa * tarefa = (Tarefa*) malloc(sizeof(Tarefa));
 Disciplina * d = (Disciplina*) malloc(sizeof(Disciplina));
-if ((ag == NULL) || (ag->status == '0')) {
- printf("\n= = = tarefa Inexistente = = =\n");
+if ((ag == NULL)) {
+ printf("\n= = = Agendamento Inexistente = = =\n");
 } else {
- 
- printf("Nome: %s ", ag->nome);
- printf(" Data: %11s ",  ag->data_agendamento);
- printf(" Id : %d", ag->id);
+ printf("| %-5d |", ag->id);
+ printf(" %-40s |", ag->nome);
+ printf(" %-11s |",  ag->data_agendamento);
  while(fread(tarefa, sizeof(Tarefa), 1, fp)) {
         if ((ag->id_tarefa == tarefa->id) && (tarefa->status != '0')) {
-            printf(" Tarefa : %s", tarefa->nome);
+            printf(" %-30s |", tarefa->nome);
             fclose(fp);
             break;
         }
     }
 while(fread(d, sizeof(Disciplina), 1, fp1)){
         if ((ag->id_disciplina == d->id) && (d->status != '0')) {
-            printf(" Disciplina : %s\n", d->nome);
+            printf(" %-30s |\n", d->nome);
             fclose(fp1);
             break;
         }
     }
-printf("-----------------------------------------------------------------------------------------------------\n");
+ printf("|-------|------------------------------------------|-------------|--------------------------------|--------------------------------|\n");
+
 free(d);
 free(tarefa);
 }
@@ -213,6 +213,13 @@ void all_agendamentos(){
     getchar();
     return;
     }
+    system("clear||cls");
+    printf(" ----------------------------------------------------------------------------------------------------------------------------------- \n");
+    printf("|---                                                   LISTA DE AGENDAMENTOS                                                    ---|\n");
+    printf(" -----------------------------------------------------------------------------------------------------------------------------------\n");
+    printf("| %-5s | %-40s | %-11s | %-30s | %-30s |\n","ID", "NOME", "DATA", "TAREFA", "DISCIPLINA");
+    printf("|-------|------------------------------------------|-------------|--------------------------------|--------------------------------|\n");
+
     while(fread(agendamento, sizeof(Agendamento), 1, fp)) {
         if (agendamento->status == '1') {
             exibe_agendamento_lista(agendamento);
@@ -490,7 +497,7 @@ int dado_age_exist( char* dado, int hora) {
     }
     Agendamento * lista = (Agendamento*) malloc(sizeof(Agendamento));
     while(fread(lista, sizeof(Agendamento), 1, fp)) {
-        if (strcmp(lista->data_agendamento, dado) == 0 &&(lista->horario == hora) ) {
+        if (strcmp(lista->data_agendamento, dado) == 0 &&(lista->horario == hora && lista->status=='1') ) {
             // Data  encontrada na lista
             free(lista);
             fclose(fp);
@@ -633,9 +640,12 @@ void Lista_ordenada_alfa_a(void) {
     agendamento = (Agendamento*)malloc(sizeof(Agendamento)); 
 
     system("clear||cls");
-    printf(" ------------------------------------------------------------------------------- \n");
-    printf("|---                            LISTA DE AGENDAMENTOS                        ---|\n");
-    printf(" -------------------------------------------------------------------------------\n");
+    printf(" ----------------------------------------------------------------------------------------------------------------------------------- \n");
+    printf("|---                                                   LISTA DE AGENDAMENTOS                                                    ---|\n");
+    printf(" -----------------------------------------------------------------------------------------------------------------------------------\n");
+    printf("| %-5s | %-40s | %-11s | %-30s | %-30s |\n","ID", "NOME", "DATA", "TAREFA", "DISCIPLINA");
+    printf("|-------|------------------------------------------|-------------|--------------------------------|--------------------------------|\n");
+
 
     while(fread(agendamento, sizeof(Agendamento), 1, fp) == 1) {
         agendamento->prox = NULL;

@@ -104,10 +104,12 @@ if (tp->status == '1') {
 }
 }
 void exibe_disciplina_lista(Disciplina* tp) {
-if ((tp == NULL) || (tp->status == '0')) {
+if ((tp == NULL)) {
  printf("\n= = = Disciplina Inexistente = = =\n");
 } else {
- printf("Nome da Disciplina: %s Id da disciplina: %d \n", tp->nome, tp->id);
+
+ printf("| %-5d | %-40s |\n",tp->id, tp->nome);
+ printf("|-------|------------------------------------------|\n");
  
 }
 }
@@ -125,6 +127,13 @@ void all_disciplinas(){
     getchar();
     return;
     }
+    system("clear||cls");
+    printf(" ---------------------------------------------------\n");
+    printf("|---          LISTA DE DISCIPLINAS              ---|\n");
+    printf(" --------------------------------------------------\n");
+    printf(" --------------------------------------------------\n");
+    printf("| %-5s | %-40s |", "ID", "Nome");
+    printf("|-------|------------------------------------------|\n");
     while(fread(disciplina, sizeof(Disciplina), 1, fp)) {
         if (disciplina->status == '1') {
             exibe_disciplina_lista(disciplina);
@@ -208,7 +217,7 @@ int dado_dic_exist( char* dado) {
     }
     Disciplina * lista = (Disciplina*) malloc(sizeof(Disciplina));
     while(fread(lista, sizeof(Disciplina), 1, fp)) {
-        if (strcmp(lista->nome, dado) == 0 ) {
+        if (strcmp(lista->nome, dado) == 0 && lista->status=='1') {
             // Data  encontrada na lista
             free(lista);
             fclose(fp);
@@ -436,11 +445,13 @@ void Lista_ordenada_alfa_d(void) {
     
     lista = NULL;
     disciplina = (Disciplina*)malloc(sizeof(Disciplina)); 
-
     system("clear||cls");
-    printf(" --------------------------------------------------- \n");
-    printf("|---             LISTA DE DISCIPLINAS            ---|\n");
-    printf(" --------------------------------------------------- \n");
+    printf(" ---------------------------------------------------\n");
+    printf("|---          LISTA DE DISCIPLINAS              ---|\n");
+    printf(" --------------------------------------------------\n");
+    printf(" --------------------------------------------------\n");
+    printf("| %-5s | %-40s |\n", "ID", "Nome");
+    printf("|-------|------------------------------------------|\n");
 
     while(fread(disciplina, sizeof(Disciplina), 1, fp) == 1) {
         disciplina->prox = NULL;

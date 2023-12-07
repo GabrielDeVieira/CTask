@@ -186,7 +186,7 @@ int dado_use_exist( char* dado, int op) {
     User * lista = (User*) malloc(sizeof(User));
     if (op==1){
     while(fread(lista, sizeof(User), 1, fp)) {
-        if (strcmp(lista->numero, dado) == 0 ) {
+        if (strcmp(lista->numero, dado) == 0 && lista->status=='1') {
             // Data  encontrada na lista
             free(lista);
             fclose(fp);
@@ -195,7 +195,7 @@ int dado_use_exist( char* dado, int op) {
     }
     }else if(op==2){
     while(fread(lista, sizeof(User), 1, fp)) {
-        if (strcmp(lista->cpf, dado) == 0 ) {
+        if (strcmp(lista->cpf, dado) == 0 && lista->status=='1') {
             // Data  encontrada na lista
             free(lista);
             fclose(fp);
@@ -204,7 +204,7 @@ int dado_use_exist( char* dado, int op) {
     }
     }else if(op ==3){
        while(fread(lista, sizeof(User), 1, fp)) {
-        if (strcmp(lista->email, dado) == 0 ) {
+        if (strcmp(lista->email, dado) == 0 && lista->status=='1') {
             // Data  encontrada na lista
             free(lista);
             fclose(fp);
@@ -213,7 +213,7 @@ int dado_use_exist( char* dado, int op) {
     } 
     }else if(op ==4){
        while(fread(lista, sizeof(User), 1, fp)) {
-        if (strcmp(lista->username, dado) == 0 ) {
+        if (strcmp(lista->username, dado) == 0 && lista->status=='1' ) {
             // Data  encontrada na lista
             free(lista);
             fclose(fp);
@@ -288,10 +288,11 @@ if (tf->status == '1') {
 }
 }
 void exibe_user_lista(User* tf) {
-if ((tf == NULL) || (tf->status == '0')) {
+if ((tf == NULL)) {
  printf("\n= = = Usuário Inexistente = = =\n");
 } else {
- printf("Nome do Usuário: %s - Id do Usuário: %d \n ", tf->nome,tf->id);
+ printf("| %-5d | %-40s | %-25s | \n",tf->id, tf->nome, tf->username);
+ printf("|-------|------------------------------------------|---------------------------|\n");
 
 }
 }
@@ -333,8 +334,16 @@ void all_users(){
     if (fp == NULL) {
     printf("Ops! Erro na abertura do arquivo!\n");
     printf("Não é possível continuar...\n");
-    return;printf("\n = Lista de Usuário = \n");
+    return;
+
     }
+    system("clear||cls");
+    printf(" ------------------------------------------------------------------------------ \n");
+    printf("|---                             LISTA DE USUARIOS                          ---|\n");
+    printf(" ------------------------------------------------------------------------------\n");
+    printf(" ------------------------------------------------------------------------------\n");
+    printf("| %-5s | %-40s | %-25s |\n", "ID", "Nome", "Username");
+    printf("|-------|------------------------------------------|---------------------------|\n");
     while(fread(user, sizeof(User), 1, fp)) {
         if (user->status == '1') {
             exibe_user_lista(user);
@@ -563,9 +572,12 @@ void Lista_ordenada_alfa(void) {
     usuario = (User*)malloc(sizeof(User)); 
 
     system("clear||cls");
-    printf(" --------------------------------------------------- \n");
-    printf("|---              LISTA DE USUARIOS              ---|\n");
-    printf(" --------------------------------------------------- \n");
+    printf(" ------------------------------------------------------------------------------ \n");
+    printf("|---                             LISTA DE USUARIOS                          ---|\n");
+    printf(" ------------------------------------------------------------------------------\n");
+    printf(" ------------------------------------------------------------------------------\n");
+    printf("| %-5s | %-40s | %-25s |\n", "ID", "Nome", "Username");
+    printf("|-------|------------------------------------------|---------------------------|\n");
 
     while(fread(usuario, sizeof(User), 1, fp) == 1) {
         usuario->prox = NULL;
