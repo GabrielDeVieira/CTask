@@ -350,7 +350,7 @@ int get_id_tarefa(){
         fp = fopen("disciplina.dat", "rb");
         if (fp == NULL) {
         printf("Ops! Erro na abertura do arquivo!\n");
-        printf("Criar disciplina...\n");
+        printf("Criar Tarefa...\n");
         ag =0;
         return ag;
         }
@@ -382,7 +382,7 @@ int get_id_disciplina(){
         fp = fopen("disciplina.dat", "rb");
         if (fp == NULL) {
         printf("Ops! Erro na abertura do arquivo!\n");
-        printf("Criar disciplina...\n");
+        printf("Criar Disciplina...\n");
         ag =0;
         return ag;
         }
