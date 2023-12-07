@@ -185,7 +185,40 @@ void get_nomed(char * nome){
         printf("|-- Nome inválido! \n");
         printf("|-- Nome: \n");
     }
-    }while (!(valida_nome(nome)));
+    }while (!(valida_nome(nome)) );
+}
+
+void get_nomedc(char * nome){
+    do{
+    fgets(nome, 100, stdin);
+    trata_string(nome);
+    if(!(dado_dic_exist(nome))){
+        printf("|-- Nome ja cadastrado! \n");
+        printf("|-- Nome: \n");
+    }
+    }while (!(dado_dic_exist(nome)) );
+}
+//Função desenvolvida a partir do ChatGPT
+int dado_dic_exist( char* dado) {
+    FILE * fp;
+    fp = fopen("disciplina.dat", "rb");
+    if(fp == NULL){
+        fclose(fp);
+        return 1;
+    }
+    Disciplina * lista = (Disciplina*) malloc(sizeof(Disciplina));
+    while(fread(lista, sizeof(Disciplina), 1, fp)) {
+        if (strcmp(lista->nome, dado) == 0 ) {
+            // Data  encontrada na lista
+            free(lista);
+            fclose(fp);
+            return 0;
+        }
+    }
+    // Data nao encontrada
+    fclose(fp);
+    free(lista);
+    return 1;
 }
 
 Disciplina * create_disciplina(void){
@@ -201,8 +234,7 @@ Disciplina * create_disciplina(void){
     printf("|                                                   |\n");
     disciplina->id = new_id_disciplina();
     printf("|-- Nome Da Disciplina: \n");
-    fgets(disciplina->nome, sizeof(disciplina->nome), stdin);
-    trata_string(disciplina->nome);
+    get_nomedc(disciplina->nome);
     printf("|                                                   |\n");
     printf("|-- Nome do Doscente : \n");
     get_nomed(disciplina->docente);

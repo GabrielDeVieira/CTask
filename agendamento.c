@@ -247,8 +247,10 @@ void salvar_agendamento(Agendamento * agendamento){
     free(agendamento);
 }
 
-void get_data(char * data){
+void get_data(char * data, int  horario){
     int dia, mes, ano;
+    do{
+    printf("|-- Data Agendamento(dd/mm/aaaa) : \n");
     do
     {
       scanf("%10s", data);
@@ -263,6 +265,9 @@ void get_data(char * data){
         printf("|-- Data Agendamento(dd/mm/aaaa): \n");
       }
     } while (!(valida_data(dia, mes, ano)));
+    printf("|-- Horario da Tarefa (1 a 16): \n");
+    horario = lerNumeroInteiro();
+    }while(!(dado_age_exist(data, horario)));
 }
 
 //Função Desenvolvida com auxilio do ChatGPT
@@ -408,16 +413,14 @@ Agendamento * create_agendamento(void){
     printf("|-- Nome : \n");
     fgets(agendamento->nome, sizeof(agendamento->nome), stdin);
     trata_string(agendamento->nome);
-    printf("|-- Data Agendamento(dd/mm/aaaa) : \n");
-    get_data(agendamento->data_agendamento);
+
+    get_data(agendamento->data_agendamento, agendamento->horario);
     printf("|-- Tarefa(ID) : \n");
     agendamento->id_tarefa = get_id_tarefa();
     printf("%d\n",agendamento->id_tarefa);
     printf("|-- Disciplina(ID) : \n");
     agendamento->id_disciplina = get_id_disciplina();
     printf("%d\n",agendamento->id_disciplina);
-    printf("|-- Horario da Tarefa (1 a 16): \n");
-    agendamento->horario = lerNumeroInteiro();
     agendamento->status = '1';
     printf("|___________________________________________________|\n");
     printf("\n");
@@ -455,14 +458,12 @@ void editar_agendamento(Agendamento* nome_agendamento) {
             achou = 1;
             printf("|-- Nome : \n");
             fgets(agendamento->nome, sizeof(agendamento->nome), stdin);
-            printf("|-- Data Agendamento(dd/mm/aaaa) : \n");
-            get_data(agendamento->data_agendamento);
+            
+            get_data(agendamento->data_agendamento, agendamento->horario);
             printf("|-- Tarefa(ID) : \n");
             agendamento->id_tarefa = lerNumeroInteiro();
             printf("|-- Disciplina(ID) : \n");
             agendamento->id_disciplina = lerNumeroInteiro();
-            printf("|-- Horario da Tarefa (1 a 16): \n");
-            agendamento->horario = lerNumeroInteiro();
             agendamento->status = '1';
             printf("|___________________________________________________|\n");
                     
@@ -479,7 +480,28 @@ void editar_agendamento(Agendamento* nome_agendamento) {
     free(agendamento);
 }
 }
-
+//Função desenvolvida a partir do ChatGPT
+int dado_age_exist( char* dado, int hora) {
+    FILE * fp;
+    fp = fopen("agendamento.dat", "rb");
+    if(fp == NULL){
+        fclose(fp);
+        return 1;
+    }
+    Agendamento * lista = (Agendamento*) malloc(sizeof(Agendamento));
+    while(fread(lista, sizeof(Agendamento), 1, fp)) {
+        if (strcmp(lista->data_agendamento, dado) == 0 &&(lista->horario == hora) ) {
+            // Data  encontrada na lista
+            free(lista);
+            fclose(fp);
+            return 0;
+        }
+    }
+    // Data nao encontrada
+    fclose(fp);
+    free(lista);
+    return 1;
+}
 
 void update_agendamento(void){
     Agendamento * agendamento;

@@ -39,3 +39,4 @@ void get_email(char *);
 void get_numero(char *);
 void  get_cpf(char * );
 void Lista_ordenada_alfa(void);
+int dado_use_exist( char* , int );

@@ -25,4 +25,6 @@ void excluir_disciplina(Disciplina *);
 int new_id_disciplina();
 void filtro_disciplinas();
 void get_nomed(char *);
+void get_nomedc(char *);
 void Lista_ordenada_alfa_d(void);
+int dado_dic_exist( char* );

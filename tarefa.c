@@ -182,6 +182,38 @@ int new_id_tarefa(){
     }
     return lastId+1;
 }
+void get_nometf(char * nome){
+    do{
+    fgets(nome, 150, stdin);
+    trata_string(nome);
+    if(!(dado_tf_exist(nome))){
+        printf("|-- Nome ja cadastrado! \n");
+        printf("|-- Nome: \n");
+    }
+    }while (!(dado_tf_exist(nome)) );
+}
+
+int dado_tf_exist( char* dado) {
+    FILE * fp;
+    fp = fopen("tarefa.dat", "rb");
+    if(fp == NULL){
+        fclose(fp);
+        return 1;
+    }
+    Tarefa * lista = (Tarefa*) malloc(sizeof(Tarefa));
+    while(fread(lista, sizeof(Tarefa), 1, fp)) {
+        if (strcmp(lista->nome, dado) == 0 ) {
+            // Data  encontrada na lista
+            free(lista);
+            fclose(fp);
+            return 0;
+        }
+    }
+    // Data nao encontrada
+    fclose(fp);
+    free(lista);
+    return 1;
+}
 
 Tarefa * create_tarefa(void){
 
@@ -197,8 +229,7 @@ Tarefa * create_tarefa(void){
     printf("|                                                   |\n");
     tarefa->id = new_id_tarefa();
     printf("|-- Nome Da Tarefa : \n");
-    fgets(tarefa->nome, sizeof(tarefa->nome), stdin);
-    trata_string(tarefa->nome);
+    get_nometf(tarefa->nome);
     printf("|                                                   |\n");
     printf("|-- Descrição : \n");
     fgets(tarefa->descricao, sizeof(tarefa->descricao), stdin);

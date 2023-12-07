@@ -94,6 +94,16 @@ void get_nome(char * nome){
     }
     }while (!(valida_nome(nome)));
 }
+void get_username(char * nome){
+    do{
+    printf("|-- Username: \n");
+    scanf("%s", nome);
+    limpa_buffer();
+    if(!(dado_use_exist(nome,4))){
+        printf("Username ja existe... \n");
+    }
+    }while (!(dado_use_exist(nome,4)));
+}
 
 void get_data_nascimento(char * data){
     int dia, mes, ano;
@@ -113,9 +123,10 @@ void get_data_nascimento(char * data){
     } while (!(valida_data(dia, mes, ano)));
 }
 void get_email(char * email){
+    do{
+    printf("|-- Email: \n");
     do
     {
-    //fgets(email, sizeof(email), stdin);
     scanf("%s", email);
     limpa_buffer();
     if (!(valida_email(email))){ 
@@ -124,21 +135,32 @@ void get_email(char * email){
     } 
     
     } while (!(valida_email(email))); 
+    if(!(dado_use_exist(email,3))){
+        printf("Email ja existe... \n");
+    }
+    }while (!(dado_use_exist(email,3)) );
     
 }
 void get_numero(char * numero){
+    do{
+    printf("|-- DDD + Numero do Celular(apenas os numeros):  \n");
     do
     {
-    //fgets(numero, sizeof(numero), stdin);
      scanf("%11s", numero);
      if (!(valida_numero(numero))){
        printf("|-- Numero Inválido ! \n");
        printf("|-- Numero (apenas os numeros): \n");
      }
     } while (!(valida_numero(numero)));
+    if(!(dado_use_exist(numero,1))){
+        printf("Numero ja existe... \n");
+    }
+    }while (!(dado_use_exist(numero,1)) );
    
 }
 void get_cpf(char * cpf){
+    do{
+    printf("|-- CPF: \n");
     do{
     scanf("%14s", cpf);
     limpa_buffer();
@@ -147,6 +169,62 @@ void get_cpf(char * cpf){
         printf("|-- CPF: \n");
     }
     }while(!(valida_CPF(cpf)));
+    if(!(dado_use_exist(cpf,2))){
+        printf("CPF ja existe... \n");
+    }
+    }while (!(dado_use_exist(cpf,2)) );
+}
+
+//Funcao que verifica a existencia de dados na tabela de usuarios
+int dado_use_exist( char* dado, int op) {
+    FILE * fp;
+    fp = fopen("user.dat", "rb");
+    if(fp == NULL){
+        fclose(fp);
+        return 1;
+    }
+    User * lista = (User*) malloc(sizeof(User));
+    if (op==1){
+    while(fread(lista, sizeof(User), 1, fp)) {
+        if (strcmp(lista->numero, dado) == 0 ) {
+            // Data  encontrada na lista
+            free(lista);
+            fclose(fp);
+            return 0;
+        }
+    }
+    }else if(op==2){
+    while(fread(lista, sizeof(User), 1, fp)) {
+        if (strcmp(lista->cpf, dado) == 0 ) {
+            // Data  encontrada na lista
+            free(lista);
+            fclose(fp);
+            return 0;
+        }
+    }
+    }else if(op ==3){
+       while(fread(lista, sizeof(User), 1, fp)) {
+        if (strcmp(lista->email, dado) == 0 ) {
+            // Data  encontrada na lista
+            free(lista);
+            fclose(fp);
+            return 0;
+        }
+    } 
+    }else if(op ==4){
+       while(fread(lista, sizeof(User), 1, fp)) {
+        if (strcmp(lista->username, dado) == 0 ) {
+            // Data  encontrada na lista
+            free(lista);
+            fclose(fp);
+            return 0;
+        }
+    } 
+    }
+    // Data nao encontrada
+    fclose(fp);
+    free(lista);
+    return 1;
 }
 
 User * create_users(void){
@@ -166,21 +244,16 @@ User * create_users(void){
     printf("|-- Data de Nascimento(dd/mm/aaaa): \n");
     get_data_nascimento(usuario->data_nascimento);
     printf("|                                                   |\n");
-    printf("|-- Email: \n");
     get_email(usuario->email);
     printf("|                                                   |\n");
-    printf("|-- DDD + Numero do Celular(apenas os numeros):  \n");
     get_numero(usuario->numero);    
     printf("|                                                   |\n");
-    printf("|-- Username: \n");
-    scanf("%s", usuario->username);
-    limpa_buffer();
+    get_username(usuario->username);
     printf("|                                                   |\n");
     printf("|-- Senha: \n");
     scanf("%s", usuario->senha);
     limpa_buffer();
     printf("|                                                   |\n");
-    printf("|-- CPF: \n");
     get_cpf(usuario->cpf);
     usuario->status = '1';
     printf("|                                                   |\n");

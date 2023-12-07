@@ -25,3 +25,5 @@ void editar_tarefa(Tarefa *);
 int new_id_tarefa();
 void filtro_tarefas();
 void Lista_ordenada_alfa_t(void);
+void get_nometf(char *);
+int dado_tf_exist( char* );
