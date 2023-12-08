@@ -254,7 +254,7 @@ void salvar_agendamento(Agendamento * agendamento){
     free(agendamento);
 }
 
-void get_data(char * data, int  horario){
+void get_data(char * data, int * horario){
     int dia, mes, ano;
     do{
     printf("|-- Data Agendamento(dd/mm/aaaa) : \n");
@@ -273,8 +273,8 @@ void get_data(char * data, int  horario){
       }
     } while (!(valida_data(dia, mes, ano)));
     printf("|-- Horario da Tarefa (1 a 16): \n");
-    horario = lerNumeroInteiro();
-    }while(!(dado_age_exist(data, horario)));
+    *horario = lerNumeroInteiro();
+    }while(!(dado_age_exist(data, *horario)));
 }
 
 //Função Desenvolvida com auxilio do ChatGPT
@@ -306,9 +306,9 @@ void matriz_agendamento(){
     }
     // Exibindo a semana
     printf("Agendamentos já cadastradas na semana:\n");
-    printf(" ______________________________________________________________________________\n");
-    printf(" | Horarios      1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 |10 |11 |12 |13 |14 |15 |16 |\n");
-    printf(" |_________________|___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|\n");
+    printf(" ______________________________________________________________________________________________\n");
+    printf(" | Horarios       1 |  2 |  3 |  4 |  5 |  6 |  7 |  8 |  9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 |\n");
+    printf(" |__________________|____|____|____|____|____|____|____|____|____|____|____|____|____|____|____|\n");
     for (int i = 0; i < 7; i++) {
         char dataString[11];
         strftime(dataString, sizeof(dataString), "%d/%m/%Y", infoTempo);
@@ -323,19 +323,19 @@ void matriz_agendamento(){
             while(fread(agendamento, sizeof(Agendamento), 1, fp)) {
                 if (agendamento->status == '1' && ((strstr(agendamento->data_agendamento, dataString))!= NULL)
                 && agendamento->horario == (j+1)) {
-                    printf(" x |");
+                    printf(" OK |");
                     vaux =0;
                     break;
                 }
             
             }
             if (vaux){
-                printf("   |");
+                printf("    |");
             }
             fclose(fp);
         }
         printf("\n");
-        printf(" -------------------------------------------------------------------------------\n");
+        printf(" -------------------+----+----+----+----+----+----+----+----+----+----+----+----+----+----+-----\n");
     }
     free(matriz);
     free(agendamento);
@@ -365,7 +365,7 @@ int get_id_tarefa(){
 
     }
     if(vaux){
-            printf("Disciplina nao encontrada, digite um id valido \n");
+            printf("Tarefa nao encontrada, digite um id valido \n");
             fclose(fp);
         }
     }while(vaux);
@@ -421,7 +421,7 @@ Agendamento * create_agendamento(void){
     fgets(agendamento->nome, sizeof(agendamento->nome), stdin);
     trata_string(agendamento->nome);
 
-    get_data(agendamento->data_agendamento, agendamento->horario);
+    get_data(agendamento->data_agendamento, &(agendamento->horario));
     printf("|-- Tarefa(ID) : \n");
     agendamento->id_tarefa = get_id_tarefa();
     printf("%d\n",agendamento->id_tarefa);
@@ -466,7 +466,7 @@ void editar_agendamento(Agendamento* nome_agendamento) {
             printf("|-- Nome : \n");
             fgets(agendamento->nome, sizeof(agendamento->nome), stdin);
             
-            get_data(agendamento->data_agendamento, agendamento->horario);
+            get_data(agendamento->data_agendamento, &(agendamento->horario));
             printf("|-- Tarefa(ID) : \n");
             agendamento->id_tarefa = lerNumeroInteiro();
             printf("|-- Disciplina(ID) : \n");
