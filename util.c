@@ -85,13 +85,16 @@ int valida_CPF(char *cpf) {
     char numeros_cpf[12]; 
     int len = strlen(cpf);
     int pos = 0;
+    
     for (i = 0; i < len; i++) {
+
         if (eh_numero(cpf[i])) {
             numeros_cpf[pos++] = cpf[i];
         }
     }
-    numeros_cpf[pos] = '\0';
-
+    
+    numeros_cpf[12] = '\0';
+     
     if (strlen(numeros_cpf) != 11) {
         return False;
     }
@@ -114,6 +117,7 @@ int valida_CPF(char *cpf) {
     } else {
         return False;
     }
+    
 }
 
 // Função de Validação de email desenvolvida com auxilio do ChatGPT
@@ -202,6 +206,7 @@ void limpa_buffer(void)
     } while (c != EOF && c!= '\n');
 }
 char trata_string(char * str){
+  
     for (int i = 0; str[i] != '\0'; i++) {
             if (str[i] == '\n') {
                 // Substituindo '\n' por '\0'
@@ -211,6 +216,6 @@ char trata_string(char * str){
     return *str;
 
 }
-//get_nome():
+
 
 

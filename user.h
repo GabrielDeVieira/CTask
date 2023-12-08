@@ -12,7 +12,7 @@ struct user
     char numero[12];
     char senha[20];
     char username[100];
-    char cpf[15];
+    char cpf[14];
     char status;
     User *prox;
 };

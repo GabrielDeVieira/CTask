@@ -162,8 +162,10 @@ void get_cpf(char * cpf){
     do{
     printf("|-- CPF: \n");
     do{
-    scanf("%14s", cpf);
-    limpa_buffer();
+    
+    fgets(cpf, 14, stdin);
+    trata_string(cpf);
+
     if (!(valida_CPF(cpf))){
         printf("|-- CPF inválido! \n");
         printf("|-- CPF: \n");
