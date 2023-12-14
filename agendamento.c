@@ -54,7 +54,7 @@ char menu_agendamentos(void){
     printf("|--            5 - Buscar Agendamentos            --|\n");
     printf("|--            6 - Filtrar Agendamentos           --|\n");
     printf("|--            7 - Agendamentos da Semana         --|\n");
-    printf("|--            8 - Listar por por data            --|\n");
+    printf("|--            8 - Listar agendamento por data    --|\n");
     printf("|--            0 - Sair                           --|\n");
     printf("|___________________________________________________|\n");
     printf("\n");
