@@ -93,7 +93,9 @@ void sobre(void){
     printf("|                                                                        |\n");
     printf("|-   O projeto é o método principal de avaliação da disciplina DCT1106  -|\n");
     printf("|-   Programação. Como o próprio nome sugere o projeto diz respeito ao  -|\n");
-    printf("|-   Desenvolvimento de uma Agenda de Compromissos para estudantes, onde-|\n");
+    printf("|-   Desenvolvimento de uma Agenda de Compromissos para estudantes,     -|\n");
+    printf("|-   mais especificamente estudantes da universidade onde se tem 16     -|\n");
+    printf("|-   horários da manhâ até a noite.                                     -|\n");
     printf("|-    o seu usuário vai poder tipificar esses determinados Compromissos -|\n");
     printf("|-   (Tendo a liberdade de nomer o tipo da atividade). Além de todas as -|\n");
     printf("|-   funcionalidades de uma agenda, como: criar um Compromisso e poder  -|\n");

@@ -245,7 +245,7 @@ Disciplina * create_disciplina(void){
     printf("|-- Nome Da Disciplina: \n");
     get_nomedc(disciplina->nome);
     printf("|                                                   |\n");
-    printf("|-- Nome do Doscente : \n");
+    printf("|-- Nome do Docente : \n");
     get_nomed(disciplina->docente);
     printf("|                                                   |\n");
     printf("|-- Carga Horária : \n");

@@ -62,10 +62,9 @@ char menu_tarefa(void){
 void exibe_tarefa(Tarefa* tf) {
 char situacao[20];
 if ((tf == NULL) || (tf->status == '0')) {
- printf("\n= = = tarefa Inexistente = = =\n");
+ printf("\n Tarefa Inexistente...");
 } else {
- printf("\n= = = Tarefa Cadastrado = = =\n");
- printf("Id da Tarefa: %d", tf->id);
+ printf("\nId da Tarefa: %d\n", tf->id);
  printf("Nome da Tarefa: %s\n", tf->nome);
  printf("Descrição da Tarefa da Tarefa: %s\n", tf->descricao);
 
@@ -79,7 +78,7 @@ if (tf->status == '1') {
 }
 void exibe_tarefa_lista(Tarefa* tf) {
 if ((tf == NULL) || (tf->status == '0')) {
- printf("\n= = = Tarefa Inexistente = = =\n");
+ printf("\n Tarefa Inexistente...");
 } else {
   printf("| %-5d | %-40s |\n",tf->id, tf->nome);
   printf("|-------|------------------------------------------|\n");
@@ -402,10 +401,10 @@ void read_tarefa(void){
     printf("|                                                   |\n");
     printf("|-- informe o nome da tarefa: \n");
     fgets(nome_tarefa,150,stdin);
+    trata_string(nome_tarefa);
     printf("|___________________________________________________|\n");
     FILE* fp;
     Tarefa* tarefa;
-    printf("\n = Lista de Tarefas = \n");
     tarefa = (Tarefa*) malloc(sizeof(Tarefa));
     fp = fopen("tarefa.dat", "rb");
     if (fp == NULL) {
