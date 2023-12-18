@@ -85,7 +85,7 @@ int new_id_disciplina(){
     return lastId+1;
 }
 
-//Funções de Listagem
+//Funções de exibicao de um determinado arquivo,  mostrando todos os dados existentes do mesmo.
 //Função Baseada nos Slides da aula: Semana 11
 void exibe_disciplina(Disciplina* tp) {
 char situacao[20];

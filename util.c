@@ -49,7 +49,7 @@ int valida_data(int dd, int mm, int aa) {
 int valida_nome(char* nome) {
   int tam;
   tam = strlen(nome);
-  for (int i = 0; i < tam-1; i++) {
+  for (int i = 0; i < tam; i++) {
     if (!eh_letra(nome[i])) {
       return False;
     }
@@ -57,7 +57,7 @@ int valida_nome(char* nome) {
   return True;  
 }
 //Função adaptada do código do professsor Flávius - https://replit.com/@GabrielVieira01/ValidacaoDeDados#util.c
-int eh_letra(char c) {
+int eh_letra(char  c) {
   if (c >= 'A' && c <= 'Z') {
     return True;
   } else if (c >= 'a' && c <= 'z') {

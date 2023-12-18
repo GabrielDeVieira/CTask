@@ -146,7 +146,8 @@ void get_numero(char * numero){
     printf("|-- DDD + Numero do Celular(apenas os numeros):  \n");
     do
     {
-     scanf("%11s", numero);
+     fgets(numero, 14, stdin);
+     trata_string(numero);
      if (!(valida_numero(numero))){
        printf("|-- Numero Inválido ! \n");
        printf("|-- Numero (apenas os numeros): \n");

@@ -260,6 +260,7 @@ void salvar_tipo(Tipo * tipo){
     free(tipo);
 }
 
+
 Tipo * create_tipo_tarefa(void){
 
     Tipo *tipo = malloc(sizeof(Tipo));

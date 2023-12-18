@@ -61,13 +61,23 @@ char menu_tarefa(void){
 }
 void exibe_tarefa(Tarefa* tf) {
 char situacao[20];
+FILE * fp;
+fp = fopen("tipo.dat", "rb");
+Tipo * ttarefa = (Tipo*) malloc(sizeof(Tipo));
 if ((tf == NULL) || (tf->status == '0')) {
  printf("\n Tarefa Inexistente...");
 } else {
  printf("\nId da Tarefa: %d\n", tf->id);
  printf("Nome da Tarefa: %s\n", tf->nome);
  printf("Descrição da Tarefa da Tarefa: %s\n", tf->descricao);
-
+while(fread(ttarefa, sizeof(Tipo), 1, fp)) {
+        if ((tf->id_tipo == ttarefa->id) && (ttarefa->status != '0')) {
+            printf("Tipo da Tarefa: %s\n", ttarefa->nome);
+            break;
+        }
+    }
+fclose(fp);
+free(ttarefa);
 if (tf->status == '1') {
  strcpy(situacao, "Cadastrada");
 } else {
@@ -158,6 +168,13 @@ void filtro_tarefas(){
 }
 //Função Baseada nos Slides da aula: Semana 11
 void salvar_tarefa(Tarefa * tarefa){
+    if (tarefa->id_tipo == 0){
+        printf("Ops! Erro na abertura do arquivo!\n");
+        printf("Verificar Informações que Foram indicadas durante a execucao...\n");
+        printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+        getchar();
+        return;
+    }
     FILE* fp;
     fp = fopen("tarefa.dat","ab");
     if (fp == NULL) {
@@ -199,6 +216,7 @@ void get_nometf(char * nome){
     do{
     fgets(nome, 150, stdin);
     trata_string(nome);
+    
     if(!(dado_tf_exist(nome))){
         printf("|-- Nome ja cadastrado! \n");
         printf("|-- Nome: \n");
@@ -228,6 +246,38 @@ int dado_tf_exist( char* dado) {
     return 1;
 }
 
+
+int get_id_tipo(){
+    int  ag;
+    int vaux = 1;
+     Tipo *tarefa = malloc(sizeof(Tipo));
+     do{
+        FILE* fp;
+        fp = fopen("tipo.dat", "rb");
+        ag = lerNumeroInteiro();
+        if (fp == NULL) {
+        printf("Ops! Erro na abertura do arquivo!\n");
+        printf("Criar Tipo de Tarefa...\n");
+        ag =0;
+        return ag;
+        }
+     while(!feof(fp) && vaux) {
+        fread(tarefa, sizeof(Tipo), 1, fp);
+        if ((ag == tarefa->id) && (tarefa->status != '0')) {
+            fclose(fp);
+            vaux = 0;
+            return ag;
+        }
+    }
+    if(vaux){
+            printf("Tipo de Tarefa nao encontrada, digite um id valido \n");
+            fclose(fp);
+        }
+    }while(vaux);
+    return 0;
+
+}
+
 Tarefa * create_tarefa(void){
 
     Tarefa* tarefa;
@@ -248,7 +298,7 @@ Tarefa * create_tarefa(void){
     fgets(tarefa->descricao, sizeof(tarefa->descricao), stdin);
     printf("|                                                   |\n");
     printf("|-- Tipo do tarefa(ID) : \n");
-    tarefa->id_tipo = lerNumeroInteiro();
+    tarefa->id_tipo = get_id_tipo();
     tarefa->status = '1';
     printf("|                                                   |\n");
     printf("|___________________________________________________|\n");
